@@ -4,19 +4,19 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import Sidebar from "./Sidebar";
 
 const Navbar = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   return (
     <Box
       sx={{
         backgroundColor: Colors.mainLightGreen,
         width: width,
-        height: 0.1 * height,
+        height: "85px",
         borderBottomLeftRadius: "10px",
         borderBottomRightRadius: "10px",
         boxShadow: 1,
         display: "flex",
-        alignItems: "center", // Center links vertically
+        alignItems: "center",
       }}
     >
       <Link

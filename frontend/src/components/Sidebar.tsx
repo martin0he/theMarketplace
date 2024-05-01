@@ -10,22 +10,29 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useState } from "react";
+import Colors from "../assets/Colors";
 
 const Sidebar = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={() => setOpen(false)}>
+    <Box sx={{ width: 250 }} onClick={() => setOpen(false)}>
       <List>
         {["listings", "sell", "account", "about"].map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemText primary={text} />
+              <ListItemText
+                primaryTypographyProps={{
+                  fontFamily: "inherit",
+                  color: "black",
+                  fontSize: "20px",
+                }}
+                primary={text}
+              />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-      <Divider />
     </Box>
   );
 
@@ -37,13 +44,16 @@ const Sidebar = () => {
           setOpen(true);
         }}
       >
-        <MenuIcon sx={{ color: "black", fontSize: "22px" }} />
+        <MenuIcon sx={{ color: "black", fontSize: "27px" }} />
       </IconButton>
       <Drawer
         anchor="right"
         open={open}
         onClose={() => {
-          setOpen(true);
+          setOpen(false); // Update to false when closing the drawer
+        }}
+        sx={{
+          "& .MuiDrawer-paper": { backgroundColor: Colors.mainLightGreen },
         }}
       >
         {DrawerList}
