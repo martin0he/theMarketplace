@@ -9,12 +9,12 @@ const Navbar = () => {
   return (
     <Box
       sx={{
-        backgroundColor: Colors.mainLightGreen,
+        backgroundColor: Colors.ghostWhite,
         width: width,
         height: "85px",
         borderBottomLeftRadius: "10px",
         borderBottomRightRadius: "10px",
-        boxShadow: 1,
+        WebkitBoxShadow: "0.3px 0.3px 7px #D8315B",
         display: "flex",
         alignItems: "center",
       }}

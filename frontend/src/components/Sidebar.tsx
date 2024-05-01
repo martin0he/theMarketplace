@@ -1,7 +1,6 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
-  Divider,
   Drawer,
   IconButton,
   List,
@@ -53,7 +52,7 @@ const Sidebar = () => {
           setOpen(false); // Update to false when closing the drawer
         }}
         sx={{
-          "& .MuiDrawer-paper": { backgroundColor: Colors.mainLightGreen },
+          "& .MuiDrawer-paper": { backgroundColor: Colors.ghostWhite },
         }}
       >
         {DrawerList}

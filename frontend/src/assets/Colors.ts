@@ -1,8 +1,8 @@
 export default {
   light: {},
   dark: {},
-  mainBlue: "#4357AD",
-  mainGreen: "#48A9A6",
-  mainTan: "#E4DFDA",
-  mainLightGreen: "#BBC79B",
+  royalBlue: "#0A2463",
+  celestialBlue: "#3E92CC",
+  ghostWhite: "#FFFAFF",
+  cerise: "#D8315B",
 };
