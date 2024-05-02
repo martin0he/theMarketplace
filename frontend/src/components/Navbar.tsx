@@ -14,9 +14,11 @@ const Navbar = () => {
         height: "85px",
         borderBottomLeftRadius: "10px",
         borderBottomRightRadius: "10px",
-        WebkitBoxShadow: "0.3px 0.3px 7px #D8315B",
+        boxShadow: 1,
         display: "flex",
         alignItems: "center",
+        position: "fixed",
+        top: 0,
       }}
     >
       <Link

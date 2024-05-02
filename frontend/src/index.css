@@ -105,4 +105,22 @@ video {
   padding: 0;
 }
 
-/* Additional styles as needed */
+/* Width */
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fffaff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3e92cc;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

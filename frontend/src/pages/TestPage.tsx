@@ -1,11 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 const TestPage = () => {
-  return (
-    <Box>
-      <Typography fontFamily={"inherit"}>ererg</Typography>
-    </Box>
-  );
+  return <Box></Box>;
 };
 
 export default TestPage;
