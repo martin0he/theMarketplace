@@ -5,4 +5,5 @@ export default {
   celestialBlue: "#3E92CC",
   ghostWhite: "#FFFAFF",
   cerise: "#D8315B",
+  smallListing: "#e9e7e9",
 };
