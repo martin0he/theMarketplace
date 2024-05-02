@@ -3,6 +3,7 @@ import {
   Box,
   Drawer,
   IconButton,
+  Link,
   List,
   ListItem,
   ListItemButton,
@@ -17,8 +18,8 @@ const Sidebar = () => {
   const DrawerList = (
     <Box sx={{ width: 250 }} onClick={() => setOpen(false)}>
       <List>
-        {["listings", "sell", "account", "about"].map((text) => (
-          <ListItem key={text} disablePadding>
+        <ListItem disablePadding>
+          <Link href="/test" underline="none" width="100%">
             <ListItemButton>
               <ListItemText
                 primaryTypographyProps={{
@@ -26,11 +27,53 @@ const Sidebar = () => {
                   color: "black",
                   fontSize: "20px",
                 }}
-                primary={text}
+                primary="listings"
               />
             </ListItemButton>
-          </ListItem>
-        ))}
+          </Link>
+        </ListItem>
+        <ListItem disablePadding>
+          <Link href="/test" underline="none" width="100%">
+            <ListItemButton>
+              <ListItemText
+                primaryTypographyProps={{
+                  fontFamily: "inherit",
+                  color: "black",
+                  fontSize: "20px",
+                }}
+                primary="sell"
+              />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem disablePadding>
+          <Link href="/test" underline="none" width="100%">
+            <ListItemButton>
+              <ListItemText
+                primaryTypographyProps={{
+                  fontFamily: "inherit",
+                  color: "black",
+                  fontSize: "20px",
+                }}
+                primary="account"
+              />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem disablePadding>
+          <Link href="/test" underline="none" width="100%">
+            <ListItemButton>
+              <ListItemText
+                primaryTypographyProps={{
+                  fontFamily: "inherit",
+                  color: "black",
+                  fontSize: "20px",
+                }}
+                primary="about"
+              />
+            </ListItemButton>
+          </Link>
+        </ListItem>
       </List>
     </Box>
   );
