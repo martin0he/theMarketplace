@@ -61,7 +61,7 @@ const Sidebar = () => {
           </Link>
         </ListItem>
         <ListItem disablePadding>
-          <Link href="/test" underline="none" width="100%">
+          <Link href="/about" underline="none" width="100%">
             <ListItemButton>
               <ListItemText
                 primaryTypographyProps={{

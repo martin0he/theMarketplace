@@ -99,7 +99,7 @@ const Navbar = () => {
           </Button>
 
           <Button
-            href="/test"
+            href="/about"
             sx={{
               marginLeft: "65px",
               fontFamily: "inherit",
