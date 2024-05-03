@@ -18,7 +18,7 @@ const HomePage = () => {
   const exampleListing: Listing = {
     name: "Example Small Item",
     dateAdded: new Date(),
-    price: 28.6,
+    price: 2800.6,
     seller: exampleUser,
     paymentMethod: [],
     exchangeLocation: "",

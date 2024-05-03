@@ -20,82 +20,121 @@ const SmallListingCard = ({ listing }: SmallListingCardProps) => {
   return (
     <Box
       sx={{
+        position: "relative",
         borderRadius: "12px",
         boxShadow: 2,
         backgroundColor: Colors.smallListing,
         minWidth: "200px",
         flex: "0 0 auto",
         marginLeft: 1,
+        overflow: "clip",
       }}
       height="150px"
     >
       <Box
-        sx={{ borderRadius: "12px" }}
-        width="70px"
-        height="70px"
+        sx={{
+          position: "absolute",
+          top: 5,
+          left: 5,
+          borderRadius: "12px",
+          border: 1,
+        }}
+        width="90px"
+        height="80px"
         margin="5px"
       >
         <Slider {...settings}>
-          <Box width="70px" height="70px">
+          <Box width="90px" height="80px">
             <img
-              width="70px"
+              width="90px"
               style={{ borderRadius: "12px" }}
-              height="70px"
-              src="https://picsum.photos/70/70"
+              height="80px"
+              src="https://picsum.photos/90/80"
               alt="Random Image"
             />
           </Box>
-          <Box width="70px" height="70px">
+          <Box width="90px" height="80px">
             <img
-              width="70px"
+              width="90px"
               style={{ borderRadius: "12px" }}
-              height="70px"
-              src="https://picsum.photos/70/70"
+              height="80px"
+              src="https://picsum.photos/90/80"
               alt="Random Image"
             />
           </Box>
-          <Box width="70px" height="70px">
+          <Box width="90px" height="80px">
             <img
-              width="70px"
+              width="90px"
               style={{ borderRadius: "12px" }}
-              height="70px"
-              src="https://picsum.photos/70/70"
+              height="80px"
+              src="https://picsum.photos/90/80"
               alt="Random Image"
             />
           </Box>
-          <Box width="70px" height="70px">
+          <Box width="90px" height="80px">
             <img
-              width="70px"
+              width="90px"
               style={{ borderRadius: "12px" }}
-              height="70px"
-              src="https://picsum.photos/70/70"
+              height="80px"
+              src="https://picsum.photos/90/80"
               alt="Random Image"
             />
           </Box>
-          <Box width="70px" height="70px">
+          <Box width="90px" height="80px">
             <img
-              width="70px"
+              width="90px"
               style={{ borderRadius: "12px" }}
-              height="70px"
-              src="https://picsum.photos/70/70"
+              height="80px"
+              src="https://picsum.photos/90/80"
               alt="Random Image"
             />
           </Box>
-          <Box width="70px" height="70px">
+          <Box width="90px" height="80px">
             <img
-              width="70px"
+              width="90px"
               style={{ borderRadius: "12px" }}
-              height="70px"
-              src="https://picsum.photos/70/70"
+              height="80px"
+              src="https://picsum.photos/90/80"
               alt="Random Image"
             />
           </Box>
         </Slider>
       </Box>
 
-      <Typography fontFamily="inherit" textAlign="center" marginTop="35px">
-        {listing.name}
-      </Typography>
+      <Box
+        width="100%"
+        sx={{
+          position: "absolute",
+          top: "20px",
+          marginLeft: "60px",
+          transform: "rotate(45deg)",
+          backgroundColor: "#96b17c",
+          padding: "5px",
+          zIndex: 2,
+        }}
+      >
+        <Typography fontFamily="inherit" color="white" textAlign="center">
+          ${listing.price}
+        </Typography>
+      </Box>
+
+      <Box
+        overflow="hidden"
+        width="88%"
+        left="6px"
+        position="absolute"
+        bottom="5px"
+        padding="5px"
+      >
+        <Typography
+          fontFamily="inherit"
+          whiteSpace="nowrap"
+          overflow="hidden"
+          textOverflow="ellipsis"
+        >
+          {listing.name}trhrthrthrgrst
+        </Typography>
+      </Box>
     </Box>
   );
 };

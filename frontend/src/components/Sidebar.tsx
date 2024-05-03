@@ -92,7 +92,7 @@ const Sidebar = () => {
         anchor="right"
         open={open}
         onClose={() => {
-          setOpen(false); // Update to false when closing the drawer
+          setOpen(false);
         }}
         sx={{
           "& .MuiDrawer-paper": { backgroundColor: Colors.ghostWhite },
