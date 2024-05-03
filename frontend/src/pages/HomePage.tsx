@@ -10,9 +10,6 @@ const HomePage = () => {
     username: "glazedGuat",
     email: "martin@email.com",
     password: "passywo",
-    itemsSold: [],
-    itemsPurchased: [],
-    itemsLiked: [],
   };
 
   const exampleListing: Listing = {
@@ -23,6 +20,24 @@ const HomePage = () => {
     paymentMethod: [],
     exchangeLocation: "",
     imageUrl: "",
+  };
+
+  const exampleSoldListing: Listing = {
+    name: "Example Sold Small Item",
+    dateAdded: new Date(),
+    dateDeleted: new Date(),
+    price: 2800.6,
+    seller: exampleUser,
+    paymentMethod: [],
+    exchangeLocation: "",
+    imageUrl: "",
+  };
+
+  const likingUser: User = {
+    username: "liker",
+    email: "iLikeStuff@Hotmail.com",
+    password: "password",
+    itemsLiked: [exampleListing],
   };
 
   return (
@@ -82,8 +97,8 @@ const HomePage = () => {
 
                 <Box
                   marginTop="10px"
-                  justifyContent="center"
-                  alignItems="center"
+                  marginLeft="30px"
+                  justifyContent="flex-start"
                   display="flex"
                 >
                   <Box
@@ -94,7 +109,7 @@ const HomePage = () => {
                       display: "flex",
                       flexDirection: "row",
                       flexWrap: "nowrap",
-                      overflowX: "scroll",
+                      overflowX: "auto",
                       "&::-webkit-scrollbar": {
                         height: "8px",
                         backgroundColor: "transparent",
@@ -140,6 +155,54 @@ const HomePage = () => {
                 >
                   Your Likes
                 </Typography>
+                <Box
+                  marginTop="10px"
+                  marginLeft="30px"
+                  justifyContent="flex-start"
+                  display="flex"
+                >
+                  <Box
+                    maxWidth="90%"
+                    height="fit-content"
+                    paddingBottom="10px"
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "nowrap",
+                      overflowX: "auto",
+                      "&::-webkit-scrollbar": {
+                        height: "8px",
+                        backgroundColor: "transparent",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        borderRadius: "4px",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: Colors.celestialBlue,
+                        borderRadius: "4px",
+                        "&:hover": {
+                          backgroundColor: Colors.royalBlue,
+                        },
+                      },
+                    }}
+                  >
+                    {likingUser.itemsLiked?.map((item) => (
+                      <SmallListingCard isLikable={true} listing={item} />
+                    ))}
+                    <SmallListingCard
+                      isLikable={true}
+                      listing={exampleListing}
+                    />
+                    <SmallListingCard
+                      isLikable={true}
+                      listing={exampleListing}
+                    />
+                    <SmallListingCard
+                      isLikable={true}
+                      listing={exampleListing}
+                    />
+                  </Box>
+                </Box>
               </Box>
             </Grid>
           </Grid>
@@ -173,6 +236,59 @@ const HomePage = () => {
                 >
                   Recently Posted
                 </Typography>
+                <Box
+                  marginTop="10px"
+                  marginLeft="30px"
+                  justifyContent="flex-start"
+                  display="flex"
+                >
+                  <Box
+                    maxWidth="90%"
+                    height="fit-content"
+                    paddingBottom="10px"
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "nowrap",
+                      overflowX: "auto",
+                      "&::-webkit-scrollbar": {
+                        height: "8px",
+                        backgroundColor: "transparent",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        borderRadius: "4px",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: Colors.celestialBlue,
+                        borderRadius: "4px",
+                        "&:hover": {
+                          backgroundColor: Colors.royalBlue,
+                        },
+                      },
+                    }}
+                  >
+                    <SmallListingCard
+                      isLikable={true}
+                      listing={exampleListing}
+                    />
+                    <SmallListingCard
+                      isLikable={true}
+                      listing={exampleListing}
+                    />
+                    <SmallListingCard
+                      isLikable={true}
+                      listing={exampleListing}
+                    />
+                    <SmallListingCard
+                      isLikable={true}
+                      listing={exampleListing}
+                    />
+                    <SmallListingCard
+                      isLikable={true}
+                      listing={exampleListing}
+                    />
+                  </Box>
+                </Box>
               </Box>
             </Grid>
             <Grid item xs={12} md={5} paddingY="10px">
@@ -195,6 +311,44 @@ const HomePage = () => {
                 >
                   Recently Sold
                 </Typography>
+                <Box
+                  marginTop="10px"
+                  marginLeft="30px"
+                  justifyContent="flex-start"
+                  display="flex"
+                >
+                  <Box
+                    maxWidth="90%"
+                    height="fit-content"
+                    paddingBottom="10px"
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "nowrap",
+                      overflowX: "auto",
+                      "&::-webkit-scrollbar": {
+                        height: "8px",
+                        backgroundColor: "transparent",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        borderRadius: "4px",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: Colors.celestialBlue,
+                        borderRadius: "4px",
+                        "&:hover": {
+                          backgroundColor: Colors.royalBlue,
+                        },
+                      },
+                    }}
+                  >
+                    <SmallListingCard listing={exampleSoldListing} />
+                    <SmallListingCard listing={exampleSoldListing} />
+                    <SmallListingCard listing={exampleSoldListing} />
+                    <SmallListingCard listing={exampleSoldListing} />
+                    <SmallListingCard listing={exampleSoldListing} />
+                  </Box>
+                </Box>
               </Box>
             </Grid>
           </Grid>

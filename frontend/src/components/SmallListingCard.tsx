@@ -1,8 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Colors from "../assets/Colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useState } from "react";
 
 const settings = {
   arrows: false,
@@ -14,9 +16,17 @@ const settings = {
 
 interface SmallListingCardProps {
   listing: Listing;
+  isLikable?: boolean;
 }
 
-const SmallListingCard = ({ listing }: SmallListingCardProps) => {
+const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
+  const [likeColor, setLikeColor] = useState<string>("#b8b7b7");
+
+  const handleLikeClick = () => {
+    const newColor = likeColor === "#b8b7b7" ? "#e61919" : "#b8b7b7";
+    setLikeColor(newColor);
+  };
+
   return (
     <Box
       sx={{
@@ -101,22 +111,39 @@ const SmallListingCard = ({ listing }: SmallListingCardProps) => {
         </Slider>
       </Box>
 
-      <Box
-        width="100%"
-        sx={{
-          position: "absolute",
-          top: "20px",
-          marginLeft: "60px",
-          transform: "rotate(45deg)",
-          backgroundColor: "#96b17c",
-          padding: "5px",
-          zIndex: 2,
-        }}
-      >
-        <Typography fontFamily="inherit" color="white" textAlign="center">
-          ${listing.price}
-        </Typography>
-      </Box>
+      {listing.dateDeleted ? (
+        <Box
+          width="100%"
+          sx={{
+            position: "absolute",
+            top: "20px",
+            marginLeft: "60px",
+            transform: "rotate(45deg)",
+            backgroundColor: "#8b3fc6",
+            padding: "5px",
+          }}
+        >
+          <Typography fontFamily="inherit" color="white" textAlign="center">
+            {`${listing.dateDeleted.getDay()}/${listing.dateDeleted.getDate()}/${listing.dateDeleted.getFullYear()}`}
+          </Typography>
+        </Box>
+      ) : (
+        <Box
+          width="100%"
+          sx={{
+            position: "absolute",
+            top: "20px",
+            marginLeft: "60px",
+            transform: "rotate(45deg)",
+            backgroundColor: "#96b17c",
+            padding: "5px",
+          }}
+        >
+          <Typography fontFamily="inherit" color="white" textAlign="center">
+            ${listing.price}
+          </Typography>
+        </Box>
+      )}
 
       <Box
         overflow="hidden"
@@ -135,6 +162,17 @@ const SmallListingCard = ({ listing }: SmallListingCardProps) => {
           {listing.name}trhrthrthrgrst
         </Typography>
       </Box>
+
+      {isLikable === true ? (
+        <IconButton
+          sx={{ position: "absolute", top: 0, right: 0 }}
+          onClick={handleLikeClick}
+        >
+          <FavoriteIcon htmlColor={likeColor} />
+        </IconButton>
+      ) : (
+        <></>
+      )}
     </Box>
   );
 };
