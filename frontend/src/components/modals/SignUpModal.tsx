@@ -1,22 +1,24 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Box,
   Button,
   Dialog,
   DialogContent,
   DialogTitle,
+  IconButton,
   TextField,
 } from "@mui/material";
 import Colors from "../../assets/Colors";
 import { useState } from "react";
 import supabase from "../../supabase";
-import React from "react";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface SignUpModalProps {
   isOpen: boolean;
 }
 
 const SignUpModal = ({ isOpen }: SignUpModalProps) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState<boolean>(isOpen);
 
   const handleClose = () => {
     setOpen(false);
@@ -58,7 +60,7 @@ const SignUpModal = ({ isOpen }: SignUpModalProps) => {
   }
 
   return (
-    <Dialog open={isOpen} onClose={() => !isOpen}>
+    <Dialog open={open} onClose={handleClose}>
       <DialogTitle
         sx={{
           fontFamily: "Josefin Sans",
@@ -68,6 +70,18 @@ const SignUpModal = ({ isOpen }: SignUpModalProps) => {
       >
         sign up
       </DialogTitle>
+      <IconButton
+        aria-label="close"
+        onClick={handleClose}
+        sx={{
+          position: "absolute",
+          right: 8,
+          top: 8,
+          color: Colors.celestialBlue,
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
       <DialogContent>
         <Box margin={4}>
           <form onSubmit={handleSubmit}>
