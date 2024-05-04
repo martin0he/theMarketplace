@@ -103,6 +103,7 @@ audio,
 video {
   margin: 0;
   padding: 0;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 /* Width */

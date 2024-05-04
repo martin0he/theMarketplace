@@ -3,6 +3,8 @@ import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import Sidebar from "./Sidebar";
 
+import AccountMenu from "./AccountMenu";
+
 const Navbar = () => {
   const { width } = useWindowDimensions();
 
@@ -45,7 +47,7 @@ const Navbar = () => {
           }}
         >
           <Button
-            href="/test"
+            href="/auth"
             sx={{
               marginLeft: "65px",
               fontFamily: "inherit",
@@ -81,24 +83,6 @@ const Navbar = () => {
           </Button>
 
           <Button
-            href="/test"
-            sx={{
-              marginLeft: "65px",
-              fontFamily: "inherit",
-              textTransform: "none",
-            }}
-          >
-            <Typography
-              fontFamily={"inherit"}
-              color="black"
-              fontSize={23}
-              fontWeight={500}
-            >
-              account
-            </Typography>
-          </Button>
-
-          <Button
             href="/about"
             sx={{
               marginLeft: "65px",
@@ -115,6 +99,9 @@ const Navbar = () => {
               about
             </Typography>
           </Button>
+          <Box marginLeft="55px">
+            <AccountMenu />
+          </Box>
         </Box>
       ) : (
         <Box
