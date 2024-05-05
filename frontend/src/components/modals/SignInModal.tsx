@@ -13,14 +13,13 @@ import { useState } from "react";
 import supabase from "../../auth/supabase";
 import CloseIcon from "@mui/icons-material/Close";
 
-interface SignUpModalProps {
+interface SignInModalProps {
   isOpen: boolean;
   handleClose: () => void;
 }
 
-const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
+const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
   });
@@ -42,11 +41,6 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
-        options: {
-          data: {
-            fullname: formData.username,
-          },
-        },
       });
       alert("check your email");
     } catch (error) {
@@ -63,7 +57,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
           color: Colors.celestialBlue,
         }}
       >
-        sign up
+        sign in
       </DialogTitle>
       <IconButton
         aria-label="close"
@@ -80,22 +74,6 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
       <DialogContent>
         <Box margin={4}>
           <form onSubmit={handleSubmit}>
-            <TextField
-              label="Username"
-              placeholder="enter username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              InputProps={{
-                style: { fontFamily: "inherit", fontSize: "24px" },
-              }}
-              InputLabelProps={{
-                style: { fontFamily: "inherit", fontSize: "24px" },
-              }}
-              required
-            />
             <TextField
               type="email"
               label="University Email"
@@ -146,7 +124,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
                 ":hover": { backgroundColor: "#571877" },
               }}
             >
-              register
+              login
             </Button>
           </form>
         </Box>
@@ -155,4 +133,4 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
   );
 };
 
-export default SignUpModal;
+export default SignInModal;

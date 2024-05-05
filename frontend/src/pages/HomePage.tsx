@@ -1,7 +1,8 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import SmallListingCard from "../components/SmallListingCard";
+import { useAuth } from "../auth/AuthProvider";
 
 const HomePage = () => {
   const { width } = useWindowDimensions();
@@ -40,11 +41,13 @@ const HomePage = () => {
     itemsLiked: [exampleListing],
   };
 
+  const { user } = useAuth();
+
   return (
     <Box paddingTop={10} paddingBottom={40}>
       <Box justifyContent="center" display="flex" alignItems="center">
         <Typography fontFamily={"inherit"} fontSize={30} marginTop={7}>
-          Welcome, John
+          {user! ? "not logged in" : "logged in"}
         </Typography>
       </Box>
 
