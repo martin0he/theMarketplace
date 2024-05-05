@@ -15,15 +15,10 @@ import CloseIcon from "@mui/icons-material/Close";
 
 interface SignUpModalProps {
   isOpen: boolean;
+  handleClose: () => void;
 }
 
-const SignUpModal = ({ isOpen }: SignUpModalProps) => {
-  const [open, setOpen] = useState<boolean>(isOpen);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -60,7 +55,7 @@ const SignUpModal = ({ isOpen }: SignUpModalProps) => {
   }
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle
         sx={{
           fontFamily: "Josefin Sans",

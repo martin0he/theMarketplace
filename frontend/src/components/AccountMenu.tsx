@@ -90,10 +90,6 @@ const AccountMenu = () => {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
           <MenuItem onClick={handleClose}>
-            <Avatar />{" "}
-            <Typography fontFamily="Josefin Sans">profile</Typography>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
             <Avatar />
             <Typography fontFamily="Josefin Sans">my account</Typography>
           </MenuItem>
@@ -112,7 +108,7 @@ const AccountMenu = () => {
           </MenuItem>
         </Menu>
       </React.Fragment>
-      <SignUpModal isOpen={modalOpen} />
+      <SignUpModal isOpen={modalOpen} handleClose={() => setModalOpen(false)} />
     </>
   );
 };
