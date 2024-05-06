@@ -10,8 +10,8 @@ import {
 } from "@mui/material";
 import Colors from "../../assets/Colors";
 import { useState } from "react";
-import supabase from "../../auth/supabase";
 import CloseIcon from "@mui/icons-material/Close";
+import { useAuth } from "../../auth/AuthProvider";
 
 interface SignUpModalProps {
   isOpen: boolean;
@@ -36,23 +36,18 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
     });
   }
 
-  async function handleSubmit(e) {
+  const { signUp } = useAuth();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            fullname: formData.username,
-          },
-        },
-      });
+      await signUp(formData.email, formData.password, formData.username);
       alert("check your email");
     } catch (error) {
+      console.log(error);
       alert(error);
     }
-  }
+  };
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>

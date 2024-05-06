@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import SmallListingCard from "../components/SmallListingCard";
@@ -47,7 +47,7 @@ const HomePage = () => {
     <Box paddingTop={10} paddingBottom={40}>
       <Box justifyContent="center" display="flex" alignItems="center">
         <Typography fontFamily={"inherit"} fontSize={30} marginTop={7}>
-          {user! ? "not logged in" : "logged in"}
+          {user !== (null || undefined) ? "Logged In" : "Not Logged In"}
         </Typography>
       </Box>
 

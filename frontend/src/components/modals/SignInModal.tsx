@@ -38,12 +38,14 @@ const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
+      console.log(data, error);
       alert("check your email");
     } catch (error) {
+      console.log(error);
       alert(error);
     }
   }
