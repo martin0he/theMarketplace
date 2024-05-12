@@ -17,7 +17,7 @@ const UniversityTitle = () => {
     if (matchedUniversity) {
       setUniversityName(matchedUniversity.name + " Marketplace");
     } else {
-      setUniversityName("University not found :(");
+      setUniversityName("University marketplace not found :(");
     }
   }, [user]);
 

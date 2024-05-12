@@ -4,11 +4,12 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import SmallListingCard from "../components/SmallListingCard";
 import { useAuth } from "../auth/AuthProvider";
 import UniversityTitle from "../components/UniversityTitle";
+import { CustomUser, Listing } from "../types";
 
 const HomePage = () => {
   const { width } = useWindowDimensions();
 
-  const exampleUser: User = {
+  const exampleUser: CustomUser = {
     username: "glazedGuat",
     email: "martin@email.com",
     password: "passywo",
@@ -35,7 +36,7 @@ const HomePage = () => {
     imageUrl: "",
   };
 
-  const likingUser: User = {
+  const likingUser: CustomUser = {
     username: "liker",
     email: "iLikeStuff@Hotmail.com",
     password: "password",

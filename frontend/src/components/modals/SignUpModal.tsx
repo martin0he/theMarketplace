@@ -11,7 +11,7 @@ import {
 import Colors from "../../assets/Colors";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import supabase from "../../auth/supabase";
+import { useAuth } from "../../auth/AuthProvider";
 
 interface SignUpModalProps {
   isOpen: boolean;
@@ -19,6 +19,8 @@ interface SignUpModalProps {
 }
 
 const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
+  const { handleSubmit } = useAuth();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -35,7 +37,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
       };
     });
   }
-
+  /*
   async function handleSubmit(e) {
     e.preventDefault();
     try {
@@ -48,13 +50,23 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
           },
         },
       });
-      console.log(data.user);
+      const customUser: CustomUser = {
+        ...data.user,
+        username: formData.username,
+        password: formData.password,
+      };
+      console.log("CustomUser:", customUser);
     } catch (error) {
       console.log("Sign-up error:", error);
       alert(error);
     }
   }
+*/
 
+  async function submit(e) {
+    e.preventDefault();
+    handleSubmit(e, formData.email, formData.password, formData.username);
+  }
   return (
     <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle
@@ -80,7 +92,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
       </IconButton>
       <DialogContent>
         <Box margin={4}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={submit}>
             <TextField
               label="Username"
               placeholder="enter username"
