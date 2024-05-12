@@ -43,7 +43,6 @@ const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
         password: formData.password,
       });
       console.log(data, error);
-      alert("check your email");
     } catch (error) {
       console.log(error);
       alert(error);

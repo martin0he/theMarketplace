@@ -3,6 +3,7 @@ import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import SmallListingCard from "../components/SmallListingCard";
 import { useAuth } from "../auth/AuthProvider";
+import UniversityTitle from "../components/UniversityTitle";
 
 const HomePage = () => {
   const { width } = useWindowDimensions();
@@ -47,19 +48,12 @@ const HomePage = () => {
     <Box paddingTop={10} paddingBottom={40}>
       <Box justifyContent="center" display="flex" alignItems="center">
         <Typography fontFamily={"inherit"} fontSize={30} marginTop={7}>
-          {user !== (null || undefined) ? "Logged In" : "Not Logged In"}
+          {user !== (null || undefined) ? user?.email : "Not Logged In"}
         </Typography>
       </Box>
 
       <Box marginTop={8} marginLeft={5}>
-        <Typography
-          fontWeight="bold"
-          fontSize={27}
-          fontFamily="inherit"
-          color={Colors.royalBlue}
-        >
-          Northeastern University Marketplace
-        </Typography>
+        <UniversityTitle />
       </Box>
 
       <Box
@@ -68,7 +62,7 @@ const HomePage = () => {
         display={"flex"}
         marginTop="30px"
       >
-        <Grid width={0.88 * width} height="260px">
+        <Grid container width={0.88 * width} height="260px">
           <Grid
             item
             container

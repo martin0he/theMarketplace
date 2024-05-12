@@ -47,7 +47,6 @@ const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
           top: 5,
           left: 5,
           borderRadius: "12px",
-          border: 1,
         }}
         width="90px"
         height="80px"
@@ -116,7 +115,7 @@ const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
           width="100%"
           sx={{
             position: "absolute",
-            top: "20px",
+            top: "30px",
             marginLeft: "60px",
             transform: "rotate(45deg)",
             backgroundColor: "#8b3fc6",
@@ -132,7 +131,7 @@ const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
           width="100%"
           sx={{
             position: "absolute",
-            top: "20px",
+            top: "30px",
             marginLeft: "60px",
             transform: "rotate(45deg)",
             backgroundColor: "#96b17c",

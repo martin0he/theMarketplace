@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: any) => {
         password,
       });
       if (error) throw error;
-      setUser(user);
+      setUser(data.user);
     } catch (error) {
       console.log("Sign-in error:", error);
       throw error;
@@ -105,4 +105,17 @@ export const AuthProvider = ({ children }: any) => {
 // export the useAuth hook
 export const useAuth = () => {
   return useContext(AuthContext);
+};
+
+export const signIn = async (email: string, password: string) => {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
+  } catch (error) {
+    console.log("Sign-in error:", error);
+    throw error;
+  }
 };

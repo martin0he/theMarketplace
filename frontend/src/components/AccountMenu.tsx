@@ -74,7 +74,7 @@ const AccountMenu = () => {
             </IconButton>
           </Tooltip>
         </Box>
-        {user !== (null || undefined) ? (
+        {user === (null || undefined) ? (
           <Menu
             anchorEl={anchorEl}
             id="account-menu"
