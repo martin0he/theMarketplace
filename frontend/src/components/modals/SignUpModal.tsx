@@ -10,12 +10,10 @@ import {
   TextField,
 } from "@mui/material";
 import Colors from "../../assets/Colors";
-import { useState, ReactElement, useEffect } from "react";
+import { useState, ReactElement } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import supabase from "../../auth/supabase";
-import { User } from "@supabase/supabase-js";
 import { Universities } from "../../assets/Universities";
-import { useAuth } from "../../auth/AuthProvider";
 
 interface SignUpModalProps {
   isOpen: boolean;
