@@ -69,9 +69,13 @@ const AccountMenu = () => {
                   backgroundColor: "#8b3fc6",
                 }}
               >
-                {customUser !== null
-                  ? customUser.username.charAt(0).toUpperCase()
-                  : ""}
+                {customUser !== null ? (
+                  <Typography fontFamily="Josefin Sans">
+                    {customUser.username.charAt(0).toUpperCase()}
+                  </Typography>
+                ) : (
+                  ""
+                )}
               </Avatar>
             </IconButton>
           </Tooltip>
