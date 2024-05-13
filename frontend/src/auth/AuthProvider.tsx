@@ -1,28 +1,26 @@
+// Import necessary types and dependencies
 import { Session, User } from "@supabase/supabase-js";
 import { useContext, useState, useEffect, createContext } from "react";
 import supabase from "./supabase";
 import { CustomUser } from "../types";
 
-// create a context for authentication
+// Create a context for authentication
 const AuthContext = createContext<{
   session: Session | null | undefined;
   user: User | null | undefined;
+  customUser: CustomUser | null;
   signOut: () => void;
-  handleSubmit: (
-    email: string,
-    password: string,
-    fullname: string
-  ) => Promise<void>;
 }>({
   session: null,
   user: null,
+  customUser: null,
   signOut: () => {},
-  handleSubmit: async () => {},
 });
 
+// Define the AuthProvider component
 export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState<User | null>();
-  const [customUser, setCustomUser] = useState<CustomUser | null>();
+  const [customUser, setCustomUser] = useState<CustomUser | null>(null);
   const [session, setSession] = useState<Session | null>();
   const [loading, setLoading] = useState(true);
 
@@ -36,6 +34,31 @@ export const AuthProvider = ({ children }: any) => {
       setSession(session);
       setUser(session?.user);
       setLoading(false);
+
+      // Fetch user data from the database and update customUser state
+      if (session && session.user) {
+        const { data: userData, error: userError } = await supabase
+          .from("Users")
+          .select("*")
+          .eq("id", session.user.id)
+          .single();
+
+        if (userError) {
+          console.error("Error fetching user data:", userError);
+        } else {
+          // Transform fetched user data into custom user type
+          const { email, phone, username, password, school } = userData;
+          const customUserData: CustomUser = {
+            email,
+            phone,
+            password,
+            username,
+            school,
+          };
+          setCustomUser(customUserData);
+          console.log(customUser);
+        }
+      }
     };
 
     const { data: listener } = supabase.auth.onAuthStateChange(
@@ -62,53 +85,11 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const handleSubmit = async (
-    email: string,
-    password: string,
-    fullname: string
-  ) => {
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            fullname,
-          },
-        },
-      });
-      if (error) throw error;
-      const customUser: CustomUser = {
-        ...data.user,
-        username: fullname,
-        password,
-      };
-      setCustomUser(customUser);
-
-      const { data: insertData, error: insertError } = await supabase
-        .from("Users")
-        .insert([
-          {
-            username: customUser.username,
-            email: customUser.email,
-            password: customUser.password,
-            phone: customUser.phone,
-          },
-        ])
-        .select();
-
-      console.log("CustomUser:", customUser);
-    } catch (error) {
-      console.log("Sign-up error:", error);
-      alert(error);
-    }
-  };
-
   const value = {
     session,
     user,
+    customUser,
     signOut,
-    handleSubmit,
   };
 
   return (
@@ -118,7 +99,7 @@ export const AuthProvider = ({ children }: any) => {
   );
 };
 
-// export the useAuth hook
+// Export the useAuth hook
 export const useAuth = () => {
   return useContext(AuthContext);
 };

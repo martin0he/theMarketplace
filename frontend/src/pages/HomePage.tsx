@@ -13,6 +13,7 @@ const HomePage = () => {
     username: "glazedGuat",
     email: "martin@email.com",
     password: "passywo",
+    school: "Northeastern Uni",
   };
 
   const exampleListing: Listing = {
@@ -23,6 +24,7 @@ const HomePage = () => {
     paymentMethod: [],
     exchangeLocation: "",
     imageUrl: "",
+    school: "Northeastern Uni",
   };
 
   const exampleSoldListing: Listing = {
@@ -34,6 +36,7 @@ const HomePage = () => {
     paymentMethod: [],
     exchangeLocation: "",
     imageUrl: "",
+    school: "Northeastern Uni",
   };
 
   const likingUser: CustomUser = {
@@ -41,15 +44,18 @@ const HomePage = () => {
     email: "iLikeStuff@Hotmail.com",
     password: "password",
     itemsLiked: [exampleListing],
+    school: "Northeastern Uni",
   };
 
-  const { user } = useAuth();
+  const { customUser } = useAuth();
 
   return (
     <Box paddingTop={10} paddingBottom={40}>
       <Box justifyContent="center" display="flex" alignItems="center">
         <Typography fontFamily={"inherit"} fontSize={30} marginTop={7}>
-          {user !== (null || undefined) ? user?.email : "Not Logged In"}
+          {customUser !== null
+            ? `Hello ${customUser?.username}`
+            : "Not Logged In"}
         </Typography>
       </Box>
 

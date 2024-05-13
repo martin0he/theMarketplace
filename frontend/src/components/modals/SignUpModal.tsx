@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  Alert,
   Box,
   Button,
   Dialog,
@@ -9,9 +10,9 @@ import {
   TextField,
 } from "@mui/material";
 import Colors from "../../assets/Colors";
-import { useState } from "react";
+import { useState, ReactElement } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { useAuth } from "../../auth/AuthProvider";
+import supabase from "../../auth/supabase";
 
 interface SignUpModalProps {
   isOpen: boolean;
@@ -19,7 +20,7 @@ interface SignUpModalProps {
 }
 
 const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
-  const { handleSubmit } = useAuth();
+  const [alert, setAlert] = useState<ReactElement>();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -37,7 +38,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
       };
     });
   }
-  /*
+
   async function handleSubmit(e) {
     e.preventDefault();
     try {
@@ -50,23 +51,22 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
           },
         },
       });
-      const customUser: CustomUser = {
-        ...data.user,
-        username: formData.username,
-        password: formData.password,
-      };
-      console.log("CustomUser:", customUser);
+      error
+        ? setAlert(
+            <Alert variant="outlined" severity="error">
+              {error.message}
+            </Alert>
+          )
+        : setAlert(
+            <Alert variant="outlined" severity="success">
+              Successfully registered! Check your inbox for verification email.
+            </Alert>
+          );
     } catch (error) {
       console.log("Sign-up error:", error);
-      alert(error);
     }
   }
-*/
 
-  async function submit(e) {
-    e.preventDefault();
-    handleSubmit(e, formData.email, formData.password, formData.username);
-  }
   return (
     <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle
@@ -91,8 +91,9 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
         <CloseIcon />
       </IconButton>
       <DialogContent>
+        {alert}
         <Box margin={4}>
-          <form onSubmit={submit}>
+          <form onSubmit={handleSubmit}>
             <TextField
               label="Username"
               placeholder="enter username"
