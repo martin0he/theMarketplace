@@ -30,7 +30,7 @@ const AccountMenu = () => {
 
   const [signUpModalOpen, setSignUpModalOpen] = useState<boolean>(false);
   const [signInModalOpen, setSignInModalOpen] = useState<boolean>(false);
-  const { user, signOut } = useAuth();
+  const { user, signOut, customUser } = useAuth();
 
   const handleSignOut = () => {
     signOut();
@@ -69,7 +69,9 @@ const AccountMenu = () => {
                   backgroundColor: "#8b3fc6",
                 }}
               >
-                M
+                {customUser !== null
+                  ? customUser.username.charAt(0).toUpperCase()
+                  : ""}
               </Avatar>
             </IconButton>
           </Tooltip>

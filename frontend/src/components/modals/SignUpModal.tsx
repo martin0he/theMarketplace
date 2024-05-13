@@ -10,9 +10,12 @@ import {
   TextField,
 } from "@mui/material";
 import Colors from "../../assets/Colors";
-import { useState, ReactElement } from "react";
+import { useState, ReactElement, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import supabase from "../../auth/supabase";
+import { User } from "@supabase/supabase-js";
+import { Universities } from "../../assets/Universities";
+import { useAuth } from "../../auth/AuthProvider";
 
 interface SignUpModalProps {
   isOpen: boolean;
@@ -21,14 +24,11 @@ interface SignUpModalProps {
 
 const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
   const [alert, setAlert] = useState<ReactElement>();
-
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-
-  console.log(formData);
 
   function handleChange(event) {
     setFormData((prevFormData) => {
@@ -51,17 +51,44 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
           },
         },
       });
-      error
-        ? setAlert(
+      if (error) {
+        setAlert(
+          <Alert variant="outlined" severity="error">
+            {error.message}
+          </Alert>
+        );
+      } else {
+        // New user signed up successfully, now add to custom user table
+        const domain = formData.email?.split("@")[1];
+        const userUniversity = Universities.find((uni: any) =>
+          uni.domains.includes(domain)
+        );
+        const { data: newUser, error: insertError } = await supabase
+          .from("Users")
+          .insert([
+            {
+              id: data?.user?.id,
+              email: formData.email,
+              username: formData.username,
+              password: formData.password,
+              school: userUniversity?.name,
+            },
+          ]);
+        if (insertError) {
+          console.error("Error inserting new user:", insertError);
+          setAlert(
             <Alert variant="outlined" severity="error">
-              {error.message}
+              Error creating user. Please try again.
             </Alert>
-          )
-        : setAlert(
+          );
+        } else {
+          setAlert(
             <Alert variant="outlined" severity="success">
               Successfully registered! Check your inbox for verification email.
             </Alert>
           );
+        }
+      }
     } catch (error) {
       console.log("Sign-up error:", error);
     }

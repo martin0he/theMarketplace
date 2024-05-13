@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { Universities } from "../assets/Universities";
 
 const UniversityTitle = () => {
-  const { user } = useAuth();
+  const { customUser } = useAuth();
 
   const [universityName, setUniversityName] = useState<string | null>(null);
 
   useEffect(() => {
-    const domain = user?.email.split("@")[1];
+    const domain = customUser?.email?.split("@")[1];
     const matchedUniversity = Universities.find((uni: any) =>
       uni.domains.includes(domain)
     );
@@ -19,7 +19,7 @@ const UniversityTitle = () => {
     } else {
       setUniversityName("University marketplace not found :(");
     }
-  }, [user]);
+  }, [customUser]);
 
   return (
     <Typography
