@@ -3,11 +3,14 @@ import {
   Alert,
   Box,
   Button,
+  Checkbox,
   Dialog,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
   IconButton,
   TextField,
+  Typography,
 } from "@mui/material";
 import Colors from "../../assets/Colors";
 import { useState, ReactElement } from "react";
@@ -27,6 +30,11 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
     email: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
 
   function handleChange(event) {
     setFormData((prevFormData) => {
@@ -153,7 +161,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
               required
             />
             <TextField
-              type="password"
+              type={showPassword ? "text" : "password"}
               label="Password"
               placeholder="enter password"
               name="password"
@@ -168,6 +176,18 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
                 style: { fontFamily: "inherit", fontSize: "24px" },
               }}
               required
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showPassword}
+                  onChange={handleTogglePasswordVisibility}
+                  color="primary"
+                />
+              }
+              label={
+                <Typography fontFamily="Josefin Sans">show password</Typography>
+              }
             />
             <Button
               fullWidth

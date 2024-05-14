@@ -47,20 +47,6 @@ const Sidebar = () => {
           </Link>
         </ListItem>
         <ListItem disablePadding>
-          <Link href="/test" underline="none" width="100%">
-            <ListItemButton>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontFamily: "inherit",
-                  color: "black",
-                  fontSize: "20px",
-                }}
-                primary="account"
-              />
-            </ListItemButton>
-          </Link>
-        </ListItem>
-        <ListItem disablePadding>
           <Link href="/about" underline="none" width="100%">
             <ListItemButton>
               <ListItemText
@@ -73,6 +59,18 @@ const Sidebar = () => {
               />
             </ListItemButton>
           </Link>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemText
+              primaryTypographyProps={{
+                fontFamily: "inherit",
+                color: "black",
+                fontSize: "20px",
+              }}
+              primary="account"
+            />
+          </ListItemButton>
         </ListItem>
       </List>
     </Box>
