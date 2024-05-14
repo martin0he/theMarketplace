@@ -4,6 +4,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Colors from "../assets/Colors";
+import SellForm from "../components/SellForm";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -22,11 +23,7 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -89,7 +86,9 @@ const SellPage = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        <Box justifyContent="center" alignItems="center" display="flex">
+          <SellForm />
+        </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two
