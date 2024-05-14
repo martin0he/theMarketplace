@@ -50,7 +50,9 @@ const AccountMenu = () => {
         >
           <Tooltip
             title={
-              <Typography fontFamily="Josefin Sans">your account</Typography>
+              <Typography fontFamily="Josefin Sans">
+                {customUser ? "your account" : "guest"}
+              </Typography>
             }
           >
             <IconButton
@@ -70,7 +72,12 @@ const AccountMenu = () => {
                 }}
               >
                 {customUser !== null ? (
-                  <Typography fontFamily="Josefin Sans">
+                  <Typography
+                    fontFamily="Josefin Sans"
+                    fontSize={24}
+                    marginTop={0.7}
+                    textAlign={"center"}
+                  >
                     {customUser.username.charAt(0).toUpperCase()}
                   </Typography>
                 ) : (

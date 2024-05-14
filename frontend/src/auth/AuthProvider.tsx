@@ -62,9 +62,34 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+      async (_event, session) => {
+        if (session && session.user) {
+          setUser(session.user);
+
+          const { data: userData, error: userError } = await supabase
+            .from("Users")
+            .select("*")
+            .eq("id", session.user.id)
+            .single();
+
+          if (userError) {
+            console.error("Error fetching user data:", userError);
+          } else {
+            const { email, phone, username, password, school } = userData;
+            const customUserData: CustomUser = {
+              email,
+              phone,
+              password,
+              username,
+              school,
+            };
+            setCustomUser(customUserData);
+          }
+        } else {
+          setUser(null);
+          setCustomUser(null);
+        }
         setSession(session);
-        setUser(session?.user);
         setLoading(false);
       }
     );
