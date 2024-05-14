@@ -1,10 +1,8 @@
-// Import necessary types and dependencies
 import { Session, User } from "@supabase/supabase-js";
 import { useContext, useState, useEffect, createContext } from "react";
 import supabase from "./supabase";
 import { CustomUser } from "../types";
 
-// Create a context for authentication
 const AuthContext = createContext<{
   session: Session | null | undefined;
   user: User | null | undefined;
@@ -17,7 +15,6 @@ const AuthContext = createContext<{
   signOut: () => {},
 });
 
-// Define the AuthProvider component
 export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState<User | null>();
   const [customUser, setCustomUser] = useState<CustomUser | null>(null);
@@ -25,7 +22,7 @@ export const AuthProvider = ({ children }: any) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const setData = async () => {
+    const fetchData = async () => {
       const {
         data: { session },
         error,
@@ -33,20 +30,19 @@ export const AuthProvider = ({ children }: any) => {
       if (error) throw error;
       setSession(session);
       setUser(session?.user);
-      setLoading(false);
+      setLoading(true);
 
-      // Fetch user data from the database and update customUser state
-      if (session && session.user) {
+      try {
         const { data: userData, error: userError } = await supabase
           .from("Users")
           .select("*")
-          .eq("id", session.user.id)
+          .eq("id", session?.user.id)
           .single();
 
         if (userError) {
           console.error("Error fetching user data:", userError);
+          setCustomUser(null);
         } else {
-          // Transform fetched user data into custom user type
           const { email, phone, username, password, school } = userData;
           const customUserData: CustomUser = {
             email,
@@ -56,45 +52,20 @@ export const AuthProvider = ({ children }: any) => {
             school,
           };
           setCustomUser(customUserData);
-          console.log(customUser);
         }
+      } finally {
+        setLoading(false);
       }
     };
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
-        if (session && session.user) {
-          setUser(session.user);
-
-          const { data: userData, error: userError } = await supabase
-            .from("Users")
-            .select("*")
-            .eq("id", session.user.id)
-            .single();
-
-          if (userError) {
-            console.error("Error fetching user data:", userError);
-          } else {
-            const { email, phone, username, password, school } = userData;
-            const customUserData: CustomUser = {
-              email,
-              phone,
-              password,
-              username,
-              school,
-            };
-            setCustomUser(customUserData);
-          }
-        } else {
-          setUser(null);
-          setCustomUser(null);
-        }
         setSession(session);
-        setLoading(false);
+        fetchData();
       }
     );
 
-    setData();
+    fetchData();
 
     return () => {
       listener?.subscription.unsubscribe();
@@ -108,7 +79,7 @@ export const AuthProvider = ({ children }: any) => {
       setUser(null);
       setCustomUser(null);
     } catch (error) {
-      console.log("Sign-out error:", error);
+      console.error("Sign-out error:", error);
     }
   };
 
@@ -126,7 +97,6 @@ export const AuthProvider = ({ children }: any) => {
   );
 };
 
-// Export the useAuth hook
 export const useAuth = () => {
   return useContext(AuthContext);
 };
