@@ -75,7 +75,6 @@ export const AuthProvider = ({ children }: any) => {
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
-      localStorage.clear();
       setUser(null);
       setCustomUser(null);
     } catch (error) {

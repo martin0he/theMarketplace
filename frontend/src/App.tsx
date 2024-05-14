@@ -6,6 +6,7 @@ import AuthPage from "./pages/AuthPage";
 import { AuthProvider } from "./auth/AuthProvider";
 import Navbar from "./components/Navbar";
 import Masthead from "./components/Masthead";
+import SellPage from "./pages/SellPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/test" element={<TestPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/sell" element={<SellPage />} />
         </Routes>
         <Masthead />
       </AuthProvider>

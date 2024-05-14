@@ -65,7 +65,7 @@ const Navbar = () => {
           </Button>
 
           <Button
-            href="/test"
+            href="/sell"
             sx={{
               marginLeft: "65px",
               fontFamily: "inherit",

@@ -2,14 +2,25 @@ import { User } from "@supabase/supabase-js";
 
 export interface Listing {
   name: string;
+  description: string;
   school: string;
   dateAdded: Date;
   dateDeleted?: Date;
   price: number;
   seller: CustomUser;
-  paymentMethod: string[];
+  paymentMethod: PaymentMethod[];
   exchangeLocation: string;
-  imageUrl: string;
+  imageUrls: string[];
+  condition: string;
+  isSold?: boolean;
+}
+
+export enum PaymentMethod {
+  CASH = "Cash",
+  VENMO = "Venmo",
+  Zelle = "Zelle",
+  BOA = "BOA",
+  OTHER = "Other",
 }
 
 export interface CustomUser extends Pick<User, "email" | "phone"> {

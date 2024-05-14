@@ -34,7 +34,6 @@ const AccountMenu = () => {
 
   const handleSignOut = () => {
     signOut();
-    localStorage.clear();
   };
 
   return (
