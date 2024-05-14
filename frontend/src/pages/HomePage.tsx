@@ -23,8 +23,10 @@ const HomePage = () => {
     seller: exampleUser,
     paymentMethod: [],
     exchangeLocation: "",
-    imageUrl: "",
+    imageUrls: [],
     school: "Northeastern Uni",
+    description: "",
+    condition: "",
   };
 
   const exampleSoldListing: Listing = {
@@ -35,8 +37,10 @@ const HomePage = () => {
     seller: exampleUser,
     paymentMethod: [],
     exchangeLocation: "",
-    imageUrl: "",
+    imageUrls: [],
     school: "Northeastern Uni",
+    description: "",
+    condition: "",
   };
 
   const likingUser: CustomUser = {
