@@ -30,11 +30,11 @@ const AccountMenu = () => {
 
   const [signUpModalOpen, setSignUpModalOpen] = useState<boolean>(false);
   const [signInModalOpen, setSignInModalOpen] = useState<boolean>(false);
-  const { user, signOut, customUser } = useAuth();
+  const { signOut, customUser } = useAuth();
 
   const handleSignOut = () => {
     signOut();
-    localStorage.removeItem("sb-egnuwqvtuxctatbhwrfq-auth-token");
+    localStorage.clear();
   };
 
   return (
@@ -80,7 +80,7 @@ const AccountMenu = () => {
             </IconButton>
           </Tooltip>
         </Box>
-        {user === (null || undefined) ? (
+        {customUser ? (
           <Menu
             anchorEl={anchorEl}
             id="account-menu"
