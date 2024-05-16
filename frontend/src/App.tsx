@@ -7,6 +7,7 @@ import { AuthProvider } from "./auth/AuthProvider";
 import Navbar from "./components/Navbar";
 import Masthead from "./components/Masthead";
 import SellPage from "./pages/SellPage";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (

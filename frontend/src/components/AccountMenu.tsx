@@ -66,7 +66,7 @@ const AccountMenu = () => {
                 sx={{
                   width: 32,
                   height: 32,
-                  padding: "10px",
+                  padding: "22px",
                   backgroundColor: "#8b3fc6",
                 }}
               >
