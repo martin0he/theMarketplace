@@ -10,6 +10,8 @@ import {
 import Carousel from "react-bootstrap/Carousel";
 import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
+import supabase from "../auth/supabase";
+import { useState } from "react";
 
 const SellForm = () => {
   const { width } = useWindowDimensions();
@@ -18,6 +20,43 @@ const SellForm = () => {
     fontFamily: "Josefin Sans",
     backgroundColor: Colors.tan,
   };
+
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleUpload = async () => {
+    if (!file) return;
+
+    setUploading(true);
+
+    try {
+      const { data, error } = await supabase.storage
+        .from("pictures")
+        .upload("public/avatar1.png", file, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+      if (error) {
+        throw error;
+      }
+
+      // Once uploaded, you can store the image URL or metadata in your database
+      console.log("Image uploaded successfully:", data);
+
+      // Reset file state after successful upload
+      setFile(null);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <Carousel
       variant="dark"
@@ -128,102 +167,109 @@ const SellForm = () => {
       </Carousel.Item>
       <Carousel.Item>
         <Grid
-          minWidth="500px"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
+          container
+          spacing={2}
           paddingX="170px"
-          paddingBottom="150px"
-          height="100%"
-          width="100%"
+          paddingBottom="137px"
+          marginTop="45px"
         >
-          <Grid width="100%" item sx={{ marginBottom: "35px" }}>
+          {/* First Grid Item */}
+          <Grid item xs={12}>
             <TextField
               color="secondary"
-              variant="standard"
               fullWidth
-              label="Listing Name"
+              sx={{ mt: "15px" }}
+              label="Listing Price"
+              variant="outlined"
               InputProps={{
-                style: {
-                  fontFamily: "inherit",
-                  fontSize: "24px",
-                  paddingLeft: "8px",
-                  paddingBottom: "14px",
-                },
+                style: inputStyle,
               }}
               InputLabelProps={{
                 style: {
-                  fontFamily: "inherit",
-                  fontSize: "19px",
-                  padding: "8px",
-                  color: "#7a7a78",
+                  fontFamily: "Josefin Sans",
+                  backgroundColor: Colors.tan,
+                  borderRadius: "9px",
+                  paddingLeft: "5px",
+                  paddingRight: "5px",
                 },
-              }}
-              required
-              sx={{
-                borderRadius: "10px",
-                backgroundColor: Colors.tan,
               }}
             />
           </Grid>
 
-          <Grid width="100%" item sx={{ marginBottom: "35px" }}>
-            <TextField
-              color="secondary"
-              variant="standard"
-              fullWidth
-              label="Listing Name"
-              InputProps={{
-                style: {
-                  fontFamily: "inherit",
-                  fontSize: "24px",
-                  paddingLeft: "8px",
-                  paddingBottom: "14px",
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  fontFamily: "inherit",
-                  fontSize: "19px",
-                  padding: "8px",
-                  color: "#7a7a78",
-                },
-              }}
-              required
-              sx={{
-                borderRadius: "10px",
-                backgroundColor: Colors.tan,
-              }}
-            />
+          {/* Second Grid Item */}
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <InputLabel
+                color="secondary"
+                sx={{
+                  fontFamily: "Josefin Sans",
+                  backgroundColor: Colors.tan,
+                  borderRadius: "9px",
+                  paddingLeft: "5px",
+                  paddingRight: "5px",
+                }}
+              >
+                Preferred Payment Methods
+              </InputLabel>
+              <Select
+                color="secondary"
+                fullWidth
+                //variant="outlined"
+                defaultValue=""
+                inputProps={{
+                  style: {
+                    fontFamily: "Josefin Sans",
+                  },
+                }}
+                style={inputStyle}
+              >
+                <MenuItem value="cash">
+                  <Typography fontFamily="Josefin Sans">cash</Typography>
+                </MenuItem>
+                <MenuItem value="venmo">
+                  <Typography fontFamily="Josefin Sans">venmo</Typography>
+                </MenuItem>
+                <MenuItem value="zelle">
+                  <Typography fontFamily="Josefin Sans">zelle</Typography>
+                </MenuItem>
+                <MenuItem value="bank_transfer">
+                  <Typography fontFamily="Josefin Sans">
+                    bank transfer
+                  </Typography>
+                </MenuItem>
+                <MenuItem value="other">
+                  <Typography fontFamily="Josefin Sans">other</Typography>
+                </MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
 
-          <Grid item width="100%">
+          {/* Third Grid Item */}
+
+          <Grid item xs={12} position="relative">
+            {/* Clickable Text */}
+            <Typography position="absolute" right="0" fontFamily="inherit">
+              custom | address
+            </Typography>
+
+            {/* TextField */}
             <TextField
+              sx={{ mt: "28px" }}
               color="secondary"
-              variant="standard"
               fullWidth
-              label="Listing Name"
-              InputProps={{
-                style: {
-                  fontFamily: "inherit",
-                  fontSize: "24px",
-                  paddingLeft: "8px",
-                  paddingBottom: "14px",
-                },
-              }}
+              label="Exchange Location"
+              variant="outlined"
               InputLabelProps={{
                 style: {
-                  fontFamily: "inherit",
-                  fontSize: "19px",
-                  padding: "8px",
-                  color: "#7a7a78",
+                  fontFamily: "Josefin Sans",
+                  backgroundColor: Colors.tan,
+                  borderRadius: "9px",
+                  paddingLeft: "5px",
+                  paddingRight: "5px",
                 },
               }}
-              required
-              sx={{
-                borderRadius: "10px",
-                backgroundColor: Colors.tan,
+              InputProps={{
+                style: inputStyle,
               }}
             />
           </Grid>
@@ -240,95 +286,12 @@ const SellForm = () => {
           height="100%"
           width="100%"
         >
-          <Grid width="100%" item sx={{ marginBottom: "35px" }}>
-            <TextField
-              color="secondary"
-              variant="standard"
-              fullWidth
-              label="Listing Name"
-              InputProps={{
-                style: {
-                  fontFamily: "inherit",
-                  fontSize: "24px",
-                  paddingLeft: "8px",
-                  paddingBottom: "14px",
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  fontFamily: "inherit",
-                  fontSize: "19px",
-                  padding: "8px",
-                  color: "#7a7a78",
-                },
-              }}
-              required
-              sx={{
-                borderRadius: "10px",
-                backgroundColor: Colors.tan,
-              }}
-            />
-          </Grid>
-
-          <Grid width="100%" item sx={{ marginBottom: "35px" }}>
-            <TextField
-              color="secondary"
-              variant="standard"
-              fullWidth
-              label="Listing Name"
-              InputProps={{
-                style: {
-                  fontFamily: "inherit",
-                  fontSize: "24px",
-                  paddingLeft: "8px",
-                  paddingBottom: "14px",
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  fontFamily: "inherit",
-                  fontSize: "19px",
-                  padding: "8px",
-                  color: "#7a7a78",
-                },
-              }}
-              required
-              sx={{
-                borderRadius: "10px",
-                backgroundColor: Colors.tan,
-              }}
-            />
-          </Grid>
-
-          <Grid item width="100%">
-            <TextField
-              color="secondary"
-              variant="standard"
-              fullWidth
-              label="Listing Name"
-              InputProps={{
-                style: {
-                  fontFamily: "inherit",
-                  fontSize: "24px",
-                  paddingLeft: "8px",
-                  paddingBottom: "14px",
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  fontFamily: "inherit",
-                  fontSize: "19px",
-                  padding: "8px",
-                  color: "#7a7a78",
-                },
-              }}
-              required
-              sx={{
-                borderRadius: "10px",
-                backgroundColor: Colors.tan,
-              }}
-            />
-          </Grid>
+          <div>
+            <input type="file" onChange={handleFileChange} />
+            <button onClick={handleUpload} disabled={!file || uploading}>
+              {uploading ? "Uploading..." : "Upload Image"}
+            </button>
+          </div>
         </Grid>
       </Carousel.Item>
     </Carousel>
