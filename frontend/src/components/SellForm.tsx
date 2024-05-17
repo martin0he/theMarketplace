@@ -1,9 +1,12 @@
 import {
+  Box,
+  Button,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from "@mui/material";
@@ -12,8 +15,10 @@ import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import supabase from "../auth/supabase";
 import { useState } from "react";
+import { AddressAutofill } from "@mapbox/search-js-react";
 
 const SellForm = () => {
+  const [isCustom, setIsCustom] = useState<boolean>(true);
   const { width } = useWindowDimensions();
   const inputStyle = {
     borderRadius: "12px",
@@ -57,6 +62,27 @@ const SellForm = () => {
     }
   };
 
+  const [listingName, setListingName] = useState<string>();
+  const [listingCondition, setListingCondition] = useState<string>();
+  const [listingDescription, setListingDescription] = useState<string>();
+  const [listingPrice, setListingPrice] = useState<string>();
+  const [listingPaymentMethods, setListingPaymentMethods] = useState([]);
+  const [listingLocation, setListingLocation] = useState<string>("");
+
+  const handlePaymentChange = (
+    event: SelectChangeEvent<typeof listingPaymentMethods>
+  ) => {
+    const { value } = event.target;
+    setListingPaymentMethods(value);
+  };
+
+  const handleConditionChange = (event: SelectChangeEvent) => {
+    const {
+      target: { value },
+    } = event;
+    setListingCondition(value);
+  };
+
   return (
     <Carousel
       variant="dark"
@@ -90,6 +116,11 @@ const SellForm = () => {
                   paddingRight: "5px",
                 },
               }}
+              value={listingName}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setListingName(event.target.value);
+              }}
+              defaultValue={listingName}
             />
           </Grid>
 
@@ -111,7 +142,6 @@ const SellForm = () => {
               <Select
                 color="secondary"
                 fullWidth
-                //variant="outlined"
                 defaultValue=""
                 inputProps={{
                   style: {
@@ -119,6 +149,8 @@ const SellForm = () => {
                   },
                 }}
                 style={inputStyle}
+                value={listingCondition}
+                onChange={handleConditionChange}
               >
                 <MenuItem value="new">
                   <Typography fontFamily="Josefin Sans">New</Typography>
@@ -161,6 +193,10 @@ const SellForm = () => {
               InputProps={{
                 style: inputStyle,
               }}
+              value={listingDescription}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setListingDescription(event.target.value);
+              }}
             />
           </Grid>
         </Grid>
@@ -178,6 +214,7 @@ const SellForm = () => {
             <TextField
               color="secondary"
               fullWidth
+              type="text"
               sx={{ mt: "15px" }}
               label="Listing Price"
               variant="outlined"
@@ -192,6 +229,10 @@ const SellForm = () => {
                   paddingLeft: "5px",
                   paddingRight: "5px",
                 },
+              }}
+              value={listingPrice}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setListingPrice(event.target.value);
               }}
             />
           </Grid>
@@ -214,8 +255,10 @@ const SellForm = () => {
               <Select
                 color="secondary"
                 fullWidth
-                //variant="outlined"
-                defaultValue=""
+                multiple // Allow multiple selections
+                value={listingPaymentMethods} // Set the selected values
+                onChange={handlePaymentChange}
+                renderValue={() => listingPaymentMethods.join(", ")}
                 inputProps={{
                   style: {
                     fontFamily: "Josefin Sans",
@@ -248,30 +291,86 @@ const SellForm = () => {
 
           <Grid item xs={12} position="relative">
             {/* Clickable Text */}
-            <Typography position="absolute" right="0" fontFamily="inherit">
-              custom | address
-            </Typography>
-
-            {/* TextField */}
-            <TextField
-              sx={{ mt: "28px" }}
-              color="secondary"
-              fullWidth
-              label="Exchange Location"
-              variant="outlined"
-              InputLabelProps={{
-                style: {
-                  fontFamily: "Josefin Sans",
-                  backgroundColor: Colors.tan,
-                  borderRadius: "9px",
-                  paddingLeft: "5px",
-                  paddingRight: "5px",
-                },
-              }}
-              InputProps={{
-                style: inputStyle,
-              }}
-            />
+            <Box position="absolute" right="0">
+              <Button onClick={() => setIsCustom(true)}>
+                <Typography
+                  sx={{
+                    textDecoration: isCustom ? "underline" : "none",
+                  }}
+                  fontFamily="Josefin Sans"
+                  textTransform="lowercase"
+                  color="black"
+                >
+                  custom{" "}
+                </Typography>
+              </Button>
+              |
+              <Button onClick={() => setIsCustom(false)}>
+                <Typography
+                  sx={{
+                    textDecoration: isCustom ? "none" : "underline",
+                  }}
+                  fontFamily="Josefin Sans"
+                  textTransform="lowercase"
+                  color="black"
+                >
+                  {" "}
+                  address
+                </Typography>
+              </Button>
+            </Box>
+            {isCustom ? (
+              <TextField
+                sx={{ mt: "28px" }}
+                color="secondary"
+                fullWidth
+                label="Exchange Location"
+                variant="outlined"
+                InputLabelProps={{
+                  style: {
+                    fontFamily: "Josefin Sans",
+                    backgroundColor: Colors.tan,
+                    borderRadius: "9px",
+                    paddingLeft: "5px",
+                    paddingRight: "5px",
+                  },
+                }}
+                InputProps={{
+                  style: inputStyle,
+                }}
+                value={listingLocation}
+                onChange={(e) => setListingLocation(e.target.value)}
+              />
+            ) : (
+              <Box marginTop="28px">
+                <form>
+                  <AddressAutofill accessToken="pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ">
+                    <TextField
+                      sx={{ height: "200px" }}
+                      color="secondary"
+                      fullWidth
+                      label="Exchange Location"
+                      variant="outlined"
+                      InputLabelProps={{
+                        style: {
+                          fontFamily: "Josefin Sans",
+                          backgroundColor: Colors.tan,
+                          borderRadius: "9px",
+                          paddingLeft: "5px",
+                          paddingRight: "5px",
+                        },
+                      }}
+                      InputProps={{
+                        style: inputStyle,
+                      }}
+                      autoComplete="address-line1"
+                      value={listingLocation}
+                      onChange={(e) => setListingLocation(e.target.value)}
+                    />
+                  </AddressAutofill>
+                </form>
+              </Box>
+            )}
           </Grid>
         </Grid>
       </Carousel.Item>
