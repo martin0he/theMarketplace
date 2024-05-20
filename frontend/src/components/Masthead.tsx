@@ -15,6 +15,7 @@ const Masthead = () => {
         alignItems: "center",
         display: "flex",
         padding: "5px",
+        zIndex: 5,
       }}
     >
       <Typography fontFamily={"inherit"} color={"white"}>

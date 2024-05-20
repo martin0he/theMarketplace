@@ -1,10 +1,12 @@
-import * as React from "react";
+import React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Colors from "../assets/Colors";
 import SellForm from "../components/SellForm";
+import PreviewTab from "../components/PreviewTab";
+import { ListingProvider } from "../components/ListingContext";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -43,57 +45,59 @@ const SellPage = () => {
   };
 
   return (
-    <Box paddingTop={12} paddingBottom={10} paddingX={5} zIndex={0}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          indicatorColor="secondary"
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab
-            label={
-              <Typography
-                style={{
-                  color: Colors.royalBlue,
-                  fontSize: 18,
-                  fontFamily: "Josefin Sans",
-                  textTransform: "lowercase",
-                  fontWeight: value === 0 ? "bold" : "normal",
-                }}
-              >
-                sell
-              </Typography>
-            }
-            {...a11yProps(0)}
-          />
-          <Tab
-            label={
-              <Typography
-                style={{
-                  color: Colors.royalBlue,
-                  fontSize: 18,
-                  fontFamily: "Josefin Sans",
-                  textTransform: "lowercase",
-                  fontWeight: value === 1 ? "bold" : "normal",
-                }}
-              >
-                preview
-              </Typography>
-            }
-            {...a11yProps(1)}
-          />
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-        <Box justifyContent="center" alignItems="center" display="flex">
-          <SellForm />
+    <ListingProvider>
+      <Box paddingTop={12} paddingBottom={10} paddingX={5} zIndex={0}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            indicatorColor="secondary"
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab
+              label={
+                <Typography
+                  style={{
+                    color: Colors.royalBlue,
+                    fontSize: 18,
+                    fontFamily: "Josefin Sans",
+                    textTransform: "lowercase",
+                    fontWeight: value === 0 ? "bold" : "normal",
+                  }}
+                >
+                  sell
+                </Typography>
+              }
+              {...a11yProps(0)}
+            />
+            <Tab
+              label={
+                <Typography
+                  style={{
+                    color: Colors.royalBlue,
+                    fontSize: 18,
+                    fontFamily: "Josefin Sans",
+                    textTransform: "lowercase",
+                    fontWeight: value === 1 ? "bold" : "normal",
+                  }}
+                >
+                  preview
+                </Typography>
+              }
+              {...a11yProps(1)}
+            />
+          </Tabs>
         </Box>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        Item Two
-      </CustomTabPanel>
-    </Box>
+        <CustomTabPanel value={value} index={0}>
+          <Box justifyContent="center" alignItems="center" display="flex">
+            <SellForm />
+          </Box>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <PreviewTab />
+        </CustomTabPanel>
+      </Box>
+    </ListingProvider>
   );
 };
 

@@ -21,6 +21,7 @@ const Navbar = () => {
         alignItems: "center",
         position: "fixed",
         top: 0,
+        zIndex: 5,
       }}
     >
       <Link

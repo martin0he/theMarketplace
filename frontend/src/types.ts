@@ -19,7 +19,7 @@ export enum PaymentMethod {
   CASH = "Cash",
   VENMO = "Venmo",
   Zelle = "Zelle",
-  BOA = "BOA",
+  BANKTRANSFER = "Bank Transfer",
   OTHER = "Other",
 }
 
