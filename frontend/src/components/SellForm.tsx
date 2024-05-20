@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -13,14 +14,40 @@ import {
 import Carousel from "react-bootstrap/Carousel";
 import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import supabase from "../auth/supabase";
-import { useState } from "react";
 import { AddressAutofill } from "@mapbox/search-js-react";
-import { CustomUser, Listing, PaymentMethod } from "../types";
-import { useAuth } from "../auth/AuthProvider";
-import { useListing } from "./ListingContext";
+import { PaymentMethod } from "../types";
 
-const SellForm = () => {
+interface SellFormProps {
+  listingName: string;
+  setListingName: (value: string) => void;
+  listingCondition: string;
+  setListingCondition: (value: string) => void;
+  listingDescription: string;
+  setListingDescription: (value: string) => void;
+  listingPrice: string;
+  setListingPrice: (value: string) => void;
+  listingPaymentMethods: PaymentMethod[];
+  setListingPaymentMethods: (value: PaymentMethod[]) => void;
+  listingLocation: string;
+  setListingLocation: (value: string) => void;
+  handleSubmit: () => void;
+}
+
+const SellForm = ({
+  listingName,
+  setListingName,
+  listingCondition,
+  setListingCondition,
+  listingDescription,
+  setListingDescription,
+  listingPrice,
+  setListingPrice,
+  listingPaymentMethods,
+  setListingPaymentMethods,
+  listingLocation,
+  setListingLocation,
+  handleSubmit,
+}: SellFormProps) => {
   const [isCustom, setIsCustom] = useState<boolean>(true);
   const { width } = useWindowDimensions();
   const inputStyle = {
@@ -28,48 +55,6 @@ const SellForm = () => {
     fontFamily: "Josefin Sans",
     backgroundColor: Colors.tan,
   };
-
-  const [file, setFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState(false);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files ? e.target.files[0] : null;
-    setFile(selectedFile);
-  };
-
-  const handleUpload = async () => {
-    if (!file) return;
-
-    setUploading(true);
-
-    try {
-      const { data, error } = await supabase.storage
-        .from("pictures")
-        .upload("public/avatar1.png", file, {
-          cacheControl: "3600",
-          upsert: false,
-        });
-      if (error) {
-        throw error;
-      }
-
-      console.log("Image uploaded successfully:", data);
-      setFile(null);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const [listingName, setListingName] = useState<string>("");
-  const [listingCondition, setListingCondition] = useState<string>("");
-  const [listingDescription, setListingDescription] = useState<string>("");
-  const [listingPrice, setListingPrice] = useState<string>("");
-  const [listingPaymentMethods, setListingPaymentMethods] = useState<
-    PaymentMethod[]
-  >([]);
-  const [listingLocation, setListingLocation] = useState<string>("");
 
   const handlePaymentChange = (event: SelectChangeEvent<PaymentMethod[]>) => {
     const { value } = event.target;
@@ -80,38 +65,6 @@ const SellForm = () => {
 
   const handleConditionChange = (event: SelectChangeEvent<string>) => {
     setListingCondition(event.target.value);
-  };
-
-  const { customUser } = useAuth();
-  const { setListing } = useListing();
-
-  const exampleUser: CustomUser = {
-    username: "glazedGuat",
-    email: "martin@email.com",
-    password: "passywo",
-    school: "Northeastern Uni",
-  };
-
-  const createListing = (): Listing => {
-    return {
-      name: listingName,
-      description: listingDescription,
-      school: customUser?.school || "NA",
-      dateAdded: new Date(),
-      price: parseFloat(listingPrice),
-      seller: customUser || exampleUser,
-      paymentMethod: listingPaymentMethods,
-      exchangeLocation: listingLocation,
-      imageUrls: [], // Add logic to handle image URLs if necessary
-      condition: listingCondition,
-    };
-  };
-
-  const handleSubmit = () => {
-    const newListing = createListing();
-    setListing(newListing);
-    console.log("New Listing Created:", newListing);
-    // Add logic to save the listing to your database
   };
 
   return (
@@ -370,12 +323,7 @@ const SellForm = () => {
             height="100%"
             width="100%"
           >
-            <div>
-              <input type="file" onChange={handleFileChange} />
-              <button onClick={handleUpload} disabled={!file || uploading}>
-                {uploading ? "Uploading..." : "Upload Image"}
-              </button>
-            </div>
+            <div></div>
           </Grid>
         </Carousel.Item>
       </Carousel>

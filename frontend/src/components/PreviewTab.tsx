@@ -1,27 +1,44 @@
-import React from "react";
 import { Box, Typography } from "@mui/material";
-import { useListing } from "./ListingContext";
+import { PaymentMethod } from "../types";
 
-const PreviewTab = () => {
-  const { listing } = useListing();
+interface PreviewProps {
+  listingName: string;
+  listingCondition: string;
+  listingDescription: string;
+  listingPrice: string;
+  listingPaymentMethods: PaymentMethod[];
+  listingLocation: string;
+}
 
-  if (!listing) {
-    return <Typography>No listing to preview</Typography>;
-  }
-
+const PreviewTab = ({
+  listingName,
+  listingCondition,
+  listingDescription,
+  listingPrice,
+  listingPaymentMethods,
+  listingLocation,
+}: PreviewProps) => {
   return (
-    <Box>
-      <Typography variant="h5">{listing.name}</Typography>
-      <Typography variant="body1">{listing.description}</Typography>
-      <Typography variant="body2">Price: ${listing.price}</Typography>
-      <Typography variant="body2">Condition: {listing.condition}</Typography>
-      <Typography variant="body2">
-        Payment Methods: {listing.paymentMethod.join(", ")}
+    <Box padding="20px" border="1px solid gray" borderRadius="12px" mt="20px">
+      <Typography variant="h5">Preview</Typography>
+      <Typography variant="body1">
+        <strong>Name:</strong> {listingName}
       </Typography>
-      <Typography variant="body2">
-        Location: {listing.exchangeLocation}
+      <Typography variant="body1">
+        <strong>Condition:</strong> {listingCondition}
       </Typography>
-      {/* Add more fields as necessary */}
+      <Typography variant="body1">
+        <strong>Description:</strong> {listingDescription}
+      </Typography>
+      <Typography variant="body1">
+        <strong>Price:</strong> {listingPrice}
+      </Typography>
+      <Typography variant="body1">
+        <strong>Payment Methods:</strong> {listingPaymentMethods.join(", ")}
+      </Typography>
+      <Typography variant="body1">
+        <strong>Location:</strong> {listingLocation}
+      </Typography>
     </Box>
   );
 };
