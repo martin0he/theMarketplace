@@ -183,8 +183,8 @@ const SellForm = ({
             container
             spacing={2}
             paddingX="170px"
-            paddingBottom="137px"
-            marginTop="45px"
+            paddingBottom="147px"
+            marginTop="25px"
           >
             <Grid item xs={12}>
               <TextField
@@ -245,32 +245,33 @@ const SellForm = ({
             </Grid>
 
             <Grid item xs={12}>
-              <Box display="flex" justifyContent="flex-end" mb={1}>
-                <Button onClick={() => setIsCustom(true)}>
-                  <Typography
-                    sx={{ textDecoration: isCustom ? "underline" : "none" }}
-                    fontFamily="Josefin Sans"
-                    textTransform="lowercase"
-                    color="black"
-                  >
-                    custom
-                  </Typography>
-                </Button>
-                |
-                <Button onClick={() => setIsCustom(false)}>
-                  <Typography
-                    sx={{ textDecoration: isCustom ? "none" : "underline" }}
-                    fontFamily="Josefin Sans"
-                    textTransform="lowercase"
-                    color="black"
-                  >
-                    address
-                  </Typography>
-                </Button>
+              <Box display="flex" justifyContent="flex-end">
+                <Typography>
+                  <Button onClick={() => setIsCustom(true)}>
+                    <Typography
+                      sx={{ textDecoration: isCustom ? "underline" : "none" }}
+                      fontFamily="Josefin Sans"
+                      textTransform="lowercase"
+                      color="black"
+                    >
+                      custom
+                    </Typography>
+                  </Button>
+                  |
+                  <Button onClick={() => setIsCustom(false)}>
+                    <Typography
+                      sx={{ textDecoration: isCustom ? "none" : "underline" }}
+                      fontFamily="Josefin Sans"
+                      textTransform="lowercase"
+                      color="black"
+                    >
+                      address
+                    </Typography>
+                  </Button>
+                </Typography>
               </Box>
               {isCustom ? (
                 <TextField
-                  sx={{ mt: "28px", height: "56px" }}
                   color="secondary"
                   fullWidth
                   label="Exchange Location"
@@ -289,31 +290,29 @@ const SellForm = ({
                   onChange={(e) => setListingLocation(e.target.value)}
                 />
               ) : (
-                <Box marginTop="28px">
-                  <form>
-                    <AddressAutofill accessToken="pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ">
-                      <TextField
-                        color="secondary"
-                        fullWidth
-                        label="Exchange Address"
-                        variant="outlined"
-                        InputLabelProps={{
-                          style: {
-                            fontFamily: "Josefin Sans",
-                            backgroundColor: Colors.tan,
-                            borderRadius: "9px",
-                            paddingLeft: "5px",
-                            paddingRight: "5px",
-                          },
-                        }}
-                        InputProps={{ style: inputStyle }}
-                        autoComplete="address-line1"
-                        value={listingLocation}
-                        onChange={(e) => setListingLocation(e.target.value)}
-                      />
-                    </AddressAutofill>
-                  </form>
-                </Box>
+                <form>
+                  <AddressAutofill accessToken="pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ">
+                    <TextField
+                      color="secondary"
+                      fullWidth
+                      label="Exchange Address"
+                      variant="outlined"
+                      InputLabelProps={{
+                        style: {
+                          fontFamily: "Josefin Sans",
+                          backgroundColor: Colors.tan,
+                          borderRadius: "9px",
+                          paddingLeft: "5px",
+                          paddingRight: "5px",
+                        },
+                      }}
+                      InputProps={{ style: inputStyle }}
+                      autoComplete="address-line1"
+                      value={listingLocation}
+                      onChange={(e) => setListingLocation(e.target.value)}
+                    />
+                  </AddressAutofill>
+                </form>
               )}
             </Grid>
           </Grid>
