@@ -7,6 +7,7 @@ const Masthead = () => {
   return (
     <Box
       width={width}
+      height="20px"
       sx={{
         position: "fixed",
         bottom: 0,
@@ -14,11 +15,11 @@ const Masthead = () => {
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
-        padding: "5px",
+        padding: "4px",
         zIndex: 5,
       }}
     >
-      <Typography fontFamily={"inherit"} color={"white"}>
+      <Typography fontFamily={"inherit"} color={"white"} fontSize="14px">
         martin hema @ northeastern university
       </Typography>
     </Box>

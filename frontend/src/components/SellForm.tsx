@@ -74,10 +74,9 @@ const SellForm = ({
   };
 
   const { customUser } = useAuth();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [media, setMedia] = useState<any[]>([]);
 
-  async function getMedia() {
+  const getMedia = async () => {
     if (!customUser) return;
     const { data, error } = await supabase.storage
       .from("pictures")
@@ -95,25 +94,29 @@ const SellForm = ({
     } else {
       setMedia(data || []);
     }
-  }
+  };
 
-  async function uploadImage(e: React.ChangeEvent<HTMLInputElement>) {
+  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!customUser || !e.target.files || e.target.files.length === 0) return;
 
-    const file = e.target.files[0];
-    const filePath = `${customUser.school}/${customUser.username}/${uuidv4()}`;
+    const files = Array.from(e.target.files);
+    for (const file of files) {
+      const filePath = `${customUser.school}/${
+        customUser.username
+      }/${uuidv4()}`;
 
-    const { data, error } = await supabase.storage
-      .from("pictures")
-      .upload(filePath, file);
+      const { data, error } = await supabase.storage
+        .from("pictures")
+        .upload(filePath, file);
 
-    if (error) {
-      console.error("Error uploading image:", error);
-    } else {
-      console.log("Image uploaded successfully:", data);
-      getMedia();
+      if (error) {
+        console.error("Error uploading image:", error);
+      } else {
+        console.log("Image uploaded successfully:", data);
+      }
     }
-  }
+    getMedia();
+  };
 
   useEffect(() => {
     getMedia();
@@ -393,18 +396,23 @@ const SellForm = ({
               <Typography textTransform="lowercase" fontFamily="Josefin Sans">
                 upload image
               </Typography>
-              <input type="file" hidden onChange={(e) => uploadImage(e)} />
+              <input
+                type="file"
+                hidden
+                multiple
+                accept="image/*"
+                onChange={(e) => uploadImage(e)}
+              />
             </Button>
             <ImageList
-              sx={{ width: 500, height: 450 }}
+              sx={{ width: 500, height: 450, marginTop: 2 }}
               cols={3}
               rowHeight={164}
             >
               {media.map((item) => (
                 <ImageListItem key={item.name}>
                   <img
-                    srcSet={`https://your-supabase-url.storage.supabase.co/storage/v1/object/public/pictures/${customUser?.school}/${customUser?.username}/${item.name}`}
-                    src={`https://your-supabase-url.storage.supabase.co/storage/v1/object/public/pictures/${customUser?.school}/${customUser?.username}/${item.name}`}
+                    src={`https://egnuwqvtuxctatbhwrfq.supabase.co/storage/v1/object/public/pictures/${customUser?.school}/${customUser?.username}/${item.name}`}
                     alt={item.name}
                     loading="lazy"
                   />
