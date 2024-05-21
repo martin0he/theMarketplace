@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
   FormControl,
   Grid,
+  ImageList,
+  ImageListItem,
   InputLabel,
   MenuItem,
   Select,
@@ -16,6 +18,9 @@ import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { AddressAutofill } from "@mapbox/search-js-react";
 import { PaymentMethod } from "../types";
+import supabase from "../auth/supabase";
+import { useAuth } from "../auth/AuthProvider";
+import { v4 as uuidv4 } from "uuid";
 
 interface SellFormProps {
   listingName: string;
@@ -67,6 +72,52 @@ const SellForm = ({
   const handleConditionChange = (event: SelectChangeEvent<string>) => {
     setListingCondition(event.target.value);
   };
+
+  const { customUser } = useAuth();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [media, setMedia] = useState<any[]>([]);
+
+  async function getMedia() {
+    if (!customUser) return;
+    const { data, error } = await supabase.storage
+      .from("pictures")
+      .list(customUser.school + "/" + customUser.username + "/", {
+        limit: 10,
+        offset: 0,
+        sortBy: {
+          column: "name",
+          order: "asc",
+        },
+      });
+
+    if (error) {
+      console.error("Error fetching media:", error);
+    } else {
+      setMedia(data || []);
+    }
+  }
+
+  async function uploadImage(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!customUser || !e.target.files || e.target.files.length === 0) return;
+
+    const file = e.target.files[0];
+    const filePath = `${customUser.school}/${customUser.username}/${uuidv4()}`;
+
+    const { data, error } = await supabase.storage
+      .from("pictures")
+      .upload(filePath, file);
+
+    if (error) {
+      console.error("Error uploading image:", error);
+    } else {
+      console.log("Image uploaded successfully:", data);
+      getMedia();
+    }
+  }
+
+  useEffect(() => {
+    getMedia();
+  }, []);
 
   return (
     <>
@@ -328,7 +379,38 @@ const SellForm = ({
             height="100%"
             width="100%"
           >
-            <div></div>
+            <Button
+              variant="contained"
+              component="label"
+              sx={{
+                backgroundColor: Colors.cerise,
+                "&:hover": {
+                  backgroundColor: Colors.celestialBlue,
+                },
+                borderRadius: "10px",
+              }}
+            >
+              <Typography textTransform="lowercase" fontFamily="Josefin Sans">
+                upload image
+              </Typography>
+              <input type="file" hidden onChange={(e) => uploadImage(e)} />
+            </Button>
+            <ImageList
+              sx={{ width: 500, height: 450 }}
+              cols={3}
+              rowHeight={164}
+            >
+              {media.map((item) => (
+                <ImageListItem key={item.name}>
+                  <img
+                    srcSet={`https://your-supabase-url.storage.supabase.co/storage/v1/object/public/pictures/${customUser?.school}/${customUser?.username}/${item.name}`}
+                    src={`https://your-supabase-url.storage.supabase.co/storage/v1/object/public/pictures/${customUser?.school}/${customUser?.username}/${item.name}`}
+                    alt={item.name}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
           </Grid>
         </Carousel.Item>
       </Carousel>
