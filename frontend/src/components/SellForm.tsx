@@ -51,6 +51,7 @@ const SellForm = ({
   const [isCustom, setIsCustom] = useState<boolean>(true);
   const { width } = useWindowDimensions();
   const inputStyle = {
+    height: "56px",
     borderRadius: "12px",
     fontFamily: "Josefin Sans",
     backgroundColor: Colors.tan,
@@ -86,7 +87,7 @@ const SellForm = ({
               <TextField
                 color="secondary"
                 fullWidth
-                sx={{ mt: "15px" }}
+                sx={{ mt: "15px", height: "56px" }}
                 label="Listing Name"
                 variant="outlined"
                 InputProps={{ style: inputStyle }}
@@ -105,7 +106,7 @@ const SellForm = ({
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ height: "56px" }}>
                 <InputLabel
                   color="secondary"
                   sx={{
@@ -164,7 +165,13 @@ const SellForm = ({
                     paddingRight: "5px",
                   },
                 }}
-                InputProps={{ style: inputStyle }}
+                InputProps={{
+                  style: {
+                    borderRadius: "12px",
+                    fontFamily: "Josefin Sans",
+                    backgroundColor: Colors.tan,
+                  },
+                }}
                 value={listingDescription}
                 onChange={(event) => setListingDescription(event.target.value)}
               />
@@ -184,7 +191,7 @@ const SellForm = ({
                 color="secondary"
                 fullWidth
                 type="text"
-                sx={{ mt: "15px" }}
+                sx={{ mt: "15px", height: "56px" }}
                 label="Listing Price"
                 variant="outlined"
                 InputProps={{ style: inputStyle }}
@@ -203,7 +210,7 @@ const SellForm = ({
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ height: "56px" }}>
                 <InputLabel
                   color="secondary"
                   sx={{
@@ -263,7 +270,7 @@ const SellForm = ({
               </Box>
               {isCustom ? (
                 <TextField
-                  sx={{ mt: "28px" }}
+                  sx={{ mt: "28px", height: "56px" }}
                   color="secondary"
                   fullWidth
                   label="Exchange Location"
@@ -284,12 +291,11 @@ const SellForm = ({
               ) : (
                 <Box marginTop="28px">
                   <form>
-                    <AddressAutofill accessToken="your-mapbox-access-token">
+                    <AddressAutofill accessToken="pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ">
                       <TextField
-                        sx={{ height: "200px" }}
                         color="secondary"
                         fullWidth
-                        label="Exchange Location"
+                        label="Exchange Address"
                         variant="outlined"
                         InputLabelProps={{
                           style: {
