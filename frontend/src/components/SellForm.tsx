@@ -5,7 +5,6 @@ import {
   FormControl,
   Grid,
   ImageList,
-  ImageListItem,
   InputLabel,
   MenuItem,
   Select,
@@ -21,6 +20,7 @@ import { PaymentMethod } from "../types";
 import supabase from "../auth/supabase";
 import { useAuth } from "../auth/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
+import CustomCarousel from "./CustomCarousel";
 
 interface SellFormProps {
   listingName: string;
@@ -121,6 +121,11 @@ const SellForm = ({
   useEffect(() => {
     getMedia();
   }, []);
+
+  const imageUrls = media.map(
+    (file) =>
+      `https://egnuwqvtuxctatbhwrfq.supabase.co/storage/v1/object/public/pictures/${customUser.school}/${customUser.username}/${file.name}`
+  );
 
   return (
     <>
@@ -409,15 +414,11 @@ const SellForm = ({
               cols={3}
               rowHeight={164}
             >
-              {media.map((item) => (
-                <ImageListItem key={item.name}>
-                  <img
-                    src={`https://egnuwqvtuxctatbhwrfq.supabase.co/storage/v1/object/public/pictures/${customUser?.school}/${customUser?.username}/${item.name}`}
-                    alt={item.name}
-                    loading="lazy"
-                  />
-                </ImageListItem>
-              ))}
+              <CustomCarousel
+                imageUrls={imageUrls}
+                width={"250px"}
+                height={"190px"}
+              />
             </ImageList>
           </Grid>
         </Carousel.Item>

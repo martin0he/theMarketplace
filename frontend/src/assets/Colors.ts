@@ -7,4 +7,5 @@ export default {
   cerise: "#D8315B",
   smallListing: "#e9e7e9",
   tan: "#E8E4DF",
+  turquoise: "#8dc3b3",
 };

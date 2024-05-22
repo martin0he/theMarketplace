@@ -23,7 +23,12 @@ const HomePage = () => {
     seller: exampleUser,
     paymentMethod: [],
     exchangeLocation: "",
-    imageUrls: [],
+    imageUrls: [
+      "https://picsum.photos/90/80",
+      "https://picsum.photos/id/237/90/80",
+      "https://picsum.photos/90/80",
+      "https://picsum.photos/id/237/90/80",
+    ],
     school: "Northeastern Uni",
     description: "",
     condition: "",

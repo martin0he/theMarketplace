@@ -1,18 +1,9 @@
+import React, { useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import Colors from "../assets/Colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useState } from "react";
-
-const settings = {
-  arrows: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-};
+import { Listing } from "../types";
+import CustomCarousel from "./CustomCarousel";
 
 interface SmallListingCardProps {
   listing: Listing;
@@ -26,6 +17,9 @@ const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
     const newColor = likeColor === "#b8b7b7" ? "#e61919" : "#b8b7b7";
     setLikeColor(newColor);
   };
+
+  // Assuming the listing has an images property with URLs
+  const imageUrls = listing.imageUrls;
 
   return (
     <Box
@@ -52,62 +46,13 @@ const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
         height="80px"
         margin="5px"
       >
-        <Slider {...settings}>
-          <Box width="90px" height="80px">
-            <img
-              width="90px"
-              style={{ borderRadius: "12px" }}
-              height="80px"
-              src="https://picsum.photos/90/80"
-              alt="Random Image"
-            />
-          </Box>
-          <Box width="90px" height="80px">
-            <img
-              width="90px"
-              style={{ borderRadius: "12px" }}
-              height="80px"
-              src="https://picsum.photos/90/80"
-              alt="Random Image"
-            />
-          </Box>
-          <Box width="90px" height="80px">
-            <img
-              width="90px"
-              style={{ borderRadius: "12px" }}
-              height="80px"
-              src="https://picsum.photos/90/80"
-              alt="Random Image"
-            />
-          </Box>
-          <Box width="90px" height="80px">
-            <img
-              width="90px"
-              style={{ borderRadius: "12px" }}
-              height="80px"
-              src="https://picsum.photos/90/80"
-              alt="Random Image"
-            />
-          </Box>
-          <Box width="90px" height="80px">
-            <img
-              width="90px"
-              style={{ borderRadius: "12px" }}
-              height="80px"
-              src="https://picsum.photos/90/80"
-              alt="Random Image"
-            />
-          </Box>
-          <Box width="90px" height="80px">
-            <img
-              width="90px"
-              style={{ borderRadius: "12px" }}
-              height="80px"
-              src="https://picsum.photos/90/80"
-              alt="Random Image"
-            />
-          </Box>
-        </Slider>
+        <CustomCarousel
+          imageUrls={imageUrls}
+          width="90px"
+          height="80px"
+          isGrayArrows
+          isSmallArrows
+        />
       </Box>
 
       {listing.dateDeleted ? (
@@ -158,7 +103,7 @@ const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
           overflow="hidden"
           textOverflow="ellipsis"
         >
-          {listing.name}trhrthrthrgrst
+          {listing.name}
         </Typography>
       </Box>
 
