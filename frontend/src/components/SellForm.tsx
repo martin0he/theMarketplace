@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import {
   Box,
   Button,
   FormControl,
   Grid,
-  ImageList,
   InputLabel,
   MenuItem,
   Select,
@@ -16,7 +16,7 @@ import Carousel from "react-bootstrap/Carousel";
 import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { AddressAutofill } from "@mapbox/search-js-react";
-import { PaymentMethod } from "../types";
+import { Listing, PaymentMethod } from "../types";
 import supabase from "../auth/supabase";
 import { useAuth } from "../auth/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
@@ -35,9 +35,8 @@ interface SellFormProps {
   setListingPaymentMethods: (value: PaymentMethod[]) => void;
   listingLocation: string;
   setListingLocation: (value: string) => void;
-  handleSubmit: () => void;
-  imageUrls: string[];
-  setImageUrls: (value: string[]) => void;
+  previewImageUrls: string[];
+  setPreviewImageUrls: (value: string[]) => void;
 }
 
 const SellForm = ({
@@ -53,9 +52,8 @@ const SellForm = ({
   setListingPaymentMethods,
   listingLocation,
   setListingLocation,
-  imageUrls,
-  setImageUrls,
-  handleSubmit,
+  previewImageUrls,
+  setPreviewImageUrls,
 }: SellFormProps) => {
   const [isCustom, setIsCustom] = useState<boolean>(true);
   const { width } = useWindowDimensions();
@@ -79,15 +77,24 @@ const SellForm = ({
 
   const { customUser } = useAuth();
   const [media, setMedia] = useState<any[]>([]);
+  const [urls, setUrls] = useState<string[]>([]);
 
-  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!customUser || !e.target.files || e.target.files.length === 0) return;
+  /*const urlsToUpload = media.map(
+    (file) =>
+      `https://egnuwqvtuxctatbhwrfq.supabase.co/storage/v1/object/public/pictures/${customUser?.school}/${customUser?.username}/${file.name}`
+  );
+  */
 
-    const files = Array.from(e.target.files);
+  const uploadListing = async () => {
+    if (!customUser || !media || media.length === 0) return;
+
+    const files = media;
     for (const file of files) {
       const filePath = `${customUser.school}/${
         customUser.username
       }/${uuidv4()}`;
+      const tempUrl = `https://egnuwqvtuxctatbhwrfq.supabase.co/storage/v1/object/public/pictures/${filePath}`;
+      urls.push(tempUrl);
 
       const { data, error } = await supabase.storage
         .from("pictures")
@@ -97,14 +104,52 @@ const SellForm = ({
         console.error("Error uploading image:", error);
       } else {
         console.log("Image uploaded successfully:", data);
+        const listing: Listing = {
+          name: listingName,
+          description: listingDescription,
+          school: customUser?.school,
+          dateAdded: new Date(),
+          price: parseFloat(listingPrice),
+          seller: customUser,
+          paymentMethod: listingPaymentMethods,
+          exchangeLocation: listingLocation,
+          imageUrls: urls,
+          condition: listingCondition,
+        };
+
+        const { data: listingData, error: uploadError } = await supabase
+          .from("Listings")
+          .insert([
+            {
+              name: listing.name,
+              created_at: new Date(),
+              price: listing.price,
+              payment_method: listing.paymentMethod,
+              exchange_location: listing.exchangeLocation,
+              school: listing.school,
+              description: listing.description,
+              imageUrls: listing.imageUrls,
+              condition: listing.condition,
+            },
+          ])
+          .select();
+        if (uploadError) {
+          console.error("Error inserting new listing:", uploadError);
+        } else {
+          console.log("uploaded new listing", listingData);
+        }
       }
     }
   };
 
+  {
+    /*this handles converting images from files to url strings so that they can be previewed, NO uploading here*/
+  }
   const handleImageSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
 
     const files = Array.from(e.target.files);
+    //stores the selected file in the useState
     setMedia(files);
     const newImageUrls: string[] = [];
 
@@ -115,7 +160,7 @@ const SellForm = ({
         if (result) {
           newImageUrls.push(result as string);
           if (newImageUrls.length === files.length) {
-            setImageUrls((prevUrls) => [...prevUrls, ...newImageUrls]);
+            setPreviewImageUrls((prevUrls) => [...prevUrls, ...newImageUrls]);
           }
         }
       };
@@ -123,14 +168,11 @@ const SellForm = ({
     });
   };
 
-  const urlsToUpload = media.map(
-    (file) =>
-      `https://egnuwqvtuxctatbhwrfq.supabase.co/storage/v1/object/public/pictures/${customUser?.school}/${customUser?.username}/${file.name}`
-  );
-
   return (
     <>
       <Carousel
+        interval={null}
+        touch
         variant="dark"
         style={{
           width: 0.8 * width,
@@ -142,199 +184,82 @@ const SellForm = ({
         }}
       >
         <Carousel.Item>
-          <Grid container spacing={2} paddingX="170px" paddingBottom="64px">
-            <Grid item xs={12}>
-              <TextField
-                color="secondary"
-                fullWidth
-                sx={{ mt: "15px", height: "56px" }}
-                label="Listing Name"
-                variant="outlined"
-                InputProps={{ style: inputStyle }}
-                InputLabelProps={{
-                  style: {
-                    fontFamily: "Josefin Sans",
-                    backgroundColor: Colors.tan,
-                    borderRadius: "9px",
-                    paddingLeft: "5px",
-                    paddingRight: "5px",
-                  },
-                }}
-                value={listingName}
-                onChange={(event) => setListingName(event.target.value)}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <FormControl fullWidth sx={{ height: "56px" }}>
-                <InputLabel
-                  color="secondary"
-                  sx={{
-                    fontFamily: "Josefin Sans",
-                    backgroundColor: Colors.tan,
-                    borderRadius: "9px",
-                    paddingLeft: "5px",
-                    paddingRight: "5px",
-                  }}
-                >
-                  Listing Condition
-                </InputLabel>
-                <Select
-                  color="secondary"
-                  fullWidth
-                  defaultValue=""
-                  inputProps={{ style: { fontFamily: "Josefin Sans" } }}
-                  style={inputStyle}
-                  value={listingCondition}
-                  onChange={handleConditionChange}
-                >
-                  <MenuItem value="new">
-                    <Typography fontFamily="Josefin Sans">New</Typography>
-                  </MenuItem>
-                  <MenuItem value="like_new">
-                    <Typography fontFamily="Josefin Sans">Like New</Typography>
-                  </MenuItem>
-                  <MenuItem value="good_condition">
-                    <Typography fontFamily="Josefin Sans">
-                      Good Condition
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem value="heavily_used">
-                    <Typography fontFamily="Josefin Sans">
-                      Heavily Used
-                    </Typography>
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                color="secondary"
-                fullWidth
-                multiline
-                rows={8}
-                label="Description"
-                variant="outlined"
-                InputLabelProps={{
-                  style: {
-                    fontFamily: "Josefin Sans",
-                    backgroundColor: Colors.tan,
-                    borderRadius: "9px",
-                    paddingLeft: "5px",
-                    paddingRight: "5px",
-                  },
-                }}
-                InputProps={{
-                  style: {
-                    borderRadius: "12px",
-                    fontFamily: "Josefin Sans",
-                    backgroundColor: Colors.tan,
-                  },
-                }}
-                value={listingDescription}
-                onChange={(event) => setListingDescription(event.target.value)}
-              />
-            </Grid>
-          </Grid>
-        </Carousel.Item>
-        <Carousel.Item>
-          <Grid
-            container
-            spacing={2}
-            paddingX="170px"
-            paddingBottom="147px"
-            marginTop="25px"
-          >
-            <Grid item xs={12}>
-              <TextField
-                color="secondary"
-                fullWidth
-                type="text"
-                sx={{ mt: "15px", height: "56px" }}
-                label="Listing Price"
-                variant="outlined"
-                InputProps={{ style: inputStyle }}
-                InputLabelProps={{
-                  style: {
-                    fontFamily: "Josefin Sans",
-                    backgroundColor: Colors.tan,
-                    borderRadius: "9px",
-                    paddingLeft: "5px",
-                    paddingRight: "5px",
-                  },
-                }}
-                value={listingPrice}
-                onChange={(event) => setListingPrice(event.target.value)}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <FormControl fullWidth sx={{ height: "56px" }}>
-                <InputLabel
-                  color="secondary"
-                  sx={{
-                    fontFamily: "Josefin Sans",
-                    backgroundColor: Colors.tan,
-                    borderRadius: "9px",
-                    paddingLeft: "5px",
-                    paddingRight: "5px",
-                  }}
-                >
-                  Preferred Payment Methods
-                </InputLabel>
-                <Select
-                  color="secondary"
-                  fullWidth
-                  multiple
-                  value={listingPaymentMethods}
-                  onChange={handlePaymentChange}
-                  renderValue={(selected) => selected.join(", ")}
-                  inputProps={{ style: { fontFamily: "Josefin Sans" } }}
-                  style={inputStyle}
-                >
-                  {Object.values(PaymentMethod).map((method) => (
-                    <MenuItem key={method} value={method}>
-                      <Typography fontFamily="Josefin Sans">
-                        {method}
-                      </Typography>
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Box display="flex" justifyContent="flex-end">
-                <Typography>
-                  <Button onClick={() => setIsCustom(true)}>
-                    <Typography
-                      sx={{ textDecoration: isCustom ? "underline" : "none" }}
-                      fontFamily="Josefin Sans"
-                      textTransform="lowercase"
-                      color="black"
-                    >
-                      custom
-                    </Typography>
-                  </Button>
-                  |
-                  <Button onClick={() => setIsCustom(false)}>
-                    <Typography
-                      sx={{ textDecoration: isCustom ? "none" : "underline" }}
-                      fontFamily="Josefin Sans"
-                      textTransform="lowercase"
-                      color="black"
-                    >
-                      address
-                    </Typography>
-                  </Button>
-                </Typography>
-              </Box>
-              {isCustom ? (
+          <Box paddingX="200px" paddingBottom="65px">
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
                 <TextField
                   color="secondary"
                   fullWidth
-                  label="Exchange Location"
+                  sx={{ mt: "15px", height: "56px" }}
+                  label="Listing Name"
+                  variant="outlined"
+                  InputProps={{ style: inputStyle }}
+                  InputLabelProps={{
+                    style: {
+                      fontFamily: "Josefin Sans",
+                      backgroundColor: Colors.tan,
+                      borderRadius: "9px",
+                      paddingLeft: "5px",
+                      paddingRight: "5px",
+                    },
+                  }}
+                  value={listingName}
+                  onChange={(event) => setListingName(event.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControl fullWidth sx={{ height: "56px" }}>
+                  <InputLabel
+                    color="secondary"
+                    sx={{
+                      fontFamily: "Josefin Sans",
+                      backgroundColor: Colors.tan,
+                      borderRadius: "9px",
+                      paddingLeft: "5px",
+                      paddingRight: "5px",
+                    }}
+                  >
+                    Listing Condition
+                  </InputLabel>
+                  <Select
+                    color="secondary"
+                    fullWidth
+                    defaultValue=""
+                    inputProps={{ style: { fontFamily: "Josefin Sans" } }}
+                    style={inputStyle}
+                    value={listingCondition}
+                    onChange={handleConditionChange}
+                  >
+                    <MenuItem value="new">
+                      <Typography fontFamily="Josefin Sans">New</Typography>
+                    </MenuItem>
+                    <MenuItem value="like_new">
+                      <Typography fontFamily="Josefin Sans">
+                        Like New
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem value="good_condition">
+                      <Typography fontFamily="Josefin Sans">
+                        Good Condition
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem value="heavily_used">
+                      <Typography fontFamily="Josefin Sans">
+                        Heavily Used
+                      </Typography>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  color="secondary"
+                  fullWidth
+                  multiline
+                  rows={8}
+                  label="Description"
                   variant="outlined"
                   InputLabelProps={{
                     style: {
@@ -345,49 +270,172 @@ const SellForm = ({
                       paddingRight: "5px",
                     },
                   }}
-                  InputProps={{ style: inputStyle }}
-                  value={listingLocation}
-                  onChange={(e) => setListingLocation(e.target.value)}
+                  InputProps={{
+                    style: {
+                      borderRadius: "12px",
+                      fontFamily: "Josefin Sans",
+                      backgroundColor: Colors.tan,
+                    },
+                  }}
+                  value={listingDescription}
+                  onChange={(event) =>
+                    setListingDescription(event.target.value)
+                  }
                 />
-              ) : (
-                <form>
-                  <AddressAutofill accessToken="pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ">
-                    <TextField
-                      color="secondary"
-                      fullWidth
-                      label="Exchange Address"
-                      variant="outlined"
-                      InputLabelProps={{
-                        style: {
-                          fontFamily: "Josefin Sans",
-                          backgroundColor: Colors.tan,
-                          borderRadius: "9px",
-                          paddingLeft: "5px",
-                          paddingRight: "5px",
-                        },
-                      }}
-                      InputProps={{ style: inputStyle }}
-                      autoComplete="address-line1"
-                      value={listingLocation}
-                      onChange={(e) => setListingLocation(e.target.value)}
-                    />
-                  </AddressAutofill>
-                </form>
-              )}
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         </Carousel.Item>
         <Carousel.Item>
-          <Grid
+          <Box paddingX="200px" paddingBottom="145px" marginTop="45px">
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  color="secondary"
+                  fullWidth
+                  type="text"
+                  sx={{ mt: "15px", height: "56px" }}
+                  label="Listing Price"
+                  variant="outlined"
+                  InputProps={{ style: inputStyle }}
+                  InputLabelProps={{
+                    style: {
+                      fontFamily: "Josefin Sans",
+                      backgroundColor: Colors.tan,
+                      borderRadius: "9px",
+                      paddingLeft: "5px",
+                      paddingRight: "5px",
+                    },
+                  }}
+                  value={listingPrice}
+                  onChange={(event) => setListingPrice(event.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControl fullWidth sx={{ height: "56px" }}>
+                  <InputLabel
+                    color="secondary"
+                    sx={{
+                      fontFamily: "Josefin Sans",
+                      backgroundColor: Colors.tan,
+                      borderRadius: "9px",
+                      paddingLeft: "5px",
+                      paddingRight: "5px",
+                    }}
+                  >
+                    Preferred Payment Methods
+                  </InputLabel>
+                  <Select
+                    color="secondary"
+                    fullWidth
+                    multiple
+                    value={listingPaymentMethods}
+                    onChange={handlePaymentChange}
+                    renderValue={(selected) => selected.join(", ")}
+                    inputProps={{ style: { fontFamily: "Josefin Sans" } }}
+                    style={inputStyle}
+                  >
+                    {Object.values(PaymentMethod).map((method) => (
+                      <MenuItem key={method} value={method}>
+                        <Typography fontFamily="Josefin Sans">
+                          {method}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box display="flex" justifyContent="flex-end">
+                  <Typography>
+                    <Button onClick={() => setIsCustom(true)}>
+                      <Typography
+                        sx={{ textDecoration: isCustom ? "underline" : "none" }}
+                        fontFamily="Josefin Sans"
+                        textTransform="lowercase"
+                        color="black"
+                      >
+                        custom
+                      </Typography>
+                    </Button>
+                    |
+                    <Button onClick={() => setIsCustom(false)}>
+                      <Typography
+                        sx={{ textDecoration: isCustom ? "none" : "underline" }}
+                        fontFamily="Josefin Sans"
+                        textTransform="lowercase"
+                        color="black"
+                      >
+                        address
+                      </Typography>
+                    </Button>
+                  </Typography>
+                </Box>
+                {isCustom ? (
+                  <TextField
+                    color="secondary"
+                    fullWidth
+                    label="Exchange Location"
+                    variant="outlined"
+                    InputLabelProps={{
+                      style: {
+                        fontFamily: "Josefin Sans",
+                        backgroundColor: Colors.tan,
+                        borderRadius: "9px",
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                      },
+                    }}
+                    InputProps={{ style: inputStyle }}
+                    value={listingLocation}
+                    onChange={(e) => setListingLocation(e.target.value)}
+                  />
+                ) : (
+                  <form>
+                    <AddressAutofill accessToken="pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ">
+                      <TextField
+                        color="secondary"
+                        fullWidth
+                        label="Exchange Address"
+                        variant="outlined"
+                        InputLabelProps={{
+                          style: {
+                            fontFamily: "Josefin Sans",
+                            backgroundColor: Colors.tan,
+                            borderRadius: "9px",
+                            paddingLeft: "5px",
+                            paddingRight: "5px",
+                          },
+                        }}
+                        InputProps={{ style: inputStyle }}
+                        autoComplete="address-line1"
+                        value={listingLocation}
+                        onChange={(e) => setListingLocation(e.target.value)}
+                      />
+                    </AddressAutofill>
+                  </form>
+                )}
+              </Grid>
+            </Grid>
+          </Box>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Box
             display="flex"
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            paddingX="170px"
-            paddingBottom="150px"
-            height="100%"
-            width="100%"
+            paddingX="200px"
+            paddingBottom="55px"
           >
+            <CustomCarousel
+              imageUrls={previewImageUrls}
+              width={"450px"}
+              height={"330px"}
+            />
+
             <Button
               variant="contained"
               component="label"
@@ -397,6 +445,7 @@ const SellForm = ({
                   backgroundColor: Colors.celestialBlue,
                 },
                 borderRadius: "10px",
+                marginTop: "20px",
               }}
             >
               <Typography textTransform="lowercase" fontFamily="Josefin Sans">
@@ -410,18 +459,7 @@ const SellForm = ({
                 onChange={(e) => handleImageSelection(e)}
               />
             </Button>
-            <ImageList
-              sx={{ width: 500, height: 450, marginTop: 2 }}
-              cols={3}
-              rowHeight={164}
-            >
-              <CustomCarousel
-                imageUrls={imageUrls}
-                width={"250px"}
-                height={"190px"}
-              />
-            </ImageList>
-          </Grid>
+          </Box>
         </Carousel.Item>
       </Carousel>
       <Button
@@ -437,7 +475,7 @@ const SellForm = ({
           right: "35px",
           zIndex: "2",
         }}
-        onClick={handleSubmit}
+        onClick={uploadListing}
       >
         <Typography textTransform="lowercase" fontFamily="Josefin Sans">
           Submit Listing

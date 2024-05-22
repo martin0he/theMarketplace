@@ -6,8 +6,7 @@ import Box from "@mui/material/Box";
 import Colors from "../assets/Colors";
 import SellForm from "../components/SellForm";
 import PreviewTab from "../components/PreviewTab";
-import { CustomUser, Listing, PaymentMethod } from "../types";
-import { useAuth } from "../auth/AuthProvider";
+import { PaymentMethod } from "../types";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,8 +44,6 @@ const SellPage = () => {
     setValue(newValue);
   };
 
-  const { customUser } = useAuth();
-
   const [listingName, setListingName] = useState<string>("");
   const [listingCondition, setListingCondition] = useState<string>("");
   const [listingDescription, setListingDescription] = useState<string>("");
@@ -55,36 +52,7 @@ const SellPage = () => {
     PaymentMethod[]
   >([]);
   const [listingLocation, setListingLocation] = useState<string>("");
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
-
-  const exampleUser: CustomUser = {
-    username: "glazedGuat",
-    email: "martin@email.com",
-    password: "passywo",
-    school: "Northeastern Uni",
-  };
-
-  const createListing = (): Listing => {
-    return {
-      name: listingName,
-      description: listingDescription,
-      school: customUser?.school || "NA",
-      dateAdded: new Date(),
-      price: parseFloat(listingPrice),
-      seller: customUser || exampleUser,
-      paymentMethod: listingPaymentMethods,
-      exchangeLocation: listingLocation,
-      imageUrls: [], // Add logic to handle image URLs if necessary
-      condition: listingCondition,
-    };
-  };
-
-  const handleSubmit = () => {
-    const newListing = createListing();
-    //setListing(newListing);
-    console.log("New Listing Created:", newListing);
-    // Add logic to save the listing to your database
-  };
+  const [previewImageUrls, setPreviewImageUrls] = useState<string[]>([]);
 
   return (
     <Box paddingTop={12} paddingBottom={10} paddingX={5} zIndex={0}>
@@ -144,9 +112,8 @@ const SellPage = () => {
             setListingPaymentMethods={setListingPaymentMethods}
             listingLocation={listingLocation}
             setListingLocation={setListingLocation}
-            imageUrls={imageUrls}
-            setImageUrls={setImageUrls}
-            handleSubmit={handleSubmit}
+            previewImageUrls={previewImageUrls}
+            setPreviewImageUrls={setPreviewImageUrls}
           />
         </Box>
       </CustomTabPanel>
@@ -158,7 +125,7 @@ const SellPage = () => {
           listingPrice={listingPrice}
           listingPaymentMethods={listingPaymentMethods}
           listingLocation={listingLocation}
-          listingImages={imageUrls}
+          listingPreviewImages={previewImageUrls}
         />
       </CustomTabPanel>
     </Box>

@@ -10,7 +10,7 @@ interface PreviewTabProps {
   listingPrice: string;
   listingPaymentMethods: string[];
   listingLocation: string;
-  listingImages: string[];
+  listingPreviewImages: string[];
 }
 
 const PreviewTab = ({
@@ -20,7 +20,7 @@ const PreviewTab = ({
   listingPrice,
   listingPaymentMethods,
   listingLocation,
-  listingImages,
+  listingPreviewImages,
 }: PreviewTabProps) => {
   const { customUser } = useAuth();
   const formattedDate = new Date().toLocaleDateString();
@@ -102,7 +102,7 @@ const PreviewTab = ({
               <CustomCarousel
                 width="100%"
                 height="100%"
-                imageUrls={listingImages}
+                imageUrls={listingPreviewImages}
               />
             </Box>
           </Grid>
