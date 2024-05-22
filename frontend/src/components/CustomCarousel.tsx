@@ -10,7 +10,7 @@ interface CustomCarouselProps {
   imageUrls: string[];
   width: string;
   height: string;
-  isGrayArrows?: boolean;
+  isWhiteArrows?: boolean;
   isSmallArrows?: boolean;
 }
 
@@ -18,7 +18,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   imageUrls,
   width,
   height,
-  isGrayArrows,
+  isWhiteArrows,
   isSmallArrows,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -90,11 +90,16 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
             >
               {isSmallArrows ? (
                 <NavigateBeforeIcon
-                  sx={{ color: isGrayArrows ? "#9fafd6db" : "#2c3e68" }}
+                  sx={{
+                    color: isWhiteArrows ? "white" : "#2c3e68",
+                    fontSize: "13px",
+                  }}
                 />
               ) : (
                 <ArrowCircleLeftIcon
-                  sx={{ color: isGrayArrows ? "#9fafd6db" : "#2c3e68" }}
+                  sx={{
+                    color: isWhiteArrows ? "white" : "#2c3e68",
+                  }}
                 />
               )}
             </IconButton>
@@ -104,11 +109,14 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
             >
               {isSmallArrows ? (
                 <NavigateNextIcon
-                  sx={{ color: isGrayArrows ? "#9fafd6db" : "#2c3e68" }}
+                  sx={{
+                    color: isWhiteArrows ? "white" : "#2c3e68",
+                    fontSize: "13px",
+                  }}
                 />
               ) : (
                 <ArrowCircleRightIcon
-                  sx={{ color: isGrayArrows ? "#9fafd6db" : "#2c3e68" }}
+                  sx={{ color: isWhiteArrows ? "white" : "#2c3e68" }}
                 />
               )}
             </IconButton>

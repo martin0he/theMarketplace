@@ -50,7 +50,7 @@ const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
           imageUrls={imageUrls}
           width="90px"
           height="80px"
-          isGrayArrows
+          isWhiteArrows
           isSmallArrows
         />
       </Box>
