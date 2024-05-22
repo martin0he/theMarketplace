@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useAuth } from "../auth/AuthProvider";
 import useWindowDimensions from "../hooks/useWindowDimensions";
+import CustomCarousel from "./CustomCarousel";
 
 interface PreviewTabProps {
   listingName: string;
@@ -9,6 +10,7 @@ interface PreviewTabProps {
   listingPrice: string;
   listingPaymentMethods: string[];
   listingLocation: string;
+  listingImages: string[];
 }
 
 const PreviewTab = ({
@@ -18,6 +20,7 @@ const PreviewTab = ({
   listingPrice,
   listingPaymentMethods,
   listingLocation,
+  listingImages,
 }: PreviewTabProps) => {
   const { customUser } = useAuth();
   const formattedDate = new Date().toLocaleDateString();
@@ -95,12 +98,13 @@ const PreviewTab = ({
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Box
-              width="300px"
-              height="300px"
-              marginBottom="25px"
-              sx={{ backgroundColor: "green" }}
-            ></Box>
+            <Box width="300px" height="300px" marginBottom="25px">
+              <CustomCarousel
+                width="100%"
+                height="100%"
+                imageUrls={listingImages}
+              />
+            </Box>
           </Grid>
         </Grid>
 

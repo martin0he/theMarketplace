@@ -46,7 +46,6 @@ const SellPage = () => {
   };
 
   const { customUser } = useAuth();
-  //const { setListing } = useListing();
 
   const [listingName, setListingName] = useState<string>("");
   const [listingCondition, setListingCondition] = useState<string>("");
@@ -56,6 +55,7 @@ const SellPage = () => {
     PaymentMethod[]
   >([]);
   const [listingLocation, setListingLocation] = useState<string>("");
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const exampleUser: CustomUser = {
     username: "glazedGuat",
@@ -144,6 +144,8 @@ const SellPage = () => {
             setListingPaymentMethods={setListingPaymentMethods}
             listingLocation={listingLocation}
             setListingLocation={setListingLocation}
+            imageUrls={imageUrls}
+            setImageUrls={setImageUrls}
             handleSubmit={handleSubmit}
           />
         </Box>
@@ -156,6 +158,7 @@ const SellPage = () => {
           listingPrice={listingPrice}
           listingPaymentMethods={listingPaymentMethods}
           listingLocation={listingLocation}
+          listingImages={imageUrls}
         />
       </CustomTabPanel>
     </Box>

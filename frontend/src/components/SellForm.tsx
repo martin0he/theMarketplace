@@ -36,6 +36,8 @@ interface SellFormProps {
   listingLocation: string;
   setListingLocation: (value: string) => void;
   handleSubmit: () => void;
+  imageUrls: string[];
+  setImageUrls: (value: string[]) => void;
 }
 
 const SellForm = ({
@@ -51,6 +53,8 @@ const SellForm = ({
   setListingPaymentMethods,
   listingLocation,
   setListingLocation,
+  imageUrls,
+  setImageUrls,
   handleSubmit,
 }: SellFormProps) => {
   const [isCustom, setIsCustom] = useState<boolean>(true);
@@ -76,26 +80,6 @@ const SellForm = ({
   const { customUser } = useAuth();
   const [media, setMedia] = useState<any[]>([]);
 
-  const getMedia = async () => {
-    if (!customUser) return;
-    const { data, error } = await supabase.storage
-      .from("pictures")
-      .list(customUser.school + "/" + customUser.username + "/", {
-        limit: 10,
-        offset: 0,
-        sortBy: {
-          column: "name",
-          order: "asc",
-        },
-      });
-
-    if (error) {
-      console.error("Error fetching media:", error);
-    } else {
-      setMedia(data || []);
-    }
-  };
-
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!customUser || !e.target.files || e.target.files.length === 0) return;
 
@@ -115,16 +99,33 @@ const SellForm = ({
         console.log("Image uploaded successfully:", data);
       }
     }
-    getMedia();
   };
 
-  useEffect(() => {
-    getMedia();
-  }, []);
+  const handleImageSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
 
-  const imageUrls = media.map(
+    const files = Array.from(e.target.files);
+    setMedia(files);
+    const newImageUrls: string[] = [];
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result;
+        if (result) {
+          newImageUrls.push(result as string);
+          if (newImageUrls.length === files.length) {
+            setImageUrls((prevUrls) => [...prevUrls, ...newImageUrls]);
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const urlsToUpload = media.map(
     (file) =>
-      `https://egnuwqvtuxctatbhwrfq.supabase.co/storage/v1/object/public/pictures/${customUser.school}/${customUser.username}/${file.name}`
+      `https://egnuwqvtuxctatbhwrfq.supabase.co/storage/v1/object/public/pictures/${customUser?.school}/${customUser?.username}/${file.name}`
   );
 
   return (
@@ -406,7 +407,7 @@ const SellForm = ({
                 hidden
                 multiple
                 accept="image/*"
-                onChange={(e) => uploadImage(e)}
+                onChange={(e) => handleImageSelection(e)}
               />
             </Button>
             <ImageList
