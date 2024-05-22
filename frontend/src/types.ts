@@ -11,7 +11,7 @@ export interface Listing {
   paymentMethod: PaymentMethod[];
   exchangeLocation: string;
   imageUrls: string[];
-  condition: string;
+  condition: Condition;
   isSold?: boolean;
 }
 
@@ -21,6 +21,13 @@ export enum PaymentMethod {
   Zelle = "Zelle",
   BANKTRANSFER = "Bank Transfer",
   OTHER = "Other",
+}
+
+export enum Condition {
+  NEW = "New",
+  LIKENEW = "Like New",
+  GOODCONDITION = "Good Condition",
+  HEAVILYUSED = "Heavily Used",
 }
 
 export interface CustomUser extends Pick<User, "email" | "phone"> {

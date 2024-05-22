@@ -16,7 +16,7 @@ import Carousel from "react-bootstrap/Carousel";
 import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { AddressAutofill } from "@mapbox/search-js-react";
-import { Listing, PaymentMethod } from "../types";
+import { Condition, Listing, PaymentMethod } from "../types";
 import supabase from "../auth/supabase";
 import { useAuth } from "../auth/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
@@ -25,8 +25,8 @@ import CustomCarousel from "./CustomCarousel";
 interface SellFormProps {
   listingName: string;
   setListingName: (value: string) => void;
-  listingCondition: string;
-  setListingCondition: (value: string) => void;
+  listingCondition: Condition;
+  setListingCondition: (value: Condition) => void;
   listingDescription: string;
   setListingDescription: (value: string) => void;
   listingPrice: string;
@@ -71,8 +71,9 @@ const SellForm = ({
     );
   };
 
-  const handleConditionChange = (event: SelectChangeEvent<string>) => {
-    setListingCondition(event.target.value);
+  const handleConditionChange = (event: SelectChangeEvent<Condition>) => {
+    const { value } = event.target;
+    setListingCondition(value as Condition);
   };
 
   const { customUser } = useAuth();
@@ -225,30 +226,18 @@ const SellForm = ({
                   <Select
                     color="secondary"
                     fullWidth
-                    defaultValue=""
                     inputProps={{ style: { fontFamily: "Josefin Sans" } }}
                     style={inputStyle}
                     value={listingCondition}
                     onChange={handleConditionChange}
                   >
-                    <MenuItem value="new">
-                      <Typography fontFamily="Josefin Sans">New</Typography>
-                    </MenuItem>
-                    <MenuItem value="like_new">
-                      <Typography fontFamily="Josefin Sans">
-                        Like New
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem value="good_condition">
-                      <Typography fontFamily="Josefin Sans">
-                        Good Condition
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem value="heavily_used">
-                      <Typography fontFamily="Josefin Sans">
-                        Heavily Used
-                      </Typography>
-                    </MenuItem>
+                    {Object.values(Condition).map((condition) => (
+                      <MenuItem key={condition} value={condition}>
+                        <Typography fontFamily="Josefin Sans">
+                          {condition}
+                        </Typography>
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>

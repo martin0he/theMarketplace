@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Colors from "../assets/Colors";
 import SellForm from "../components/SellForm";
 import PreviewTab from "../components/PreviewTab";
-import { PaymentMethod } from "../types";
+import { Condition, PaymentMethod } from "../types";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,7 +45,7 @@ const SellPage = () => {
   };
 
   const [listingName, setListingName] = useState<string>("");
-  const [listingCondition, setListingCondition] = useState<string>("");
+  const [listingCondition, setListingCondition] = useState<Condition>();
   const [listingDescription, setListingDescription] = useState<string>("");
   const [listingPrice, setListingPrice] = useState<string>("");
   const [listingPaymentMethods, setListingPaymentMethods] = useState<
