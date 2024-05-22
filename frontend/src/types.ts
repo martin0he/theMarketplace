@@ -11,7 +11,7 @@ export interface Listing {
   paymentMethod: PaymentMethod[];
   exchangeLocation: string;
   imageUrls: string[];
-  condition: Condition;
+  condition: Condition | undefined;
   isSold?: boolean;
 }
 

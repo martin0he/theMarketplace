@@ -25,7 +25,7 @@ import CustomCarousel from "./CustomCarousel";
 interface SellFormProps {
   listingName: string;
   setListingName: (value: string) => void;
-  listingCondition: Condition;
+  listingCondition: Condition | undefined;
   setListingCondition: (value: Condition) => void;
   listingDescription: string;
   setListingDescription: (value: string) => void;
@@ -78,7 +78,6 @@ const SellForm = ({
 
   const { customUser } = useAuth();
   const [media, setMedia] = useState<any[]>([]);
-  const [urls, setUrls] = useState<string[]>([]);
 
   /*const urlsToUpload = media.map(
     (file) =>
@@ -89,13 +88,14 @@ const SellForm = ({
   const uploadListing = async () => {
     if (!customUser || !media || media.length === 0) return;
 
-    const files = media;
-    for (const file of files) {
+    const newUrls: string[] = [];
+
+    // Upload files and collect URLs
+    for (const file of media) {
       const filePath = `${customUser.school}/${
         customUser.username
       }/${uuidv4()}`;
       const tempUrl = `https://egnuwqvtuxctatbhwrfq.supabase.co/storage/v1/object/public/pictures/${filePath}`;
-      urls.push(tempUrl);
 
       const { data, error } = await supabase.storage
         .from("pictures")
@@ -105,41 +105,44 @@ const SellForm = ({
         console.error("Error uploading image:", error);
       } else {
         console.log("Image uploaded successfully:", data);
-        const listing: Listing = {
-          name: listingName,
-          description: listingDescription,
-          school: customUser?.school,
-          dateAdded: new Date(),
-          price: parseFloat(listingPrice),
-          seller: customUser,
-          paymentMethod: listingPaymentMethods,
-          exchangeLocation: listingLocation,
-          imageUrls: urls,
-          condition: listingCondition,
-        };
-
-        const { data: listingData, error: uploadError } = await supabase
-          .from("Listings")
-          .insert([
-            {
-              name: listing.name,
-              created_at: new Date(),
-              price: listing.price,
-              payment_method: listing.paymentMethod,
-              exchange_location: listing.exchangeLocation,
-              school: listing.school,
-              description: listing.description,
-              imageUrls: listing.imageUrls,
-              condition: listing.condition,
-            },
-          ])
-          .select();
-        if (uploadError) {
-          console.error("Error inserting new listing:", uploadError);
-        } else {
-          console.log("uploaded new listing", listingData);
-        }
+        newUrls.push(tempUrl);
       }
+    }
+
+    const listing: Listing = {
+      name: listingName,
+      description: listingDescription,
+      school: customUser.school,
+      dateAdded: new Date(),
+      price: parseFloat(listingPrice),
+      seller: customUser,
+      paymentMethod: listingPaymentMethods,
+      exchangeLocation: listingLocation,
+      imageUrls: newUrls,
+      condition: listingCondition,
+    };
+
+    const { data: listingData, error: uploadError } = await supabase
+      .from("Listings")
+      .insert([
+        {
+          name: listing.name,
+          created_at: new Date(),
+          price: listing.price,
+          payment_method: listing.paymentMethod,
+          exchange_location: listing.exchangeLocation,
+          school: listing.school,
+          description: listing.description,
+          imageUrls: listing.imageUrls,
+          condition: listing.condition,
+        },
+      ])
+      .select();
+
+    if (uploadError) {
+      console.error("Error inserting new listing:", uploadError);
+    } else {
+      console.log("Uploaded new listing:", listingData);
     }
   };
 

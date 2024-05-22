@@ -2,10 +2,11 @@ import { Box, Grid, Typography } from "@mui/material";
 import { useAuth } from "../auth/AuthProvider";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import CustomCarousel from "./CustomCarousel";
+import { Condition } from "../types";
 
 interface PreviewTabProps {
   listingName: string;
-  listingCondition: string;
+  listingCondition: Condition | undefined;
   listingDescription: string;
   listingPrice: string;
   listingPaymentMethods: string[];
