@@ -115,15 +115,14 @@ const PreviewTab = ({
               sx={{ margin: "5px 0", fontSize: "19px" }}
             >
               <strong>Payment: </strong>
+              {listingPaymentMethods.length < 1 ? "N/A" : ""}
             </Typography>
             <ul style={{ paddingLeft: "18px", margin: "3px" }}>
-              {listingPaymentMethods && listingPaymentMethods.length > 0
-                ? listingPaymentMethods.map((method, index) => (
-                    <li key={index} style={{ fontSize: "18px" }}>
-                      {method}
-                    </li>
-                  ))
-                : "N/A"}
+              {listingPaymentMethods.map((method, index) => (
+                <li key={index} style={{ fontSize: "18px" }}>
+                  {method}
+                </li>
+              ))}
             </ul>
           </Grid>
           <Grid item xs={12} md={6}>
