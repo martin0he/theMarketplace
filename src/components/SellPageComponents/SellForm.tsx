@@ -149,11 +149,11 @@ const SellForm = ({
   {
     /*this handles converting images from files to url strings so that they can be previewed, NO uploading here*/
   }
+
   const handleImageSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
 
     const files = Array.from(e.target.files);
-    //stores the selected file in the useState
     setMedia(files);
     const newImageUrls: string[] = [];
 
@@ -164,7 +164,7 @@ const SellForm = ({
         if (result) {
           newImageUrls.push(result as string);
           if (newImageUrls.length === files.length) {
-            setPreviewImageUrls((prevUrls) => [...prevUrls, ...newImageUrls]);
+            setPreviewImageUrls([...previewImageUrls, ...newImageUrls]);
           }
         }
       };

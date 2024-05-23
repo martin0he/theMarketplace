@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import Colors from "../../assets/Colors";
-import { ReactElement, useState } from "react";
+import { FormEvent, ReactElement, useState } from "react";
 import supabase from "../../auth/supabase";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -29,43 +29,43 @@ const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-  function handleChange(event) {
-    setFormData((prevFormData) => {
-      return {
-        ...prevFormData,
-        [event.target.name]: event.target.value,
-      };
-    });
-  }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [event.target.name]: event.target.value,
+    }));
+  };
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent default form submission behavior
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
-      error
-        ? setAlert(
-            <Alert variant="outlined" severity="error">
-              {error.message}
-            </Alert>
-          )
-        : setAlert(
-            <Alert variant="outlined" severity="success">
-              Successfully signed in!
-            </Alert>
-          );
-
+      if (error) {
+        setAlert(
+          <Alert variant="outlined" severity="error">
+            {error.message}
+          </Alert>
+        );
+      } else {
+        setAlert(
+          <Alert variant="outlined" severity="success">
+            Successfully signed in!
+          </Alert>
+        );
+      }
       console.log(data, error);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <>

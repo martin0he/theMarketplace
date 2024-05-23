@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Alert,
@@ -13,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import Colors from "../../assets/Colors";
-import { useState, ReactElement } from "react";
+import { useState, ReactElement, FormEvent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import supabase from "../../auth/supabase";
 import { Universities } from "../../assets/Universities";
@@ -36,7 +37,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-  function handleChange(event) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
@@ -45,7 +46,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
     });
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       const { data, error } = await supabase.auth.signUp({
