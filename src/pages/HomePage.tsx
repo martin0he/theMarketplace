@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Grid, Tooltip, Typography } from "@mui/material";
 import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
@@ -19,6 +20,7 @@ const HomePage = () => {
   const [recentlySoldListings, setRecentlySoldListings] = useState<Listing[]>(
     []
   );
+
   useEffect(() => {
     const fetchUserListings = async () => {
       const { data: Listings, error } = await supabase
@@ -56,7 +58,6 @@ const HomePage = () => {
       const { data: Listings, error } = await supabase
         .from("Listings")
         .select("*")
-        .is("date_deleted", !null)
         .gt("date_deleted", sevenDaysAgo);
 
       if (error) {
@@ -94,6 +95,8 @@ const HomePage = () => {
           </Typography>
         ) : (
           <Tooltip
+            arrow
+            placement="bottom"
             title={
               <Typography fontFamily="Josefin Sans">
                 to use theMarketplace, you need to be signed in
@@ -181,7 +184,7 @@ const HomePage = () => {
                       },
                     }}
                   >
-                    {userListings ? (
+                    {userListings.length > 0 ? (
                       userListings.map((listing, index) => (
                         <SmallListingCard key={index} listing={listing} />
                       ))
@@ -246,7 +249,7 @@ const HomePage = () => {
                       },
                     }}
                   >
-                    {usersLikedListings ? (
+                    {usersLikedListings.length > 0 ? (
                       usersLikedListings.map((listing, index) => (
                         <SmallListingCard key={index} listing={listing} />
                       ))

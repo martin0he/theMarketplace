@@ -1,6 +1,7 @@
 import { User } from "@supabase/supabase-js";
 
 export interface Listing {
+  id?: string;
   name: string;
   description: string;
   school: string;
@@ -13,6 +14,7 @@ export interface Listing {
   imageUrls: string[];
   condition: Condition | undefined;
   isSold?: boolean;
+  liked_by: string[];
 }
 
 export enum PaymentMethod {

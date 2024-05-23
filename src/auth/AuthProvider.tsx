@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Session, User } from "@supabase/supabase-js";
 import { useContext, useState, useEffect, createContext } from "react";
 import supabase from "./supabase";
