@@ -4,7 +4,7 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import Colors from "../assets/Colors";
+import Colors from "../../assets/Colors";
 
 interface CustomCarouselProps {
   imageUrls: string[];

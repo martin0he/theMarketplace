@@ -1,9 +1,9 @@
 import { Box, Grid, Typography } from "@mui/material";
 import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import SmallListingCard from "../components/SmallListingCard";
+import SmallListingCard from "../components/general/SmallListingCard";
 import { useAuth } from "../auth/AuthProvider";
-import UniversityTitle from "../components/UniversityTitle";
+import UniversityTitle from "../components/general/UniversityTitle";
 import supabase from "../auth/supabase";
 import { Listing } from "../types";
 import { useEffect, useState } from "react";

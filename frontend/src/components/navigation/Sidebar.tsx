@@ -10,7 +10,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useState } from "react";
-import Colors from "../assets/Colors";
+import Colors from "../../assets/Colors";
 
 const Sidebar = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -33,7 +33,7 @@ const Sidebar = () => {
           </Link>
         </ListItem>
         <ListItem disablePadding>
-          <Link href="/test" underline="none" width="100%">
+          <Link href="/sell" underline="none" width="100%">
             <ListItemButton>
               <ListItemText
                 primaryTypographyProps={{

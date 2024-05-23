@@ -1,6 +1,6 @@
 import { Box, Button, Link, Typography } from "@mui/material";
-import Colors from "../assets/Colors";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import Colors from "../../assets/Colors";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 import Sidebar from "./Sidebar";
 
 import AccountMenu from "./AccountMenu";

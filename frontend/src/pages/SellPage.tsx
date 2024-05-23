@@ -4,8 +4,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Colors from "../assets/Colors";
-import SellForm from "../components/SellForm";
-import PreviewTab from "../components/PreviewTab";
+import SellForm from "../components/SellPageComponents/SellForm";
+import PreviewTab from "../components/SellPageComponents/PreviewTab";
 import { Condition, PaymentMethod } from "../types";
 
 interface TabPanelProps {

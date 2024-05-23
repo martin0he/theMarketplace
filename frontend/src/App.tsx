@@ -4,8 +4,8 @@ import TestPage from "./pages/TestPage";
 import AboutPage from "./pages/AboutPage";
 import AuthPage from "./pages/AuthPage";
 import { AuthProvider } from "./auth/AuthProvider";
-import Navbar from "./components/Navbar";
-import Masthead from "./components/Masthead";
+import Navbar from "./components/navigation/Navbar";
+import Masthead from "./components/navigation/Masthead";
 import SellPage from "./pages/SellPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 

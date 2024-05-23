@@ -13,14 +13,14 @@ import {
   Typography,
 } from "@mui/material";
 import Carousel from "react-bootstrap/Carousel";
-import Colors from "../assets/Colors";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import Colors from "../../assets/Colors";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { AddressAutofill } from "@mapbox/search-js-react";
-import { Condition, Listing, PaymentMethod } from "../types";
-import supabase from "../auth/supabase";
-import { useAuth } from "../auth/AuthProvider";
+import { Condition, Listing, PaymentMethod } from "../../types";
+import supabase from "../../auth/supabase";
+import { useAuth } from "../../auth/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
-import CustomCarousel from "./CustomCarousel";
+import CustomCarousel from "../general/CustomCarousel";
 
 interface SellFormProps {
   listingName: string;

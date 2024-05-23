@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
-import Colors from "../assets/Colors";
-import { useAuth } from "../auth/AuthProvider";
+import Colors from "../../assets/Colors";
+import { useAuth } from "../../auth/AuthProvider";
 import { useEffect, useState } from "react";
-import { Universities } from "../assets/Universities";
+import { Universities } from "../../assets/Universities";
 
 const UniversityTitle = () => {
   const { customUser } = useAuth();
