@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Tooltip, Typography } from "@mui/material";
 import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import SmallListingCard from "../components/general/SmallListingCard";
@@ -7,6 +7,7 @@ import UniversityTitle from "../components/general/UniversityTitle";
 import supabase from "../auth/supabase";
 import { Listing } from "../types";
 import { useEffect, useState } from "react";
+import InfoIcon from "@mui/icons-material/Info";
 
 const HomePage = () => {
   const { width } = useWindowDimensions();
@@ -32,11 +33,26 @@ const HomePage = () => {
   return (
     <Box paddingTop={10} paddingBottom={40}>
       <Box justifyContent="center" display="flex" alignItems="center">
-        <Typography fontFamily={"inherit"} fontSize={30} marginTop={7}>
-          {customUser !== null
-            ? `Hello ${customUser?.username}`
-            : "Not Logged In"}
-        </Typography>
+        {customUser !== null ? (
+          <Typography fontFamily={"inherit"} fontSize={30} marginTop={7}>
+            {`Hello ${customUser?.username}`}
+          </Typography>
+        ) : (
+          <Tooltip
+            title={
+              <Typography fontFamily="Josefin Sans">
+                to use theMarketplace, you need to be signed in
+              </Typography>
+            }
+          >
+            <span style={{ display: "flex", alignItems: "center" }}>
+              <Typography fontFamily="Josefin Sans" fontSize={30} marginTop={7}>
+                Not Logged In
+              </Typography>
+              <InfoIcon fontSize="small" sx={{ marginLeft: 1 }} />
+            </span>
+          </Tooltip>
+        )}
       </Box>
 
       <Box marginTop={8} marginLeft={5}>

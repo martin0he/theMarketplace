@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Typography } from "@mui/material";
 import Colors from "../../assets/Colors";
 import { useAuth } from "../../auth/AuthProvider";

@@ -468,6 +468,7 @@ const SellForm = ({
           zIndex: "2",
         }}
         onClick={uploadListing}
+        disabled={customUser === null}
       >
         <Typography textTransform="lowercase" fontFamily="Josefin Sans">
           Submit Listing

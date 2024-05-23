@@ -17,6 +17,7 @@ import SignInModal from "../modals/SignInModal";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import { Person } from "@mui/icons-material";
+import NoAccountsIcon from "@mui/icons-material/NoAccounts";
 
 const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -80,7 +81,7 @@ const AccountMenu = () => {
                     {customUser.username.charAt(0).toUpperCase()}
                   </Typography>
                 ) : (
-                  ""
+                  <NoAccountsIcon />
                 )}
               </Avatar>
             </IconButton>
