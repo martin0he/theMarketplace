@@ -6,7 +6,7 @@ import { Condition } from "../types";
 
 interface PreviewTabProps {
   listingName: string;
-  listingCondition: Condition | undefined;
+  listingCondition: Condition;
   listingDescription: string;
   listingPrice: string;
   listingPaymentMethods: string[];

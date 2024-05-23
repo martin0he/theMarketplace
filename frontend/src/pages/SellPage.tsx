@@ -45,7 +45,9 @@ const SellPage = () => {
   };
 
   const [listingName, setListingName] = useState<string>("");
-  const [listingCondition, setListingCondition] = useState<Condition>();
+  const [listingCondition, setListingCondition] = useState<Condition>(
+    Condition.EMPTY
+  );
   const [listingDescription, setListingDescription] = useState<string>("");
   const [listingPrice, setListingPrice] = useState<string>("");
   const [listingPaymentMethods, setListingPaymentMethods] = useState<

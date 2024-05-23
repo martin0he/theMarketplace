@@ -28,6 +28,7 @@ export enum Condition {
   LIKENEW = "Like New",
   GOODCONDITION = "Good Condition",
   HEAVILYUSED = "Heavily Used",
+  EMPTY = "",
 }
 
 export interface CustomUser extends Pick<User, "email" | "phone"> {

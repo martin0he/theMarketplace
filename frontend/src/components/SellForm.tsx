@@ -25,7 +25,7 @@ import CustomCarousel from "./CustomCarousel";
 interface SellFormProps {
   listingName: string;
   setListingName: (value: string) => void;
-  listingCondition: Condition | undefined;
+  listingCondition: Condition;
   setListingCondition: (value: Condition) => void;
   listingDescription: string;
   setListingDescription: (value: string) => void;

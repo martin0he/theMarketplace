@@ -4,59 +4,30 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import SmallListingCard from "../components/SmallListingCard";
 import { useAuth } from "../auth/AuthProvider";
 import UniversityTitle from "../components/UniversityTitle";
-import { CustomUser, Listing } from "../types";
+import supabase from "../auth/supabase";
+import { Listing } from "../types";
+import { useEffect, useState } from "react";
 
 const HomePage = () => {
   const { width } = useWindowDimensions();
+  const { customUser, user } = useAuth();
+  const [userListings, setUserListings] = useState<Listing[]>([]);
+  useEffect(() => {
+    const fetchUserListings = async () => {
+      const { data: Listings, error } = await supabase
+        .from("Listings")
+        .select("*")
+        .eq("seller_id", user?.id);
 
-  const exampleUser: CustomUser = {
-    username: "glazedGuat",
-    email: "martin@email.com",
-    password: "passywo",
-    school: "Northeastern Uni",
-  };
+      if (error) {
+        console.error("Error fetching listings:", error);
+      } else {
+        setUserListings(Listings as Listing[]);
+      }
+    };
 
-  const exampleListing: Listing = {
-    name: "Example Small Item",
-    dateAdded: new Date(),
-    price: 2800.6,
-    seller: exampleUser,
-    paymentMethod: [],
-    exchangeLocation: "",
-    imageUrls: [
-      "https://picsum.photos/90/80",
-      "https://picsum.photos/id/237/90/80",
-      "https://picsum.photos/90/80",
-      "https://picsum.photos/id/237/90/80",
-    ],
-    school: "Northeastern Uni",
-    description: "",
-    condition: "",
-  };
-
-  const exampleSoldListing: Listing = {
-    name: "Example Sold Small Item",
-    dateAdded: new Date(),
-    dateDeleted: new Date(),
-    price: 2800.6,
-    seller: exampleUser,
-    paymentMethod: [],
-    exchangeLocation: "",
-    imageUrls: [],
-    school: "Northeastern Uni",
-    description: "",
-    condition: "",
-  };
-
-  const likingUser: CustomUser = {
-    username: "liker",
-    email: "iLikeStuff@Hotmail.com",
-    password: "password",
-    itemsLiked: [exampleListing],
-    school: "Northeastern Uni",
-  };
-
-  const { customUser } = useAuth();
+    fetchUserListings();
+  }, [user]);
 
   return (
     <Box paddingTop={10} paddingBottom={40}>
@@ -71,7 +42,6 @@ const HomePage = () => {
       <Box marginTop={8} marginLeft={5}>
         <UniversityTitle />
       </Box>
-
       <Box
         justifyContent={"center"}
         alignItems={"center"}
@@ -88,6 +58,7 @@ const HomePage = () => {
             columnGap={4}
           >
             <Grid item xs={12} md={5} paddingY="10px">
+              {/* insert first component here */}
               <Box
                 width="100%"
                 height="100%"
@@ -139,16 +110,15 @@ const HomePage = () => {
                       },
                     }}
                   >
-                    <SmallListingCard listing={exampleListing} />
-                    <SmallListingCard listing={exampleListing} />
-                    <SmallListingCard listing={exampleListing} />
-                    <SmallListingCard listing={exampleListing} />
-                    <SmallListingCard listing={exampleListing} />
+                    {userListings.map((listing, index) => (
+                      <SmallListingCard key={index} listing={listing} />
+                    ))}
                   </Box>
                 </Box>
               </Box>
             </Grid>
             <Grid item xs={12} md={6} paddingY="10px">
+              {/* insert second component here */}
               <Box
                 width="100%"
                 height="100%"
@@ -199,21 +169,9 @@ const HomePage = () => {
                       },
                     }}
                   >
-                    {likingUser.itemsLiked?.map((item) => (
-                      <SmallListingCard isLikable={true} listing={item} />
+                    {userListings.map((listing, index) => (
+                      <SmallListingCard key={index} listing={listing} />
                     ))}
-                    <SmallListingCard
-                      isLikable={true}
-                      listing={exampleListing}
-                    />
-                    <SmallListingCard
-                      isLikable={true}
-                      listing={exampleListing}
-                    />
-                    <SmallListingCard
-                      isLikable={true}
-                      listing={exampleListing}
-                    />
                   </Box>
                 </Box>
               </Box>
@@ -230,6 +188,7 @@ const HomePage = () => {
             marginTop="7px"
           >
             <Grid item xs={12} md={6} paddingY="10px">
+              {/* insert third component here */}
               <Box
                 width="100%"
                 height="100%"
@@ -280,31 +239,15 @@ const HomePage = () => {
                       },
                     }}
                   >
-                    <SmallListingCard
-                      isLikable={true}
-                      listing={exampleListing}
-                    />
-                    <SmallListingCard
-                      isLikable={true}
-                      listing={exampleListing}
-                    />
-                    <SmallListingCard
-                      isLikable={true}
-                      listing={exampleListing}
-                    />
-                    <SmallListingCard
-                      isLikable={true}
-                      listing={exampleListing}
-                    />
-                    <SmallListingCard
-                      isLikable={true}
-                      listing={exampleListing}
-                    />
+                    {userListings.map((listing, index) => (
+                      <SmallListingCard key={index} listing={listing} />
+                    ))}
                   </Box>
                 </Box>
               </Box>
             </Grid>
             <Grid item xs={12} md={5} paddingY="10px">
+              {/* insert fourth component here */}
               <Box
                 width="100%"
                 height="100%"
@@ -355,11 +298,9 @@ const HomePage = () => {
                       },
                     }}
                   >
-                    <SmallListingCard listing={exampleSoldListing} />
-                    <SmallListingCard listing={exampleSoldListing} />
-                    <SmallListingCard listing={exampleSoldListing} />
-                    <SmallListingCard listing={exampleSoldListing} />
-                    <SmallListingCard listing={exampleSoldListing} />
+                    {userListings.map((listing, index) => (
+                      <SmallListingCard key={index} listing={listing} />
+                    ))}
                   </Box>
                 </Box>
               </Box>
