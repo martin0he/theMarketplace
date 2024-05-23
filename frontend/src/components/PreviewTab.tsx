@@ -48,7 +48,7 @@ const PreviewTab = ({
         </Grid>
 
         <Grid item container>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={6}>
             <Box>
               <Typography
                 fontFamily="Josefin Sans"
@@ -98,13 +98,49 @@ const PreviewTab = ({
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Box width="300px" height="300px" marginBottom="25px">
+          <Grid item xs={6}>
+            <Box
+              width={0.4 * width}
+              height={0.4 * height}
+              marginBottom="25px"
+              sx={{
+                position: "relative",
+                borderRadius: "12px",
+                boxShadow: 2,
+                minWidth: "200px",
+                flex: "0 0 auto",
+                marginLeft: 1,
+                overflow: "clip",
+              }}
+            >
               <CustomCarousel
                 width="100%"
                 height="100%"
                 imageUrls={listingPreviewImages}
               />
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "15px",
+                  right: "20px",
+                  transform: "rotate(-45deg) translate(50%, -50%)",
+                  transformOrigin: "bottom right",
+                  backgroundColor: "#96b17c",
+                  padding: "10px",
+                  zIndex: 1,
+                  width: "250px",
+                  boxShadow: "1px 1px 5px #2c292e",
+                }}
+              >
+                <Typography
+                  fontFamily="inherit"
+                  color="white"
+                  textAlign="center"
+                  sx={{ fontSize: "1rem" }}
+                >
+                  {listingPrice ? `$${listingPrice}` : "No Price"}
+                </Typography>
+              </Box>
             </Box>
           </Grid>
         </Grid>
