@@ -8,11 +8,17 @@ import supabase from "../auth/supabase";
 import { Listing } from "../types";
 import { useEffect, useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
+import { formatISO, subDays } from "date-fns";
 
 const HomePage = () => {
   const { width } = useWindowDimensions();
   const { customUser, user } = useAuth();
   const [userListings, setUserListings] = useState<Listing[]>([]);
+  const [usersLikedListings, setUsersLikedListings] = useState<Listing[]>([]);
+  const [recentListings, setRecentListings] = useState<Listing[]>([]);
+  const [recentlySoldListings, setRecentlySoldListings] = useState<Listing[]>(
+    []
+  );
   useEffect(() => {
     const fetchUserListings = async () => {
       const { data: Listings, error } = await supabase
@@ -21,13 +27,62 @@ const HomePage = () => {
         .eq("seller_id", user?.id);
 
       if (error) {
-        console.error("Error fetching listings:", error);
+        console.error("Error fetching user listings:", error);
       } else {
         setUserListings(Listings as Listing[]);
       }
     };
 
+    const fetchRecentListings = async () => {
+      const sevenDaysAgo = formatISO(subDays(new Date(), 7), {
+        representation: "date",
+      });
+      const { data: Listings, error } = await supabase
+        .from("Listings")
+        .select("*")
+        .gt("created_at", sevenDaysAgo);
+
+      if (error) {
+        console.error("Error fetching recent listings:", error);
+      } else {
+        setRecentListings(Listings as Listing[]);
+      }
+    };
+
+    const fetchRecentlySoldListings = async () => {
+      const sevenDaysAgo = formatISO(subDays(new Date(), 7), {
+        representation: "date",
+      });
+      const { data: Listings, error } = await supabase
+        .from("Listings")
+        .select("*")
+        .is("date_deleted", !null)
+        .gt("date_deleted", sevenDaysAgo);
+
+      if (error) {
+        console.error("Error fetching recently sold listings:", error);
+      } else {
+        setRecentlySoldListings(Listings as Listing[]);
+      }
+    };
+
+    const fetchUserLikedListings = async () => {
+      const { data: Listings, error } = await supabase
+        .from("Listings")
+        .select("*")
+        .contains("liked_by", [user?.id]);
+
+      if (error) {
+        console.error("Error fetching users liked listings:", error);
+      } else {
+        setUsersLikedListings(Listings as Listing[]);
+      }
+    };
+
     fetchUserListings();
+    fetchRecentListings();
+    fetchRecentlySoldListings();
+    fetchUserLikedListings();
   }, [user]);
 
   return (
@@ -126,9 +181,15 @@ const HomePage = () => {
                       },
                     }}
                   >
-                    {userListings.map((listing, index) => (
-                      <SmallListingCard key={index} listing={listing} />
-                    ))}
+                    {userListings ? (
+                      userListings.map((listing, index) => (
+                        <SmallListingCard key={index} listing={listing} />
+                      ))
+                    ) : (
+                      <Typography fontFamily="Josefin Sans">
+                        You haven't posted anything!
+                      </Typography>
+                    )}
                   </Box>
                 </Box>
               </Box>
@@ -185,9 +246,15 @@ const HomePage = () => {
                       },
                     }}
                   >
-                    {userListings.map((listing, index) => (
-                      <SmallListingCard key={index} listing={listing} />
-                    ))}
+                    {usersLikedListings ? (
+                      usersLikedListings.map((listing, index) => (
+                        <SmallListingCard key={index} listing={listing} />
+                      ))
+                    ) : (
+                      <Typography fontFamily="Josefin Sans">
+                        You haven't liked any listings!
+                      </Typography>
+                    )}
                   </Box>
                 </Box>
               </Box>
@@ -255,9 +322,19 @@ const HomePage = () => {
                       },
                     }}
                   >
-                    {userListings.map((listing, index) => (
-                      <SmallListingCard key={index} listing={listing} />
-                    ))}
+                    {recentListings.length > 0 ? (
+                      recentListings.map((listing, index) => (
+                        <SmallListingCard
+                          key={index}
+                          listing={listing}
+                          isLikable
+                        />
+                      ))
+                    ) : (
+                      <Typography fontFamily="Josefin Sans">
+                        Nothing has been posted within the last week :(
+                      </Typography>
+                    )}
                   </Box>
                 </Box>
               </Box>
@@ -314,9 +391,15 @@ const HomePage = () => {
                       },
                     }}
                   >
-                    {userListings.map((listing, index) => (
-                      <SmallListingCard key={index} listing={listing} />
-                    ))}
+                    {recentlySoldListings.length > 0 ? (
+                      recentlySoldListings.map((listing, index) => (
+                        <SmallListingCard key={index} listing={listing} />
+                      ))
+                    ) : (
+                      <Typography fontFamily="Josefin Sans">
+                        Nothing sold within the last week!
+                      </Typography>
+                    )}
                   </Box>
                 </Box>
               </Box>
