@@ -42,6 +42,7 @@ const SellPage = () => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    console.log(event);
   };
 
   const [listingName, setListingName] = useState<string>("");

@@ -89,6 +89,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
             </Alert>
           );
         } else {
+          console.log(newUser);
           setAlert(
             <Alert variant="outlined" severity="success">
               Successfully registered! Check your inbox for verification email.
