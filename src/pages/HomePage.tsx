@@ -55,7 +55,8 @@ const HomePage = () => {
       const { data: Listings, error } = await supabase
         .from("Listings")
         .select("*")
-        .gt("created_at", sevenDaysAgo);
+        .gt("created_at", sevenDaysAgo)
+        .eq("school", customUser?.school);
 
       if (error) {
         console.error("Error fetching recent listings:", error);
@@ -71,7 +72,8 @@ const HomePage = () => {
       const { data: Listings, error } = await supabase
         .from("Listings")
         .select("*")
-        .gt("date_deleted", sevenDaysAgo);
+        .gt("date_deleted", sevenDaysAgo)
+        .eq("school", customUser?.school);
 
       if (error) {
         console.error("Error fetching recently sold listings:", error);
