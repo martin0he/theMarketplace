@@ -16,11 +16,9 @@ interface SmallListingCardProps {
 const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
   const { user } = useAuth();
   const [likeColor, setLikeColor] = useState<string>("#b8b7b7");
-  const [likedBy, setLikedBy] = useState<string[]>([]);
 
   useEffect(() => {
     if (listing.liked_by && user?.id) {
-      setLikedBy(listing.liked_by);
       if (listing.liked_by.includes(user.id)) {
         setLikeColor("#e61919");
       }
@@ -59,15 +57,15 @@ const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
     const { error: updateError } = await supabase
       .from("Listings")
       .update({ liked_by: updatedLikedBy })
-      .eq("id", listing.id);
+      .eq("id", listing.id)
+      .select("liked_by");
 
     if (updateError) {
       console.error("Error updating liked_by:", updateError);
     } else {
       console.log("Successfully updated liked_by");
-      // Update the like color and state based on the new state
+      // Update the like color based on the new state
       setLikeColor(hasLiked ? "#b8b7b7" : "#e61919");
-      setLikedBy(updatedLikedBy);
     }
   };
 
