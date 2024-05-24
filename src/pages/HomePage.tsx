@@ -21,6 +21,19 @@ const HomePage = () => {
     []
   );
 
+  const fetchUserLikedListings = async () => {
+    const { data: Listings, error } = await supabase
+      .from("Listings")
+      .select("*")
+      .contains("liked_by", [user?.id]);
+
+    if (error) {
+      console.error("Error fetching users liked listings:", error);
+    } else {
+      setUsersLikedListings(Listings as Listing[]);
+    }
+  };
+
   useEffect(() => {
     const fetchUserListings = async () => {
       const { data: Listings, error } = await supabase
@@ -64,19 +77,6 @@ const HomePage = () => {
         console.error("Error fetching recently sold listings:", error);
       } else {
         setRecentlySoldListings(Listings as Listing[]);
-      }
-    };
-
-    const fetchUserLikedListings = async () => {
-      const { data: Listings, error } = await supabase
-        .from("Listings")
-        .select("*")
-        .contains("liked_by", [user?.id]);
-
-      if (error) {
-        console.error("Error fetching users liked listings:", error);
-      } else {
-        setUsersLikedListings(Listings as Listing[]);
       }
     };
 
@@ -251,7 +251,11 @@ const HomePage = () => {
                   >
                     {usersLikedListings.length > 0 ? (
                       usersLikedListings.map((listing, index) => (
-                        <SmallListingCard key={index} listing={listing} />
+                        <SmallListingCard
+                          key={index}
+                          listing={listing}
+                          onLikeChange={fetchUserLikedListings}
+                        />
                       ))
                     ) : (
                       <Typography fontFamily="Josefin Sans">
@@ -331,6 +335,7 @@ const HomePage = () => {
                           key={index}
                           listing={listing}
                           isLikable
+                          onLikeChange={fetchUserLikedListings}
                         />
                       ))
                     ) : (

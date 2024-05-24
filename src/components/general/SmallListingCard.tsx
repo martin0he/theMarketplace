@@ -11,9 +11,14 @@ import { useAuth } from "../../auth/AuthProvider";
 interface SmallListingCardProps {
   listing: Listing;
   isLikable?: boolean;
+  onLikeChange?: () => void; // Callback function to notify parent component of like changes
 }
 
-const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
+const SmallListingCard = ({
+  listing,
+  isLikable,
+  onLikeChange,
+}: SmallListingCardProps) => {
   const { user } = useAuth();
   const [likeColor, setLikeColor] = useState<string>("#b8b7b7");
 
@@ -66,6 +71,11 @@ const SmallListingCard = ({ listing, isLikable }: SmallListingCardProps) => {
       console.log("Successfully updated liked_by");
       // Update the like color based on the new state
       setLikeColor(hasLiked ? "#b8b7b7" : "#e61919");
+
+      // Notify parent component of the change
+      if (onLikeChange) {
+        onLikeChange();
+      }
     }
   };
 
