@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, IconButton, Typography, CircularProgress } from "@mui/material";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
@@ -22,6 +22,11 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   isSmallArrows,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false); // Set loading to true whenever currentIndex changes
+  }, [currentIndex]);
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
@@ -33,6 +38,10 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     setCurrentIndex((prevIndex) =>
       prevIndex === imageUrls.length - 1 ? 0 : prevIndex + 1
     );
+  };
+
+  const handleImageLoad = () => {
+    setLoading(false); // Set loading to false once the image has loaded
   };
 
   if (imageUrls.length === 0) {
@@ -71,15 +80,33 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
           height: "100%",
         }}
       >
+        {loading && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              zIndex: 1,
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
         <img
           src={imageUrls[currentIndex]}
           alt={`Slide ${currentIndex}`}
+          onLoad={handleImageLoad}
           style={{
+            display: loading ? "none" : "block",
             borderRadius: "10px",
             position: "absolute",
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            animation: "fadeIn 0.5s",
           }}
         />
         {imageUrls.length > 1 && (
