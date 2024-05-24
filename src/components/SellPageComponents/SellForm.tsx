@@ -38,7 +38,7 @@ interface SellFormProps {
   setListingLocation: (value: string) => void;
   previewImageUrls: string[];
   setPreviewImageUrls: (value: string[]) => void;
-  setAlert: (value: ReactElement) => void;
+  setAlert: (value: ReactElement | null) => void;
 }
 
 const SellForm = ({
@@ -83,13 +83,25 @@ const SellForm = ({
   const { customUser } = useAuth();
   const [media, setMedia] = useState<any[]>([]);
 
-  /*const urlsToUpload = media.map(
-    (file) =>
-      `https://egnuwqvtuxctatbhwrfq.supabase.co/storage/v1/object/public/pictures/${customUser?.school}/${customUser?.username}/${file.name}`
-  );
-  */
-
   const uploadListing = async () => {
+    // Check if all fields are filled in
+    if (
+      !listingName ||
+      listingCondition === Condition.EMPTY ||
+      !listingDescription ||
+      !listingPrice ||
+      listingPaymentMethods.length === 0 ||
+      !listingLocation ||
+      media.length === 0
+    ) {
+      setAlert(
+        <Alert variant="outlined" severity="warning">
+          Please fill in all fields and upload at least one image.
+        </Alert>
+      );
+      return;
+    }
+
     if (!customUser || !media || media.length === 0) return;
 
     const newUrls: string[] = [];
@@ -148,22 +160,18 @@ const SellForm = ({
       console.error("Error inserting new listing:", uploadError);
       setAlert(
         <Alert variant="outlined" severity="error">
-          couldn't post listing!
+          Couldn't post listing!
         </Alert>
       );
     } else {
       console.log("Uploaded new listing:", listingData);
       setAlert(
         <Alert variant="outlined" severity="success">
-          new listing posted!
+          New listing posted!
         </Alert>
       );
     }
   };
-
-  {
-    /*this handles converting images from files to url strings so that they can be previewed, NO uploading here*/
-  }
 
   const handleImageSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
