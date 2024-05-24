@@ -3,12 +3,13 @@ import { useAuth } from "../../auth/AuthProvider";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import CustomCarousel from "../general/CustomCarousel";
 import { Condition } from "../../types";
+import getLocalCurrency from "../general/LocalCurrency";
 
 interface PreviewTabProps {
   listingName: string;
   listingCondition: Condition;
   listingDescription: string;
-  listingPrice: string;
+  listingPrice: number | string;
   listingPaymentMethods: string[];
   listingLocation: string;
   listingPreviewImages: string[];
@@ -138,7 +139,11 @@ const PreviewTab = ({
                   textAlign="center"
                   sx={{ fontSize: "1rem" }}
                 >
-                  {listingPrice ? `$${listingPrice}` : "No Price"}
+                  {listingPrice
+                    ? `${
+                        customUser ? getLocalCurrency(customUser) : ""
+                      }${listingPrice}`
+                    : "No Price"}
                 </Typography>
               </Box>
             </Box>

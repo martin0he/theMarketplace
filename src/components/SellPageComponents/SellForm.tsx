@@ -12,6 +12,7 @@ import {
   SelectChangeEvent,
   TextField,
   Typography,
+  InputAdornment,
 } from "@mui/material";
 import Carousel from "react-bootstrap/Carousel";
 import Colors from "../../assets/Colors";
@@ -22,6 +23,7 @@ import supabase from "../../auth/supabase";
 import { useAuth } from "../../auth/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
 import CustomCarousel from "../general/CustomCarousel";
+import getLocalCurrency from "../general/LocalCurrency";
 
 interface SellFormProps {
   listingName: string;
@@ -30,8 +32,8 @@ interface SellFormProps {
   setListingCondition: (value: Condition) => void;
   listingDescription: string;
   setListingDescription: (value: string) => void;
-  listingPrice: string;
-  setListingPrice: (value: string) => void;
+  listingPrice: number | string;
+  setListingPrice: (value: number | string) => void;
   listingPaymentMethods: PaymentMethod[];
   setListingPaymentMethods: (value: PaymentMethod[]) => void;
   listingLocation: string;
@@ -130,7 +132,10 @@ const SellForm = ({
       description: listingDescription,
       school: customUser.school,
       dateAdded: new Date(),
-      price: parseFloat(listingPrice),
+      price:
+        typeof listingPrice === "string"
+          ? parseFloat(listingPrice)
+          : listingPrice,
       seller: customUser,
       paymentMethod: listingPaymentMethods,
       exchangeLocation: listingLocation,
@@ -308,11 +313,18 @@ const SellForm = ({
                 <TextField
                   color="secondary"
                   fullWidth
-                  type="text"
+                  type="number"
                   sx={{ mt: "15px", height: "56px" }}
                   label="Listing Price"
                   variant="outlined"
-                  InputProps={{ style: inputStyle }}
+                  InputProps={{
+                    style: inputStyle,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        {customUser ? getLocalCurrency(customUser) : ""}
+                      </InputAdornment>
+                    ),
+                  }}
                   InputLabelProps={{
                     style: {
                       fontFamily: "Josefin Sans",

@@ -7,6 +7,7 @@ import { Listing } from "../../types";
 import CustomCarousel from "./CustomCarousel";
 import supabase from "../../auth/supabase";
 import { useAuth } from "../../auth/AuthProvider";
+import getLocalCurrency from "./LocalCurrency";
 
 interface SmallListingCardProps {
   listing: Listing;
@@ -82,6 +83,8 @@ const SmallListingCard = ({
   // Assuming the listing has an images property with URLs
   const imageUrls = listing.imageUrls;
 
+  const { customUser } = useAuth();
+
   return (
     <Box
       sx={{
@@ -145,7 +148,8 @@ const SmallListingCard = ({
           }}
         >
           <Typography fontFamily="inherit" color="white" textAlign="center">
-            ${listing.price}
+            {customUser ? getLocalCurrency(customUser) : ""}
+            {listing.price}
           </Typography>
         </Box>
       )}

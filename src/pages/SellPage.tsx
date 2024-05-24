@@ -50,7 +50,7 @@ const AlertBox = styled(Box)(() => ({
 }));
 
 const SellPage = () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const [alert, setAlert] = useState<ReactElement | null>(null); // Add alert state
   const [alertVisible, setAlertVisible] = useState<boolean>(false); // Visibility state
 
@@ -64,7 +64,7 @@ const SellPage = () => {
     Condition.EMPTY
   );
   const [listingDescription, setListingDescription] = useState<string>("");
-  const [listingPrice, setListingPrice] = useState<string>("");
+  const [listingPrice, setListingPrice] = useState<number | string>(""); // Initialize as empty string
   const [listingPaymentMethods, setListingPaymentMethods] = useState<
     PaymentMethod[]
   >([]);
