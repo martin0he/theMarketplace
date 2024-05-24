@@ -126,10 +126,19 @@ const AccountMenu = () => {
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
             <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <Person fontSize="small" />
-              </ListItemIcon>
-              <Typography fontFamily="Josefin Sans">my account</Typography>
+              <Link
+                href="/account"
+                underline="none"
+                color="inherit"
+                fontFamily="inherit"
+                display="flex"
+                flexDirection="row"
+              >
+                <ListItemIcon>
+                  <Person fontSize="small" />
+                </ListItemIcon>
+                <Typography fontFamily="Josefin Sans">my account</Typography>
+              </Link>
             </MenuItem>
             <Divider />
             <MenuItem>

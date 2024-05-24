@@ -8,6 +8,7 @@ import Masthead from "./components/navigation/Masthead";
 import SellPage from "./pages/SellPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SettingsPage from "./pages/SettingsPage";
+import AccountPage from "./pages/AccountPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/sell" element={<SellPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/account" element={<AccountPage />} />
         </Routes>
         <Masthead />
       </AuthProvider>

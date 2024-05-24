@@ -31,7 +31,7 @@ function a11yProps(index: number) {
   };
 }
 
-const SettingsPage = () => {
+const AccountPage = () => {
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -57,7 +57,7 @@ const SettingsPage = () => {
                   fontWeight: value === 0 ? "bold" : "normal",
                 }}
               >
-                appearance
+                profile
               </Typography>
             }
             {...a11yProps(0)}
@@ -73,7 +73,7 @@ const SettingsPage = () => {
                   fontWeight: value === 1 ? "bold" : "normal",
                 }}
               >
-                support
+                listings
               </Typography>
             }
             {...a11yProps(1)}
@@ -86,4 +86,4 @@ const SettingsPage = () => {
   );
 };
 
-export default SettingsPage;
+export default AccountPage;
