@@ -1,6 +1,8 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
 import Colors from "../assets/Colors";
+import ProfileSection from "../components/AccountPageComponents/ProfileSection";
+import ListingsSection from "../components/AccountPageComponents/ListingsSection";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -80,8 +82,12 @@ const AccountPage = () => {
           />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}></CustomTabPanel>
-      <CustomTabPanel value={value} index={1}></CustomTabPanel>
+      <CustomTabPanel value={value} index={0}>
+        <ProfileSection />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <ListingsSection />
+      </CustomTabPanel>
     </Box>
   );
 };
