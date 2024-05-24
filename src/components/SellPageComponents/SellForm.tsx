@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import {
+  Alert,
   Box,
   Button,
   FormControl,
@@ -37,6 +38,7 @@ interface SellFormProps {
   setListingLocation: (value: string) => void;
   previewImageUrls: string[];
   setPreviewImageUrls: (value: string[]) => void;
+  setAlert: (value: ReactElement) => void;
 }
 
 const SellForm = ({
@@ -54,8 +56,10 @@ const SellForm = ({
   setListingLocation,
   previewImageUrls,
   setPreviewImageUrls,
+  setAlert,
 }: SellFormProps) => {
   const [isCustom, setIsCustom] = useState<boolean>(true);
+
   const { width } = useWindowDimensions();
   const inputStyle = {
     height: "56px",
@@ -120,6 +124,7 @@ const SellForm = ({
       exchangeLocation: listingLocation,
       imageUrls: newUrls,
       condition: listingCondition,
+      liked_by: [],
     };
 
     const { data: listingData, error: uploadError } = await supabase
@@ -141,8 +146,18 @@ const SellForm = ({
 
     if (uploadError) {
       console.error("Error inserting new listing:", uploadError);
+      setAlert(
+        <Alert variant="outlined" severity="error">
+          couldn't post listing!
+        </Alert>
+      );
     } else {
       console.log("Uploaded new listing:", listingData);
+      setAlert(
+        <Alert variant="outlined" severity="success">
+          new listing posted!
+        </Alert>
+      );
     }
   };
 

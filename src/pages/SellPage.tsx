@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -7,6 +7,7 @@ import Colors from "../assets/Colors";
 import SellForm from "../components/SellPageComponents/SellForm";
 import PreviewTab from "../components/SellPageComponents/PreviewTab";
 import { Condition, PaymentMethod } from "../types";
+import { styled } from "@mui/material/styles";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -37,8 +38,21 @@ function a11yProps(index: number) {
   };
 }
 
+const AlertBox = styled(Box)(() => ({
+  position: "fixed",
+  top: "20px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  zIndex: 10,
+  width: "80%",
+  transition: "opacity 0.5s ease-in-out",
+  backgroundColor: Colors.tan,
+}));
+
 const SellPage = () => {
   const [value, setValue] = React.useState(0);
+  const [alert, setAlert] = useState<ReactElement | null>(null); // Add alert state
+  const [alertVisible, setAlertVisible] = useState<boolean>(false); // Visibility state
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -57,8 +71,25 @@ const SellPage = () => {
   const [listingLocation, setListingLocation] = useState<string>("");
   const [previewImageUrls, setPreviewImageUrls] = useState<string[]>([]);
 
+  useEffect(() => {
+    if (alert) {
+      setAlertVisible(true);
+      const timer = setTimeout(() => {
+        setAlertVisible(false);
+        setTimeout(() => {
+          setAlert(null);
+        }, 500); // Match this duration with the CSS transition duration
+      }, 3000); // Alert display duration in milliseconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [alert]);
+
   return (
-    <Box paddingTop={12} paddingBottom={10} paddingX={5} zIndex={0}>
+    <Box paddingTop={12} paddingBottom={10} paddingX={5}>
+      {alert && (
+        <AlertBox style={{ opacity: alertVisible ? 1 : 0 }}>{alert}</AlertBox>
+      )}
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           indicatorColor="secondary"
@@ -117,6 +148,7 @@ const SellPage = () => {
             setListingLocation={setListingLocation}
             previewImageUrls={previewImageUrls}
             setPreviewImageUrls={setPreviewImageUrls}
+            setAlert={setAlert}
           />
         </Box>
       </CustomTabPanel>
