@@ -18,6 +18,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import { Person } from "@mui/icons-material";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
+import { Link } from "@mui/material";
 
 const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -131,11 +132,20 @@ const AccountMenu = () => {
               <Typography fontFamily="Josefin Sans">my account</Typography>
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <Settings fontSize="small" />
-              </ListItemIcon>
-              <Typography fontFamily="Josefin Sans">settings</Typography>
+            <MenuItem>
+              <Link
+                href="/settings"
+                underline="none"
+                color="inherit"
+                fontFamily="inherit"
+                display="flex"
+                flexDirection="row"
+              >
+                <ListItemIcon>
+                  <Settings fontSize="small" />
+                </ListItemIcon>
+                <Typography fontFamily="Josefin Sans">settings</Typography>
+              </Link>
             </MenuItem>
             <MenuItem onClick={handleSignOut}>
               <ListItemIcon>
