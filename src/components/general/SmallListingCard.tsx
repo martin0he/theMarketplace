@@ -119,12 +119,12 @@ const SmallListingCard = ({
         />
       </Box>
 
-      {listing.dateDeleted ? (
+      {listing.date_deleted ? (
         <Box
           width="100%"
           sx={{
             position: "absolute",
-            top: "30px",
+            top: "20px",
             marginLeft: "60px",
             transform: "rotate(45deg)",
             backgroundColor: "#8b3fc6",
@@ -132,7 +132,7 @@ const SmallListingCard = ({
           }}
         >
           <Typography fontFamily="inherit" color="white" textAlign="center">
-            {`${listing.dateDeleted.getDay()}/${listing.dateDeleted.getDate()}/${listing.dateDeleted.getFullYear()}`}
+            {listing.date_deleted.toString()}
           </Typography>
         </Box>
       ) : (
@@ -140,7 +140,7 @@ const SmallListingCard = ({
           width="100%"
           sx={{
             position: "absolute",
-            top: "30px",
+            top: "20px",
             marginLeft: "60px",
             transform: "rotate(45deg)",
             backgroundColor: "#96b17c",

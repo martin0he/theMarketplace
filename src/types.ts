@@ -5,15 +5,14 @@ export interface Listing {
   name: string;
   description: string;
   school: string;
-  dateAdded: Date;
-  dateDeleted?: Date;
+  created_at: Date;
+  date_deleted?: Date;
   price: number;
   seller: CustomUser;
-  paymentMethod: PaymentMethod[];
-  exchangeLocation: string;
+  payment_methods: PaymentMethod[];
+  exchange_location: string;
   imageUrls: string[];
   condition: Condition | undefined;
-  isSold?: boolean;
   liked_by: string[];
 }
 

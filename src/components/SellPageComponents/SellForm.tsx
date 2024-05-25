@@ -131,14 +131,14 @@ const SellForm = ({
       name: listingName,
       description: listingDescription,
       school: customUser.school,
-      dateAdded: new Date(),
+      created_at: new Date(),
       price:
         typeof listingPrice === "string"
           ? parseFloat(listingPrice)
           : listingPrice,
       seller: customUser,
-      paymentMethod: listingPaymentMethods,
-      exchangeLocation: listingLocation,
+      payment_methods: listingPaymentMethods,
+      exchange_location: listingLocation,
       imageUrls: newUrls,
       condition: listingCondition,
       liked_by: [],
@@ -151,8 +151,8 @@ const SellForm = ({
           name: listing.name,
           created_at: new Date(),
           price: listing.price,
-          payment_method: listing.paymentMethod,
-          exchange_location: listing.exchangeLocation,
+          payment_method: listing.payment_methods,
+          exchange_location: listing.exchange_location,
           school: listing.school,
           description: listing.description,
           imageUrls: listing.imageUrls,

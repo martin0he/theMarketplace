@@ -38,7 +38,7 @@ const SettingsPage = () => {
     console.log(event);
   };
   return (
-    <Box paddingTop={12} paddingBottom={10} paddingX={5}>
+    <Box paddingTop={12} paddingX={5}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           indicatorColor="secondary"
