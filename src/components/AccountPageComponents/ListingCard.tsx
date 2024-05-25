@@ -228,23 +228,44 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
       </IconButton>
 
       <Dialog
+        sx={{}}
         open={openDeleteDialog}
         onClose={handleCloseDeleteDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Confirm Deletion"}</DialogTitle>
+        <DialogTitle
+          sx={{ fontFamily: "Josefin Sans" }}
+          id="alert-dialog-title"
+        >
+          {"Confirm Deletion"}
+        </DialogTitle>
         <DialogContent>
-          <Typography id="alert-dialog-description">
+          <Typography id="alert-dialog-description" fontFamily={"Josefin Sans"}>
             Are you sure you want to delete this listing?
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} color="primary">
-            No
+          <Button
+            sx={{
+              fontFamily: "Josefin Sans",
+              color: Colors.turquoise,
+              textTransform: "lowercase",
+            }}
+            onClick={handleCloseDeleteDialog}
+          >
+            no
           </Button>
-          <Button onClick={handleConfirmDelete} color="primary" autoFocus>
-            Yes
+          <Button
+            sx={{
+              fontFamily: "Josefin Sans",
+              color: Colors.cerise,
+              textTransform: "lowercase",
+            }}
+            onClick={handleConfirmDelete}
+            autoFocus
+          >
+            yes
           </Button>
         </DialogActions>
       </Dialog>
@@ -255,18 +276,39 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Confirm Save"}</DialogTitle>
+        <DialogTitle
+          sx={{ fontFamily: "Josefin Sans" }}
+          id="alert-dialog-title"
+        >
+          {"Confirm Changes"}
+        </DialogTitle>
         <DialogContent>
-          <Typography id="alert-dialog-description">
+          <Typography fontFamily="inherit" id="alert-dialog-description">
             Are you sure you want to save these changes?
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseSaveDialog} color="primary">
-            No
+          <Button
+            sx={{
+              fontFamily: "Josefin Sans",
+              color: Colors.royalBlue,
+              textTransform: "lowercase",
+            }}
+            onClick={handleCloseSaveDialog}
+          >
+            no
           </Button>
-          <Button onClick={handleConfirmSave} color="primary" autoFocus>
-            Yes
+          <Button
+            sx={{
+              fontFamily: "Josefin Sans",
+              color: Colors.royalBlue,
+              textTransform: "lowercase",
+            }}
+            onClick={handleConfirmSave}
+            color="primary"
+            autoFocus
+          >
+            yes
           </Button>
         </DialogActions>
       </Dialog>
