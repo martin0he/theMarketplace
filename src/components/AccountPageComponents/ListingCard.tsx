@@ -197,11 +197,11 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           transform: "translateX(-50%)",
           textTransform: "lowercase",
           borderRadius: "8px",
-          backgroundColor: "white",
-          color: Colors.turquoise,
+          backgroundColor: dateDeleted ? "white" : Colors.turquoise,
+          color: dateDeleted ? Colors.turquoise : "white",
           "&:hover": {
-            backgroundColor: Colors.turquoise,
-            color: "white",
+            backgroundColor: dateDeleted ? "white" : Colors.turquoise,
+            color: dateDeleted ? Colors.turquoise : "white",
             ".MuiTypography-root": { color: "white" },
           },
           zIndex: 2,
@@ -212,7 +212,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
       >
         <Typography
           fontFamily="Josefin Sans"
-          color={Colors.turquoise}
+          color={dateDeleted ? Colors.turquoise : "white"}
           sx={{ zIndex: 1 }}
         >
           {dateDeleted ? "already sold" : "mark as sold"}
