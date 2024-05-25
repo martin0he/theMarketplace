@@ -25,6 +25,7 @@ const HomePage = () => {
     const { data: Listings, error } = await supabase
       .from("Listings")
       .select("*")
+      .is("date_deleted", null)
       .contains("liked_by", [user?.id]);
 
     if (error) {
@@ -56,6 +57,7 @@ const HomePage = () => {
         .from("Listings")
         .select("*")
         .gt("created_at", sevenDaysAgo)
+        .is("date_deleted", null)
         .eq("school", customUser?.school);
 
       if (error) {
@@ -342,7 +344,7 @@ const HomePage = () => {
                       ))
                     ) : (
                       <Typography fontFamily="Josefin Sans">
-                        Nothing has been posted within the last week :(
+                        No available posts from within the last week :(
                       </Typography>
                     )}
                   </Box>

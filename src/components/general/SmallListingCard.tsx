@@ -8,6 +8,7 @@ import CustomCarousel from "./CustomCarousel";
 import supabase from "../../auth/supabase";
 import { useAuth } from "../../auth/AuthProvider";
 import getLocalCurrency from "./LocalCurrency";
+import { soldDatePipe } from "../../pipes/sellDatePipe";
 
 interface SmallListingCardProps {
   listing: Listing;
@@ -129,10 +130,16 @@ const SmallListingCard = ({
             transform: "rotate(45deg)",
             backgroundColor: "#8b3fc6",
             padding: "5px",
+            boxShadow: ".5px 1px 2.5px #3d2055",
           }}
         >
-          <Typography fontFamily="inherit" color="white" textAlign="center">
-            {listing.date_deleted.toString()}
+          <Typography
+            fontSize={14}
+            fontFamily="inherit"
+            color="white"
+            textAlign="center"
+          >
+            {`sold ${soldDatePipe(listing.date_deleted.toString())}`}
           </Typography>
         </Box>
       ) : (
@@ -145,6 +152,7 @@ const SmallListingCard = ({
             transform: "rotate(45deg)",
             backgroundColor: "#96b17c",
             padding: "5px",
+            boxShadow: ".5px 1px 2.5px #3b4f3c",
           }}
         >
           <Typography fontFamily="inherit" color="white" textAlign="center">
