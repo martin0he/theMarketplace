@@ -531,14 +531,10 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             {price}
           </Typography>
           <Typography fontSize={21} fontFamily="inherit">
-            Date Posted: {listing.created_at.toString()}
+            Description: {description}
           </Typography>
-
           <Typography fontSize={21} fontFamily="inherit">
             Condition: {condition}
-          </Typography>
-          <Typography fontSize={21} fontFamily="inherit">
-            Description: {description}
           </Typography>
           <Typography fontSize={21} fontFamily="inherit">
             {Array.isArray(paymentMethods) && paymentMethods.length > 0 ? (
@@ -549,7 +545,12 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
               </Typography>
             )}
           </Typography>
-
+          <Typography fontSize={21} fontFamily="inherit">
+            Exchange Location: {location}
+          </Typography>
+          <Typography fontSize={21} fontFamily="inherit">
+            Date Posted: {listing.created_at.toString()}
+          </Typography>
           <Typography fontSize={21} fontFamily="inherit">
             {Array.isArray(likes) && likes.length > 0 ? (
               `Liked By: ${likes.map((like) => like.username).join(", ")}`
@@ -558,9 +559,6 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
                 No one has liked your listing.
               </Typography>
             )}
-          </Typography>
-          <Typography fontSize={21} fontFamily="inherit">
-            Exchange Location: {location}
           </Typography>
         </Box>
       )}
