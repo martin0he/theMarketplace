@@ -522,6 +522,10 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           <Typography fontSize={21} fontFamily={"inherit"}>
             Name: {name}
           </Typography>
+          <Typography fontSize={21} fontFamily={"inherit"}>
+            Status:{" "}
+            {dateDeleted ? `Sold: ${dateDeleted.toString()}` : "Available"}
+          </Typography>
           <Typography fontSize={21} fontFamily="inherit">
             Price: {customUser ? getLocalCurrency(customUser) : ""}
             {price}
@@ -529,9 +533,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           <Typography fontSize={21} fontFamily="inherit">
             Date Posted: {listing.created_at.toString()}
           </Typography>
-          <Typography fontSize={21} fontFamily="inherit">
-            {dateDeleted ? `Date Sold: ${dateDeleted.toString()}` : "Not Sold"}
-          </Typography>
+
           <Typography fontSize={21} fontFamily="inherit">
             Condition: {condition}
           </Typography>

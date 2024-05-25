@@ -90,6 +90,7 @@ const SellForm = ({
     if (
       !listingName ||
       listingCondition === Condition.EMPTY ||
+      !listingCondition ||
       !listingDescription ||
       !listingPrice ||
       listingPaymentMethods.length === 0 ||
@@ -151,7 +152,7 @@ const SellForm = ({
           name: listing.name,
           created_at: new Date(),
           price: listing.price,
-          payment_method: listing.payment_methods,
+          payment_methods: listing.payment_methods,
           exchange_location: listing.exchange_location,
           school: listing.school,
           description: listing.description,
