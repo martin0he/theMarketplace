@@ -200,20 +200,24 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           backgroundColor: dateDeleted ? "white" : Colors.turquoise,
           color: dateDeleted ? Colors.turquoise : "white",
           "&:hover": {
-            backgroundColor: dateDeleted ? "white" : Colors.turquoise,
-            color: dateDeleted ? Colors.turquoise : "white",
-            ".MuiTypography-root": { color: "white" },
+            backgroundColor: Colors.turquoise,
+            color: "white",
           },
           zIndex: 2,
           boxShadow: "1px 1px 2px #838181",
         }}
         onClick={() => setOpenMarkAsSoldDialog(true)}
-        disabled={dateDeleted ? true : false}
+        disabled={!!dateDeleted}
       >
         <Typography
           fontFamily="Josefin Sans"
-          color={dateDeleted ? Colors.turquoise : "white"}
-          sx={{ zIndex: 1 }}
+          sx={{
+            color: dateDeleted ? Colors.turquoise : "white",
+            zIndex: 1,
+            "&:hover": {
+              color: "white",
+            },
+          }}
         >
           {dateDeleted ? "already sold" : "mark as sold"}
         </Typography>
