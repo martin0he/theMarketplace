@@ -28,7 +28,7 @@ import { useAuth } from "../../auth/AuthProvider";
 
 interface ListingCardProps {
   listing: Listing;
-  onUpdate: () => void; // Add this prop to handle updates
+  onUpdate: () => void;
 }
 
 const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
@@ -59,7 +59,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
     } else {
       setDateDeleted(new Date());
       console.log("mark as sold successful");
-      onUpdate(); // Call the onUpdate callback
+      onUpdate();
     }
   };
 
@@ -72,7 +72,28 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
       console.log(deleteError);
     } else {
       console.log("delete successful");
-      onUpdate(); // Call the onUpdate callback
+      onUpdate();
+    }
+  };
+
+  const handleSave = async () => {
+    const { error: saveError } = await supabase
+      .from("Listings")
+      .update({
+        name: name,
+        price: price,
+        description: description,
+        condition: condition,
+        payment_methods: paymentMethods,
+        exchange_location: location,
+      })
+      .eq("id", listing.id);
+    if (saveError) {
+      console.log(saveError);
+    } else {
+      console.log("save successful");
+      setIsEditing(false);
+      onUpdate();
     }
   };
 
@@ -92,21 +113,35 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
   const [dateDeleted, setDateDeleted] = useState<Date | null>(
     listing.date_deleted || null
   );
-  const [open, setOpen] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openSaveDialog, setOpenSaveDialog] = useState(false);
 
   const { customUser } = useAuth();
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleOpenDeleteDialog = () => {
+    setOpenDeleteDialog(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
   };
 
   const handleConfirmDelete = async () => {
     await handleDelete();
-    setOpen(false);
+    setOpenDeleteDialog(false);
+  };
+
+  const handleOpenSaveDialog = () => {
+    setOpenSaveDialog(true);
+  };
+
+  const handleCloseSaveDialog = () => {
+    setOpenSaveDialog(false);
+  };
+
+  const handleConfirmSave = async () => {
+    await handleSave();
+    setOpenSaveDialog(false);
   };
 
   const inputStyle = {
@@ -139,7 +174,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
     >
       {isEditing ? (
         <IconButton
-          onClick={() => setIsEditing(false)}
+          onClick={handleOpenSaveDialog}
           sx={{ position: "absolute", top: "5px", right: "50px", zIndex: 2 }}
         >
           <SaveIcon />
@@ -187,14 +222,14 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           textTransform: "lowercase",
           zIndex: 2,
         }}
-        onClick={handleClickOpen}
+        onClick={handleOpenDeleteDialog}
       >
         <DeleteIcon />
       </IconButton>
 
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={openDeleteDialog}
+        onClose={handleCloseDeleteDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -205,10 +240,32 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleCloseDeleteDialog} color="primary">
             No
           </Button>
           <Button onClick={handleConfirmDelete} color="primary" autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openSaveDialog}
+        onClose={handleCloseSaveDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirm Save"}</DialogTitle>
+        <DialogContent>
+          <Typography id="alert-dialog-description">
+            Are you sure you want to save these changes?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseSaveDialog} color="primary">
+            No
+          </Button>
+          <Button onClick={handleConfirmSave} color="primary" autoFocus>
             Yes
           </Button>
         </DialogActions>
