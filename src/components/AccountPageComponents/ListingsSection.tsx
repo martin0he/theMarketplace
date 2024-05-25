@@ -5,11 +5,12 @@ import { useAuth } from "../../auth/AuthProvider";
 import supabase from "../../auth/supabase";
 import ListingCard from "./ListingCard";
 import { Carousel } from "react-bootstrap";
-import Colors from "../../assets/Colors";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 const ListingsSection = () => {
   const [myListings, setMyListings] = useState<Listing[]>([]);
   const { user, customUser } = useAuth();
+  const { width } = useWindowDimensions();
   useEffect(() => {
     const fetchUserListings = async () => {
       const { data: Listings, error } = await supabase
@@ -47,20 +48,19 @@ const ListingsSection = () => {
           variant="dark"
           style={{
             width: "min-content",
-            height: "100%",
+            height: "min-content",
             marginTop: "10px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             zIndex: 1,
-            borderRadius: "12px",
-            boxShadow: "1px 1px 2px #7c6741",
-            backgroundColor: Colors.tan,
           }}
         >
           {myListings.map((l) => (
             <Carousel.Item>
-              <ListingCard listing={l} />
+              <Box paddingX={width * 0.017} paddingBottom="50px">
+                <ListingCard listing={l} />
+              </Box>
             </Carousel.Item>
           ))}
         </Carousel>
