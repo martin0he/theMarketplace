@@ -242,6 +242,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
         >
           <Typography
             fontFamily={"inherit"}
+            fontSize={21}
             sx={{ textDecoration: "underline" }}
           >
             update listing
@@ -396,6 +397,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
         <Box
           paddingLeft="30px"
           paddingTop="25px"
+          paddingBottom="50px"
           sx={{
             maxHeight: "100%",
             overflow: "auto",
