@@ -197,21 +197,25 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           transform: "translateX(-50%)",
           textTransform: "lowercase",
           borderRadius: "8px",
-          backgroundColor: "#f1f2f3",
+          backgroundColor: "white",
+          color: Colors.turquoise,
           "&:hover": {
-            backgroundColor: "#dbdee1",
+            backgroundColor: Colors.turquoise,
+            color: "white",
+            ".MuiTypography-root": { color: "white" },
           },
           zIndex: 2,
           boxShadow: "1px 1px 2px #838181",
         }}
         onClick={() => setOpenMarkAsSoldDialog(true)}
+        disabled={dateDeleted ? true : false}
       >
         <Typography
           fontFamily="Josefin Sans"
           color={Colors.turquoise}
           sx={{ zIndex: 1 }}
         >
-          mark as sold
+          {dateDeleted ? "already sold" : "mark as sold"}
         </Typography>
       </Button>
 
@@ -229,11 +233,15 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
       </IconButton>
 
       <Dialog
-        sx={{}}
         open={openDeleteDialog}
         onClose={handleCloseDeleteDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        PaperProps={{
+          sx: {
+            borderRadius: "10px",
+          },
+        }}
       >
         <DialogTitle
           sx={{ fontFamily: "Josefin Sans" }}
@@ -276,6 +284,11 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
         onClose={handleCloseSaveDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        PaperProps={{
+          sx: {
+            borderRadius: "10px",
+          },
+        }}
       >
         <DialogTitle
           sx={{ fontFamily: "Josefin Sans" }}
@@ -319,6 +332,11 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
         onClose={() => setOpenMarkAsSoldDialog(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        PaperProps={{
+          sx: {
+            borderRadius: "10px",
+          },
+        }}
       >
         <DialogTitle
           sx={{ fontFamily: "Josefin Sans" }}
