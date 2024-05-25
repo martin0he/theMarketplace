@@ -115,6 +115,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
   );
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openSaveDialog, setOpenSaveDialog] = useState(false);
+  const [openMarkAsSoldDialog, setOpenMarkAsSoldDialog] = useState(false);
 
   const { customUser } = useAuth();
 
@@ -203,7 +204,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           zIndex: 2,
           boxShadow: "1px 1px 2px #838181",
         }}
-        onClick={handleMarkAsSold}
+        onClick={() => setOpenMarkAsSoldDialog(true)}
       >
         <Typography
           fontFamily="Josefin Sans"
@@ -305,6 +306,49 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
               textTransform: "lowercase",
             }}
             onClick={handleConfirmSave}
+            color="primary"
+            autoFocus
+          >
+            yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openMarkAsSoldDialog}
+        onClose={() => setOpenMarkAsSoldDialog(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle
+          sx={{ fontFamily: "Josefin Sans" }}
+          id="alert-dialog-title"
+        >
+          {"Confirm Status"}
+        </DialogTitle>
+        <DialogContent>
+          <Typography fontFamily="inherit" id="alert-dialog-description">
+            Are you sure you want to mark this listing as sold?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            sx={{
+              fontFamily: "Josefin Sans",
+              color: Colors.royalBlue,
+              textTransform: "lowercase",
+            }}
+            onClick={() => setOpenMarkAsSoldDialog(false)}
+          >
+            no
+          </Button>
+          <Button
+            sx={{
+              fontFamily: "Josefin Sans",
+              color: Colors.royalBlue,
+              textTransform: "lowercase",
+            }}
+            onClick={handleMarkAsSold}
             color="primary"
             autoFocus
           >
