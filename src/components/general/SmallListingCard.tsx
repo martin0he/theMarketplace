@@ -33,12 +33,24 @@ const SmallListingCard = ({
   }, [listing.liked_by, customUser]);
 
   const handleLikeClick = async () => {
-    if (!customUser?.id) {
-      console.error("User ID is undefined.");
+    if (!customUser?.id || !listing.id) {
+      console.error("User ID or Listing ID is undefined.");
       return;
     }
 
-    const currentLikedBy = listing.liked_by || [];
+    // Fetch the current liked_by array
+    const { data: currentData, error: fetchError } = await supabase
+      .from("Listings")
+      .select("liked_by")
+      .eq("id", listing.id)
+      .single();
+
+    if (fetchError) {
+      console.error("Error fetching liked_by:", fetchError);
+      return;
+    }
+
+    const currentLikedBy: string[] = currentData?.liked_by || [];
 
     // Check if the user has already liked the listing
     const hasLiked = currentLikedBy.includes(customUser.id);
@@ -52,8 +64,7 @@ const SmallListingCard = ({
     const { error: updateError } = await supabase
       .from("Listings")
       .update({ liked_by: updatedLikedBy })
-      .eq("id", listing.id)
-      .select("liked_by");
+      .eq("id", listing.id);
 
     if (updateError) {
       console.error("Error updating liked_by:", updateError);
@@ -69,8 +80,21 @@ const SmallListingCard = ({
       onLikeChange();
     }
 
-    const currentItemsLiked: string[] = customUser.items_liked || [];
+    // Fetch the current items_liked array
+    const { data: userData, error: userFetchError } = await supabase
+      .from("Users")
+      .select("items_liked")
+      .eq("id", customUser.id)
+      .single();
 
+    if (userFetchError) {
+      console.error("Error fetching user data:", userFetchError);
+      return;
+    }
+
+    const currentItemsLiked: string[] = userData?.items_liked || [];
+
+    // Update the user's items_liked array
     const updatedItemsLiked = hasLiked
       ? currentItemsLiked.filter((id: string) => id !== listing.id)
       : [...currentItemsLiked, listing.id];
@@ -87,7 +111,6 @@ const SmallListingCard = ({
     }
   };
 
-  // Assuming the listing has an images property with URLs
   const imageUrls = listing.imageUrls;
 
   return (
