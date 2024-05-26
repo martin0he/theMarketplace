@@ -13,7 +13,12 @@ import { useState } from "react";
 import Colors from "../../assets/Colors";
 import { useAuth } from "../../auth/AuthProvider";
 
-const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }) => {
+interface SidebarProps {
+  setSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSignUpModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
   const { customUser, signOut } = useAuth();
   const [open, setOpen] = useState(false);
 
