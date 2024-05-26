@@ -44,13 +44,27 @@ export const AuthProvider = ({ children }: any) => {
           console.error("Error fetching user data:", userError);
           setCustomUser(null);
         } else {
-          const { email, phone, username, password, school } = userData;
+          const {
+            email,
+            phone,
+            username,
+            password,
+            school,
+            id,
+            items_liked,
+            items_sold,
+            listings,
+          } = userData;
           const customUserData: CustomUser = {
+            id,
             email,
             phone,
             password,
             username,
             school,
+            items_liked,
+            items_sold,
+            listings,
           };
           setCustomUser(customUserData);
         }

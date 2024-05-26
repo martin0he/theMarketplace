@@ -54,8 +54,18 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
       .from("Listings")
       .update({ date_deleted: new Date() })
       .eq("id", listing.id);
-    if (updateError) {
-      console.log(updateError);
+
+    const updatedSoldListings = customUser?.items_sold
+      ? [...customUser.items_sold, listing.id]
+      : [listing.id];
+
+    const { error: updateUserError } = await supabase
+      .from("Users")
+      .update({ items_sold: updatedSoldListings })
+      .eq("id", customUser?.id);
+
+    if (updateError || updateUserError) {
+      console.log(updateError || updateUserError);
     } else {
       setDateDeleted(new Date());
       console.log("mark as sold successful");
@@ -68,8 +78,38 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
       .from("Listings")
       .delete()
       .eq("id", listing.id);
-    if (deleteError) {
-      console.log(deleteError);
+
+    const updatedUserListings = customUser?.items_sold.filter(
+      (myListing) => myListing !== listing.id
+    );
+
+    const { error: deleteUserListingError } = await supabase
+      .from("Users")
+      .update({ listings: updatedUserListings })
+      .eq("id", customUser?.id);
+
+    const { error: updateUserSoldError } = await supabase
+      .from("Users")
+      .update({ items_sold: updatedUserListings })
+      .eq("id", customUser?.id);
+
+    const { error: updateUserLikedError } = await supabase
+      .from("Users")
+      .update({ items_liked: updatedUserListings })
+      .eq("id", customUser?.id);
+
+    if (
+      deleteError ||
+      deleteUserListingError ||
+      updateUserLikedError ||
+      updateUserSoldError
+    ) {
+      console.log(
+        deleteError ||
+          deleteUserListingError ||
+          updateUserLikedError ||
+          updateUserSoldError
+      );
     } else {
       console.log("delete successful");
       onUpdate();

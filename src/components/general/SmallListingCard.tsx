@@ -21,7 +21,7 @@ const SmallListingCard = ({
   isLikable,
   onLikeChange,
 }: SmallListingCardProps) => {
-  const { user } = useAuth();
+  const { user, customUser } = useAuth();
   const [likeColor, setLikeColor] = useState<string>("#b8b7b7");
 
   useEffect(() => {
@@ -69,22 +69,38 @@ const SmallListingCard = ({
 
     if (updateError) {
       console.error("Error updating liked_by:", updateError);
-    } else {
-      console.log("Successfully updated liked_by");
-      // Update the like color based on the new state
-      setLikeColor(hasLiked ? "#b8b7b7" : "#e61919");
+      return;
+    }
 
-      // Notify parent component of the change
-      if (onLikeChange) {
-        onLikeChange();
-      }
+    console.log("Successfully updated liked_by");
+    // Update the like color based on the new state
+    setLikeColor(hasLiked ? "#b8b7b7" : "#e61919");
+
+    // Notify parent component of the change
+    if (onLikeChange) {
+      onLikeChange();
+    }
+
+    const currentItemsLiked = customUser?.items_liked || [];
+
+    const updatedItemsLiked = hasLiked
+      ? currentItemsLiked.filter((id: string) => id !== listing.id)
+      : [...currentItemsLiked, listing.id];
+
+    const { error: userUpdateError } = await supabase
+      .from("Users")
+      .update({ items_liked: updatedItemsLiked })
+      .eq("id", user.id);
+
+    if (userUpdateError) {
+      console.error("Error updating user items_liked:", userUpdateError);
+    } else {
+      console.log("Successfully updated user items_liked");
     }
   };
 
   // Assuming the listing has an images property with URLs
   const imageUrls = listing.imageUrls;
-
-  const { customUser } = useAuth();
 
   return (
     <Box

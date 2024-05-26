@@ -33,10 +33,13 @@ export enum Condition {
 }
 
 export interface CustomUser extends Pick<User, "email" | "phone"> {
+  id?: string;
   username: string;
   password: string;
   school: string;
-  itemsSold?: Listing[];
-  itemsPurchased?: Listing[];
-  itemsLiked?: Listing[];
+  items_sold: string[];
+  items_liked: string[];
+  phone?: string;
+  listings: string[];
+  created_at?: Date;
 }

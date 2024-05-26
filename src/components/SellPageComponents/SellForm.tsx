@@ -169,8 +169,33 @@ const SellForm = ({
           Couldn't post listing!
         </Alert>
       );
+      return;
+    }
+
+    console.log("Uploaded new listing:", listingData);
+
+    const listingId = listingData[0].id;
+
+    const updatedListings = customUser.listings
+      ? [...customUser.listings, listingId]
+      : [listingId];
+
+    const { data: userData, error: userError } = await supabase
+      .from("Users")
+      .update({
+        listings: updatedListings,
+      })
+      .eq("id", customUser.id);
+
+    if (userError) {
+      console.error("Error updating user listings:", userError);
+      setAlert(
+        <Alert variant="outlined" severity="error">
+          Couldn't update user listings!
+        </Alert>
+      );
     } else {
-      console.log("Uploaded new listing:", listingData);
+      console.log("User listings updated:", userData);
       setAlert(
         <Alert variant="outlined" severity="success">
           New listing posted!
