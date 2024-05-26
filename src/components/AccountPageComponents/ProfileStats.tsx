@@ -1,19 +1,19 @@
 import { Grid, Box, Typography } from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { CustomUser } from "../../types";
-import { User } from "@supabase/supabase-js";
+import { datePipe } from "../../pipes/sellDatePipe";
 
 interface ProfileStatsProps {
-  defaultUser: User;
   customUser: CustomUser;
 }
 
-const ProfileStats = ({ customUser, defaultUser }: ProfileStatsProps) => {
+const ProfileStats = ({ customUser }: ProfileStatsProps) => {
   const { width, height } = useWindowDimensions();
 
   interface StatsBoxProps {
     text: string;
-    numValue: number;
+    numValue?: number;
+    stringValue?: string;
     width: number;
     height: number;
     color: string;
@@ -26,6 +26,7 @@ const ProfileStats = ({ customUser, defaultUser }: ProfileStatsProps) => {
     width,
     height,
     color,
+    stringValue,
   }: StatsBoxProps) => {
     return (
       <Box
@@ -69,7 +70,7 @@ const ProfileStats = ({ customUser, defaultUser }: ProfileStatsProps) => {
             alignSelf: "flex-end",
           }}
         >
-          {numValue}
+          {numValue !== undefined ? numValue : stringValue}
         </Typography>
       </Box>
     );
@@ -97,7 +98,9 @@ const ProfileStats = ({ customUser, defaultUser }: ProfileStatsProps) => {
       >
         <StatsBox
           text="items liked"
-          numValue={7}
+          numValue={
+            customUser.items_liked.length ? customUser.items_liked.length : 0
+          }
           width={width}
           height={height}
           color="#D48B94"
@@ -116,7 +119,9 @@ const ProfileStats = ({ customUser, defaultUser }: ProfileStatsProps) => {
       >
         <StatsBox
           text="items sold"
-          numValue={0}
+          numValue={
+            customUser.items_sold.length ? customUser.items_sold.length : 0
+          }
           width={width}
           height={height}
           color="#AADBD8"
@@ -135,7 +140,7 @@ const ProfileStats = ({ customUser, defaultUser }: ProfileStatsProps) => {
       >
         <StatsBox
           text="listings"
-          numValue={3}
+          numValue={customUser.listings.length ? customUser.listings.length : 0}
           width={width}
           height={height}
           color="#9FA8D6"
@@ -154,7 +159,7 @@ const ProfileStats = ({ customUser, defaultUser }: ProfileStatsProps) => {
       >
         <StatsBox
           text="member since"
-          numValue={customUser.created_at?.getFullYear() || 1}
+          stringValue={datePipe(customUser.created_at.toString()) || "N/A"}
           width={width}
           height={height}
           color="#B593C8"

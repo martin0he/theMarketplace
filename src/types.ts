@@ -41,5 +41,5 @@ export interface CustomUser extends Pick<User, "email" | "phone"> {
   items_liked: string[];
   phone?: string;
   listings: string[];
-  created_at?: Date;
+  created_at: Date;
 }

@@ -54,6 +54,7 @@ export const AuthProvider = ({ children }: any) => {
             items_liked,
             items_sold,
             listings,
+            created_at,
           } = userData;
           const customUserData: CustomUser = {
             id,
@@ -65,6 +66,7 @@ export const AuthProvider = ({ children }: any) => {
             items_liked,
             items_sold,
             listings,
+            created_at,
           };
           setCustomUser(customUserData);
         }

@@ -8,12 +8,12 @@ import CustomCarousel from "./CustomCarousel";
 import supabase from "../../auth/supabase";
 import { useAuth } from "../../auth/AuthProvider";
 import getLocalCurrency from "./LocalCurrency";
-import { soldDatePipe } from "../../pipes/sellDatePipe";
+import { datePipe } from "../../pipes/sellDatePipe";
 
 interface SmallListingCardProps {
   listing: Listing;
   isLikable?: boolean;
-  onLikeChange?: () => void; // Callback function to notify parent component of like changes
+  onLikeChange?: () => void;
 }
 
 const SmallListingCard = ({
@@ -21,44 +21,32 @@ const SmallListingCard = ({
   isLikable,
   onLikeChange,
 }: SmallListingCardProps) => {
-  const { user, customUser } = useAuth();
+  const { customUser } = useAuth();
   const [likeColor, setLikeColor] = useState<string>("#b8b7b7");
 
   useEffect(() => {
-    if (listing.liked_by && user?.id) {
-      if (listing.liked_by.includes(user.id)) {
+    if (listing.liked_by && customUser?.id) {
+      if (listing.liked_by.includes(customUser.id)) {
         setLikeColor("#e61919");
       }
     }
-  }, [listing.liked_by, user]);
+  }, [listing.liked_by, customUser]);
 
   const handleLikeClick = async () => {
-    if (!user?.id) {
+    if (!customUser?.id) {
       console.error("User ID is undefined.");
       return;
     }
 
-    // Fetch the current liked_by array
-    const { data: currentData, error: fetchError } = await supabase
-      .from("Listings")
-      .select("liked_by")
-      .eq("id", listing.id)
-      .single();
-
-    if (fetchError) {
-      console.error("Error fetching liked_by:", fetchError);
-      return;
-    }
-
-    const currentLikedBy: string[] = currentData?.liked_by || [];
+    const currentLikedBy = listing.liked_by || [];
 
     // Check if the user has already liked the listing
-    const hasLiked = currentLikedBy.includes(user.id);
+    const hasLiked = currentLikedBy.includes(customUser.id);
 
     // Update the liked_by array
     const updatedLikedBy = hasLiked
-      ? currentLikedBy.filter((id: string) => id !== user.id)
-      : [...currentLikedBy, user.id];
+      ? currentLikedBy.filter((id: string) => id !== customUser.id)
+      : [...currentLikedBy, customUser.id];
 
     // Update the liked_by array in Supabase
     const { error: updateError } = await supabase
@@ -81,7 +69,7 @@ const SmallListingCard = ({
       onLikeChange();
     }
 
-    const currentItemsLiked = customUser?.items_liked || [];
+    const currentItemsLiked: string[] = customUser.items_liked || [];
 
     const updatedItemsLiked = hasLiked
       ? currentItemsLiked.filter((id: string) => id !== listing.id)
@@ -90,7 +78,7 @@ const SmallListingCard = ({
     const { error: userUpdateError } = await supabase
       .from("Users")
       .update({ items_liked: updatedItemsLiked })
-      .eq("id", user.id);
+      .eq("id", customUser.id);
 
     if (userUpdateError) {
       console.error("Error updating user items_liked:", userUpdateError);
@@ -155,7 +143,7 @@ const SmallListingCard = ({
             color="white"
             textAlign="center"
           >
-            {`sold ${soldDatePipe(listing.date_deleted.toString())}`}
+            {`sold ${datePipe(listing.date_deleted.toString())}`}
           </Typography>
         </Box>
       ) : (
