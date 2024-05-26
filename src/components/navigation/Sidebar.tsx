@@ -11,9 +11,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import Colors from "../../assets/Colors";
+import { useAuth } from "../../auth/AuthProvider";
 
-const Sidebar = () => {
-  const [open, setOpen] = useState<boolean>(false);
+const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }) => {
+  const { customUser, signOut } = useAuth();
+  const [open, setOpen] = useState(false);
 
   const DrawerList = (
     <Box sx={{ width: 250 }} onClick={() => setOpen(false)}>
@@ -60,38 +62,90 @@ const Sidebar = () => {
             </ListItemButton>
           </Link>
         </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemText
-              primaryTypographyProps={{
-                fontFamily: "inherit",
-                color: "black",
-                fontSize: "20px",
-              }}
-              primary="account"
-            />
-          </ListItemButton>
-        </ListItem>
+        {customUser ? (
+          <>
+            <ListItem disablePadding>
+              <Link href="/account" underline="none" width="100%">
+                <ListItemButton>
+                  <ListItemText
+                    primaryTypographyProps={{
+                      fontFamily: "inherit",
+                      color: "black",
+                      fontSize: "20px",
+                    }}
+                    primary="my account"
+                  />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+            <ListItem disablePadding>
+              <Link href="/settings" underline="none" width="100%">
+                <ListItemButton>
+                  <ListItemText
+                    primaryTypographyProps={{
+                      fontFamily: "inherit",
+                      color: "black",
+                      fontSize: "20px",
+                    }}
+                    primary="settings"
+                  />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => signOut()}>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontFamily: "inherit",
+                    color: "black",
+                    fontSize: "20px",
+                  }}
+                  primary="logout"
+                />
+              </ListItemButton>
+            </ListItem>
+          </>
+        ) : (
+          <>
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => setSignInModalOpen(true)}>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontFamily: "inherit",
+                    color: "black",
+                    fontSize: "20px",
+                  }}
+                  primary="sign in"
+                />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => setSignUpModalOpen(true)}>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontFamily: "inherit",
+                    color: "black",
+                    fontSize: "20px",
+                  }}
+                  primary="sign up"
+                />
+              </ListItemButton>
+            </ListItem>
+          </>
+        )}
       </List>
     </Box>
   );
 
   return (
     <>
-      <IconButton
-        color="secondary"
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
+      <IconButton color="secondary" onClick={() => setOpen(true)}>
         <MenuIcon sx={{ color: "black", fontSize: "27px" }} />
       </IconButton>
       <Drawer
         anchor="right"
         open={open}
-        onClose={() => {
-          setOpen(false);
-        }}
+        onClose={() => setOpen(false)}
         sx={{
           "& .MuiDrawer-paper": { backgroundColor: Colors.ghostWhite },
         }}

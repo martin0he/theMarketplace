@@ -1,12 +1,17 @@
+import { useState } from "react";
 import { Box, Button, Link, Typography } from "@mui/material";
 import Colors from "../../assets/Colors";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import Sidebar from "./Sidebar";
-
 import AccountMenu from "./AccountMenu";
+import SignInModal from "../modals/SignInModal";
+import SignUpModal from "../modals/SignUpModal";
 
 const Navbar = () => {
   const { width } = useWindowDimensions();
+
+  const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+  const [signInModalOpen, setSignInModalOpen] = useState(false);
 
   return (
     <Box
@@ -56,7 +61,7 @@ const Navbar = () => {
             }}
           >
             <Typography
-              fontFamily={"inherit"}
+              fontFamily="inherit"
               color="black"
               fontSize={23}
               fontWeight={500}
@@ -74,7 +79,7 @@ const Navbar = () => {
             }}
           >
             <Typography
-              fontFamily={"inherit"}
+              fontFamily="inherit"
               color="black"
               fontSize={23}
               fontWeight={500}
@@ -92,7 +97,7 @@ const Navbar = () => {
             }}
           >
             <Typography
-              fontFamily={"inherit"}
+              fontFamily="inherit"
               color="black"
               fontSize={23}
               fontWeight={500}
@@ -117,9 +122,20 @@ const Navbar = () => {
             display: "flex",
           }}
         >
-          <Sidebar />
+          <Sidebar
+            setSignInModalOpen={setSignInModalOpen}
+            setSignUpModalOpen={setSignUpModalOpen}
+          />
         </Box>
       )}
+      <SignInModal
+        isOpen={signInModalOpen}
+        handleClose={() => setSignInModalOpen(false)}
+      />
+      <SignUpModal
+        isOpen={signUpModalOpen}
+        handleClose={() => setSignUpModalOpen(false)}
+      />
     </Box>
   );
 };
