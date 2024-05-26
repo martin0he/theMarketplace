@@ -87,7 +87,7 @@ const ListingsSection = () => {
           ))}
         </Carousel>
       ) : (
-        <Typography>No listings available</Typography>
+        <Typography fontFamily={"inherit"}>No listings available</Typography>
       )}
     </Box>
   );

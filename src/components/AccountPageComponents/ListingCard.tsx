@@ -446,7 +446,15 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
               },
             }}
             value={price}
-            onChange={(event) => setPrice(event.target.value)}
+            onChange={(event) => {
+              const value = event.target.value;
+              if (
+                value === "" ||
+                (Number(value) >= 0 && !value.startsWith("-"))
+              ) {
+                setPrice(value);
+              }
+            }}
           />
           <FormControl fullWidth>
             <InputLabel

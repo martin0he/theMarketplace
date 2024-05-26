@@ -336,7 +336,15 @@ const SellForm = ({
                     },
                   }}
                   value={listingPrice}
-                  onChange={(event) => setListingPrice(event.target.value)}
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    if (
+                      value === "" ||
+                      (Number(value) >= 0 && !value.startsWith("-"))
+                    ) {
+                      setListingPrice(value);
+                    }
+                  }}
                 />
               </Grid>
 
