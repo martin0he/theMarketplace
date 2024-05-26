@@ -22,16 +22,20 @@ const HomePage = () => {
   );
 
   const fetchUserLikedListings = async () => {
-    const { data: Listings, error } = await supabase
-      .from("Listings")
-      .select("*")
-      .is("date_deleted", null)
-      .contains("liked_by", [user?.id]);
+    if (user) {
+      const { data: Listings, error } = await supabase
+        .from("Listings")
+        .select("*")
+        .is("date_deleted", null)
+        .contains("liked_by", [user?.id]);
 
-    if (error) {
-      console.error("Error fetching users liked listings:", error);
+      if (error) {
+        console.error("Error fetching users liked listings:", error);
+      } else {
+        setUsersLikedListings(Listings as Listing[]);
+      }
     } else {
-      setUsersLikedListings(Listings as Listing[]);
+      setUsersLikedListings([]);
     }
   };
 
@@ -88,7 +92,7 @@ const HomePage = () => {
     fetchRecentListings();
     fetchRecentlySoldListings();
     fetchUserLikedListings();
-  }, [user]);
+  }, [user, customUser]);
 
   return (
     <Box paddingTop={10} paddingBottom={40}>
