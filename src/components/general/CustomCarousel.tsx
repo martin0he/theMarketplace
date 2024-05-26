@@ -55,6 +55,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
           height: height,
           borderRadius: "10px",
           backgroundColor: Colors.turquoise,
+          marginTop: "15px",
         }}
       >
         <Typography fontFamily="inherit">No Images</Typography>

@@ -217,7 +217,7 @@ const SellForm = ({
         }}
       >
         <Carousel.Item>
-          <Box paddingX="200px" paddingBottom="65px">
+          <Box paddingX={width * 0.018} paddingBottom="50px">
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -308,7 +308,7 @@ const SellForm = ({
           </Box>
         </Carousel.Item>
         <Carousel.Item>
-          <Box paddingX="200px" paddingBottom="145px" marginTop="45px">
+          <Box paddingX={width * 0.018} paddingBottom="130px" marginTop="45px">
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -463,12 +463,12 @@ const SellForm = ({
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            paddingX="200px"
-            paddingBottom="55px"
+            paddingX={width * 0.018}
+            paddingBottom="40px"
           >
             <CustomCarousel
               imageUrls={previewImageUrls}
-              width={"450px"}
+              width={`${width * 0.41}px`}
               height={"330px"}
             />
 
