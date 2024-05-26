@@ -5,7 +5,7 @@ import ProfileStats from "./ProfileStats";
 import { useAuth } from "../../auth/AuthProvider";
 
 const ProfileSection = () => {
-  const { width, height } = useWindowDimensions();
+  const { height } = useWindowDimensions();
   const { customUser, user } = useAuth();
   return (
     <Grid
@@ -49,7 +49,7 @@ const ProfileSection = () => {
         sx={{ marginLeft: "10px" }} // Tiny gap between the divider and ProfileStats
       >
         {customUser && user ? (
-          <ProfileStats defaultUser={user} customUser={customUser} />
+          <ProfileStats customUser={customUser} />
         ) : (
           <Typography fontFamily={"Josefin Sans"}>no stats :(</Typography>
         )}
