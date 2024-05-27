@@ -66,6 +66,32 @@ const ProfileForm = () => {
 
   const [school, setSchool] = useState<string>("n/a");
 
+  const fetchUserData = async () => {
+    const { data, error } = await supabase
+      .from("Users")
+      .select()
+      .eq("id", customUser?.id);
+
+    if (error) {
+      console.log("Error fetching user data", error);
+    } else {
+      const userData = data[0];
+      setCurrentUsername(userData.username);
+      setUsername(userData.username);
+      setCurrentEmail(userData.email);
+      setEmail(userData.email);
+      const emailDomain = userData.email.split("@")[1];
+      const matchedUniversity = Universities.find((uni) =>
+        uni.domains.includes(emailDomain)
+      );
+      setSchool(matchedUniversity ? matchedUniversity.name : "n/a");
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   useEffect(() => {
     const updateSchool = () => {
       const emailDomain = email.split("@")[1];
