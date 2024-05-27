@@ -19,6 +19,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { Person } from "@mui/icons-material";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
 import { Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -37,6 +38,8 @@ const AccountMenu = () => {
   const handleSignOut = () => {
     signOut();
   };
+
+  const navigate = useNavigate();
 
   return (
     <>

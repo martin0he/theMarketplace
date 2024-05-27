@@ -1,23 +1,25 @@
 import { useState } from "react";
-import { Box, Button, Link, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Colors from "../../assets/Colors";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import Sidebar from "./Sidebar";
 import AccountMenu from "./AccountMenu";
 import SignInModal from "../modals/SignInModal";
 import SignUpModal from "../modals/SignUpModal";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { width } = useWindowDimensions();
 
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const [signInModalOpen, setSignInModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <Box
       sx={{
         backgroundColor: Colors.ghostWhite,
-        width: width,
+        width: "100%",
         height: "85px",
         borderBottomLeftRadius: "10px",
         borderBottomRightRadius: "10px",
@@ -27,35 +29,39 @@ const Navbar = () => {
         position: "fixed",
         top: 0,
         zIndex: 5,
+        padding: { xs: "0 10px", sm: "0 20px" }, // Adjust padding for different screen sizes
+        justifyContent: "space-between",
       }}
     >
-      <Link
-        href="/"
-        underline="none"
-        color="inherit"
-        fontFamily="inherit"
-        variant="h4"
-        sx={{ marginLeft: "20px" }}
+      <Button
+        onClick={() => navigate("/")}
+        sx={{
+          textDecoration: "none",
+          textTransform: "none",
+          color: "inherit",
+          padding: "5px",
+          marginLeft: "5px", // Adjust margin for different screen sizes
+        }}
       >
-        theMarketplace
-      </Link>
+        <Typography fontFamily="Josefin Sans" fontSize={35}>
+          theMarketplace
+        </Typography>
+      </Button>
       {width > 950 ? (
         <Box
           display="flex"
           flexDirection="row"
           py={3}
-          width="100%"
-          marginRight="30px"
           sx={{
-            justifyContent: "right",
+            justifyContent: "flex-end",
             alignItems: "center",
-            display: "flex",
+            flex: 1, // Allow it to take the remaining space
           }}
         >
           <Button
-            href="/auth"
+            onClick={() => navigate("/test")}
             sx={{
-              marginLeft: "65px",
+              marginLeft: { xs: "20px", sm: "65px" }, // Adjust margin for different screen sizes
               fontFamily: "inherit",
               textTransform: "none",
             }}
@@ -71,9 +77,9 @@ const Navbar = () => {
           </Button>
 
           <Button
-            href="/sell"
+            onClick={() => navigate("/sell")}
             sx={{
-              marginLeft: "65px",
+              marginLeft: { xs: "20px", sm: "65px" }, // Adjust margin for different screen sizes
               fontFamily: "inherit",
               textTransform: "none",
             }}
@@ -89,9 +95,9 @@ const Navbar = () => {
           </Button>
 
           <Button
-            href="/about"
+            onClick={() => navigate("/about")}
             sx={{
-              marginLeft: "65px",
+              marginLeft: { xs: "20px", sm: "65px" }, // Adjust margin for different screen sizes
               fontFamily: "inherit",
               textTransform: "none",
             }}
@@ -105,7 +111,7 @@ const Navbar = () => {
               about
             </Typography>
           </Button>
-          <Box marginLeft="55px">
+          <Box marginLeft={{ xs: "10px", sm: "55px" }}>
             <AccountMenu />
           </Box>
         </Box>
@@ -114,12 +120,11 @@ const Navbar = () => {
           display="flex"
           flexDirection="row"
           py={3}
-          width="100%"
-          marginRight="30px"
+          width="auto"
           sx={{
-            justifyContent: "right",
+            justifyContent: "flex-end",
             alignItems: "center",
-            display: "flex",
+            flex: 1, // Allow it to take the remaining space
           }}
         >
           <Sidebar
