@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Box, IconButton, Typography, CircularProgress } from "@mui/material";
+import { Box, IconButton, CircularProgress } from "@mui/material";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
 import Colors from "../../assets/Colors";
 
 interface CustomCarouselProps {
@@ -54,11 +56,12 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
           width: width,
           height: height,
           borderRadius: "10px",
-          backgroundColor: Colors.turquoise,
+          backgroundColor: Colors.tan,
           marginTop: "15px",
+          border: "2px dotted #312f2f",
         }}
       >
-        <Typography fontFamily="inherit">No Images</Typography>
+        <ImageNotSupportedIcon fontSize="large" />
       </Box>
     );
   }

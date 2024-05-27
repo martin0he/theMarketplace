@@ -489,12 +489,12 @@ const SellForm = ({
             justifyContent="center"
             alignItems="center"
             paddingX={width * 0.018}
-            paddingBottom="40px"
+            paddingBottom="55px"
           >
             <CustomCarousel
               imageUrls={previewImageUrls}
               width={`${width * 0.41}px`}
-              height={"330px"}
+              height={"300px"}
             />
 
             <Button
