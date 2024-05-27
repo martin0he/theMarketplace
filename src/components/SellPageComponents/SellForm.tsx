@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactElement, useState } from "react";
 import {
   Alert,
@@ -83,7 +82,7 @@ const SellForm = ({
   };
 
   const { customUser } = useAuth();
-  const [media, setMedia] = useState<any[]>([]);
+  const [media, setMedia] = useState<File[]>([]);
 
   const uploadListing = async () => {
     // Check if all fields are filled in
@@ -224,6 +223,13 @@ const SellForm = ({
       };
       reader.readAsDataURL(file);
     });
+  };
+
+  const handleRemoveImage = (index: number) => {
+    const updatedImageUrls = previewImageUrls.filter((_, i) => i !== index);
+    const updatedMedia = media.filter((_, i) => i !== index);
+    setPreviewImageUrls(updatedImageUrls);
+    setMedia(updatedMedia);
   };
 
   return (
@@ -492,9 +498,11 @@ const SellForm = ({
             paddingBottom="55px"
           >
             <CustomCarousel
+              hasDelete
               imageUrls={previewImageUrls}
               width={`${width * 0.41}px`}
               height={"300px"}
+              onDeleteImage={handleRemoveImage}
             />
 
             <Button

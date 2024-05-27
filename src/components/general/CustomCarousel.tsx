@@ -14,6 +14,8 @@ interface CustomCarouselProps {
   height: string;
   isWhiteArrows?: boolean;
   isSmallArrows?: boolean;
+  onDeleteImage?: (index: number) => void;
+  hasDelete?: boolean;
 }
 
 const CustomCarousel: React.FC<CustomCarouselProps> = ({
@@ -22,6 +24,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   height,
   isWhiteArrows,
   isSmallArrows,
+  onDeleteImage,
+  hasDelete,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -44,6 +48,15 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
 
   const handleImageLoad = () => {
     setLoading(false); // Set loading to false once the image has loaded
+  };
+
+  const handleDeleteImage = () => {
+    if (onDeleteImage) {
+      onDeleteImage(currentIndex);
+      setCurrentIndex((prevIndex) =>
+        prevIndex === imageUrls.length - 1 ? 0 : prevIndex
+      );
+    }
   };
 
   if (imageUrls.length === 0) {
@@ -113,11 +126,12 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
             animation: "fadeIn 0.5s",
           }}
         />
-        {imageUrls.length > 0 && (
+        {imageUrls.length > 0 && hasDelete && (
           <IconButton
+            onClick={handleDeleteImage}
             sx={{
               position: "absolute",
-              top: " 6px",
+              top: "6px",
               right: "6px",
               backgroundColor: Colors.cerise,
               "&:hover": {
