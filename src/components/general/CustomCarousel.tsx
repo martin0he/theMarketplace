@@ -113,6 +113,21 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
             animation: "fadeIn 0.5s",
           }}
         />
+        {imageUrls.length > 0 && (
+          <IconButton
+            sx={{
+              position: "absolute",
+              top: " 6px",
+              right: "6px",
+              backgroundColor: Colors.cerise,
+              "&:hover": {
+                backgroundColor: "#ac3535",
+              },
+            }}
+          >
+            <DeleteIcon fontSize="medium" sx={{ color: "black" }} />
+          </IconButton>
+        )}
         {imageUrls.length > 1 && (
           <>
             <IconButton
