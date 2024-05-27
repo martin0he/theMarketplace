@@ -50,9 +50,10 @@ const ProfileStats = ({ customUser }: ProfileStatsProps) => {
           color="white"
           sx={{
             fontSize: {
-              xs: "15px",
+              xs: "20px",
               sm: "20px",
-              md: "25px",
+              md: "23px",
+              lg: "25px",
             },
           }}
         >
@@ -63,9 +64,10 @@ const ProfileStats = ({ customUser }: ProfileStatsProps) => {
           color="white"
           sx={{
             fontSize: {
-              xs: "25px",
-              sm: "30px",
-              md: "35px",
+              xs: "30px",
+              sm: "35px",
+              md: "37px",
+              lg: "40px",
             },
             alignSelf: "flex-end",
           }}
@@ -84,7 +86,6 @@ const ProfileStats = ({ customUser }: ProfileStatsProps) => {
       overflow="auto"
       width="fit-content"
       padding="10px"
-      //maxHeight={}
     >
       <Grid
         item

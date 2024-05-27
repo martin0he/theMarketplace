@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import Colors from "../../assets/Colors";
 import ProfileStats from "./ProfileComponents/ProfileStats";
@@ -8,15 +8,16 @@ import ProfileForm from "./ProfileComponents/ProfileForm";
 const ProfileSection = () => {
   const { height } = useWindowDimensions();
   const { customUser, user } = useAuth();
+
   return (
     <Grid
       container
       sx={{
         height: {
-          xs: height * 0.9,
-          md: height * 0.6,
-          paddingTop: "20px",
+          xs: "auto",
+          md: height * 0.68,
         },
+        paddingTop: "20px",
       }}
       justifyContent="center"
       display="flex"
@@ -48,10 +49,21 @@ const ProfileSection = () => {
         xs={12}
         md={5.5}
         padding="15px"
-        sx={{ marginLeft: "10px" }} // Tiny gap between the divider and ProfileStats
+        sx={{
+          marginLeft: { md: "10px" },
+          overflow: { xs: "visible", md: "hidden" }, // Allow overflow on small screens
+        }}
       >
         {customUser && user ? (
-          <ProfileStats customUser={customUser} />
+          <Box
+            sx={{
+              overflowY: { xs: "visible", md: "auto" }, // Control overflow based on screen size
+              maxHeight: { md: height * 0.68 - 40 }, // Only set maxHeight for larger screens
+              paddingBottom: "20px",
+            }}
+          >
+            <ProfileStats customUser={customUser} />
+          </Box>
         ) : (
           <Typography fontFamily={"Josefin Sans"}>no stats :(</Typography>
         )}
