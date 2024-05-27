@@ -232,7 +232,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
       <Button
         sx={{
           position: "absolute",
-          bottom: "5px",
+          bottom: "8px",
           left: "50%",
           transform: "translateX(-50%)",
           textTransform: "lowercase",

@@ -51,12 +51,19 @@ const ProfileForm = () => {
   const [alert, setAlert] = useState<ReactElement | null>(null);
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const { customUser } = useAuth();
+
   const [editingUsername, setEditingUsername] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>(
+  const [currentUsername, setCurrentUsername] = useState<string>(
     customUser?.username || "n/a"
   );
+  const [username, setUsername] = useState<string>(currentUsername);
+
   const [editingEmail, setEditingEmail] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>(customUser?.email || "n/a");
+  const [currentEmail, setCurrentEmail] = useState<string>(
+    customUser?.email || "n/a"
+  );
+  const [email, setEmail] = useState<string>(currentEmail);
+
   const [school, setSchool] = useState<string>("n/a");
 
   useEffect(() => {
@@ -111,16 +118,17 @@ const ProfileForm = () => {
         if (updateUsernameError) {
           console.log("couldn't update custom user", updateUsernameError);
         } else {
+          console.log(rawData);
           console.log(
             "updated username to ",
             updateUsername ? updateUsername[0].username : "n/a"
           );
-          console.log(rawData);
           setAlert(
             <Alert variant="outlined" severity="success">
               Successfully updated username!
             </Alert>
           );
+          setCurrentUsername(username);
         }
       }
     } else if (inputType === "email") {
@@ -149,16 +157,26 @@ const ProfileForm = () => {
             </Alert>
           );
         } else {
-          console.log("updated email to ", updatedUser);
-
           console.log(data);
+          console.log("updated email to ", updatedUser);
           setAlert(
             <Alert variant="outlined" severity="success">
               Check your inbox to confirm new email!
             </Alert>
           );
+          setCurrentEmail(email);
         }
       }
+    }
+  };
+
+  const handleCancel = (inputType: string) => {
+    if (inputType === "username") {
+      setUsername(currentUsername);
+      setEditingUsername(false);
+    } else if (inputType === "email") {
+      setEmail(currentEmail);
+      setEditingEmail(false);
     }
   };
 
@@ -190,7 +208,7 @@ const ProfileForm = () => {
                 <IconButton onClick={() => handleUpdate("username")}>
                   <SaveAltIcon sx={{ fontSize: "25px" }} />
                 </IconButton>
-                <IconButton onClick={() => setEditingUsername(false)}>
+                <IconButton onClick={() => handleCancel("username")}>
                   <CancelIcon sx={{ fontSize: "25px" }} />
                 </IconButton>
               </Box>
@@ -223,7 +241,7 @@ const ProfileForm = () => {
                 <IconButton onClick={() => handleUpdate("email")}>
                   <SaveAltIcon sx={{ fontSize: "25px" }} />
                 </IconButton>
-                <IconButton onClick={() => setEditingEmail(false)}>
+                <IconButton onClick={() => handleCancel("email")}>
                   <CancelIcon sx={{ fontSize: "25px" }} />
                 </IconButton>
               </Box>
