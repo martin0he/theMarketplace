@@ -57,8 +57,23 @@ const ProfileSection = () => {
         {customUser && user ? (
           <Box
             sx={{
-              overflowY: { xs: "visible", md: "auto" }, // Control overflow based on screen size
-              maxHeight: { md: height * 0.68 - 40 }, // Only set maxHeight for larger screens
+              "&::-webkit-scrollbar": {
+                height: "8px",
+                backgroundColor: "transparent",
+              },
+              "&::-webkit-scrollbar-track": {
+                borderRadius: "4px",
+                backgroundColor: "#d5d3d3",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: Colors.celestialBlue,
+                borderRadius: "4px",
+                "&:hover": {
+                  backgroundColor: Colors.royalBlue,
+                },
+              },
+              overflowY: { xs: "visible", md: "auto" },
+              maxHeight: { md: height * 0.68 - 40 },
               paddingBottom: "20px",
             }}
           >
