@@ -3,7 +3,6 @@ import Colors from "../assets/Colors";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import SmallListingCard from "../components/general/SmallListingCard";
 import { useAuth } from "../auth/AuthProvider";
-import UniversityTitle from "../components/general/UniversityTitle";
 import supabase from "../auth/supabase";
 import { Listing } from "../types";
 import { useEffect, useState } from "react";
@@ -125,7 +124,14 @@ const HomePage = () => {
       </Box>
 
       <Box marginTop={8} marginLeft={5}>
-        <UniversityTitle />
+        <Typography
+          fontWeight="bold"
+          fontSize={27}
+          fontFamily="inherit"
+          color={Colors.royalBlue}
+        >
+          {customUser?.school || "University marketplace not found :("}
+        </Typography>
       </Box>
       <Box
         justifyContent={"center"}

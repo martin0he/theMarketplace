@@ -38,7 +38,7 @@ function a11yProps(index: number) {
   };
 }
 
-const AlertBox = styled(Box)(() => ({
+export const AlertBox = styled(Box)(() => ({
   position: "fixed",
   top: "20px",
   left: "50%",

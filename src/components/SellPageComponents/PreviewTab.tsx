@@ -32,6 +32,7 @@ const PreviewTab = ({
     <Box
       sx={{
         padding: "10px",
+        paddingRight: "25px",
       }}
     >
       <Grid container>

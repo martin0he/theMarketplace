@@ -21,7 +21,7 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 1 }}>{children}</Box>}
     </div>
   );
 }
@@ -40,7 +40,7 @@ const AccountPage = () => {
     console.log(event);
   };
   return (
-    <Box paddingTop={12} paddingBottom={10} paddingX={5}>
+    <Box paddingTop={12} paddingBottom={7} paddingX={5}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           indicatorColor="secondary"

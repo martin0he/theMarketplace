@@ -1,7 +1,7 @@
 import { Grid, Box, Typography } from "@mui/material";
-import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { CustomUser } from "../../types";
-import { datePipe } from "../../pipes/sellDatePipe";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
+import { CustomUser } from "../../../types";
+import { datePipe } from "../../../pipes/sellDatePipe";
 
 interface ProfileStatsProps {
   customUser: CustomUser;
@@ -84,6 +84,7 @@ const ProfileStats = ({ customUser }: ProfileStatsProps) => {
       overflow="auto"
       width="fit-content"
       padding="10px"
+      //maxHeight={}
     >
       <Grid
         item

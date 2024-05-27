@@ -1,8 +1,9 @@
 import { Divider, Grid, Typography } from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import Colors from "../../assets/Colors";
-import ProfileStats from "./ProfileStats";
+import ProfileStats from "./ProfileComponents/ProfileStats";
 import { useAuth } from "../../auth/AuthProvider";
+import ProfileForm from "./ProfileComponents/ProfileForm";
 
 const ProfileSection = () => {
   const { height } = useWindowDimensions();
@@ -14,11 +15,10 @@ const ProfileSection = () => {
         height: {
           xs: height * 0.9,
           md: height * 0.6,
+          paddingTop: "20px",
         },
-        marginTop: "15px",
       }}
       justifyContent="center"
-      alignItems="center"
       display="flex"
     >
       <Grid
@@ -26,8 +26,10 @@ const ProfileSection = () => {
         xs={12}
         md={5.5} // Adjust to make space for the Divider
         padding="15px"
+        container
+        width={"100%"}
       >
-        {/* Content for the first grid item */}
+        <ProfileForm />
       </Grid>
 
       <Divider
@@ -44,7 +46,7 @@ const ProfileSection = () => {
       <Grid
         item
         xs={12}
-        md={5.5} // Adjust to make space for the Divider
+        md={5.5}
         padding="15px"
         sx={{ marginLeft: "10px" }} // Tiny gap between the divider and ProfileStats
       >
