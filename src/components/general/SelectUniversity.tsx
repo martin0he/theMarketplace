@@ -29,7 +29,7 @@ const SelectUniversity = () => {
             variant="outlined"
           />
         )}
-        onChange={(event, newValue) => {
+        onChange={(_event, newValue) => {
           setSelectedInstitution(newValue);
         }}
       />
