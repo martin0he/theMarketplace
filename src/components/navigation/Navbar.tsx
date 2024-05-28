@@ -29,7 +29,7 @@ const Navbar = () => {
         position: "fixed",
         top: 0,
         zIndex: 5,
-        padding: { xs: "0 10px", sm: "0 20px" }, // Adjust padding for different screen sizes
+        padding: { xs: "0 10px", sm: "0 20px" },
         justifyContent: "space-between",
       }}
     >
@@ -40,7 +40,7 @@ const Navbar = () => {
           textTransform: "none",
           color: "inherit",
           padding: "5px",
-          marginLeft: "5px", // Adjust margin for different screen sizes
+          marginLeft: "5px",
         }}
       >
         <Typography fontFamily="Josefin Sans" fontSize={35}>
@@ -55,13 +55,13 @@ const Navbar = () => {
           sx={{
             justifyContent: "flex-end",
             alignItems: "center",
-            flex: 1, // Allow it to take the remaining space
+            flex: 1,
           }}
         >
           <Button
-            onClick={() => navigate("/test")}
+            onClick={() => navigate("/listings")}
             sx={{
-              marginLeft: { xs: "20px", sm: "65px" }, // Adjust margin for different screen sizes
+              marginLeft: { xs: "20px", sm: "65px" },
               fontFamily: "inherit",
               textTransform: "none",
             }}
@@ -79,7 +79,7 @@ const Navbar = () => {
           <Button
             onClick={() => navigate("/sell")}
             sx={{
-              marginLeft: { xs: "20px", sm: "65px" }, // Adjust margin for different screen sizes
+              marginLeft: { xs: "20px", sm: "65px" },
               fontFamily: "inherit",
               textTransform: "none",
             }}
@@ -97,7 +97,7 @@ const Navbar = () => {
           <Button
             onClick={() => navigate("/about")}
             sx={{
-              marginLeft: { xs: "20px", sm: "65px" }, // Adjust margin for different screen sizes
+              marginLeft: { xs: "20px", sm: "65px" },
               fontFamily: "inherit",
               textTransform: "none",
             }}
@@ -124,7 +124,7 @@ const Navbar = () => {
           sx={{
             justifyContent: "flex-end",
             alignItems: "center",
-            flex: 1, // Allow it to take the remaining space
+            flex: 1,
           }}
         >
           <Sidebar
