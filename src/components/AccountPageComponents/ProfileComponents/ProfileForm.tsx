@@ -10,6 +10,8 @@ import { useAuth } from "../../../auth/AuthProvider";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import CancelIcon from "@mui/icons-material/Cancel";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { ReactElement, useEffect, useState } from "react";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 import supabase from "../../../auth/supabase";
@@ -19,31 +21,61 @@ import { Universities } from "../../../assets/Universities";
 interface CustomTextFieldProps {
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  type?: string;
+  placeholder?: string;
+  showPasswordToggle?: boolean;
+  onTogglePasswordVisibility?: () => void;
+  isPasswordVisible?: boolean;
 }
 
-const CustomTextField = ({ value, onChange }: CustomTextFieldProps) => {
+const CustomTextField = ({
+  value,
+  onChange,
+  type = "text",
+  placeholder,
+  showPasswordToggle = false,
+  onTogglePasswordVisibility,
+  isPasswordVisible,
+}: CustomTextFieldProps) => {
   const { width } = useWindowDimensions();
 
   return (
-    <TextField
-      value={value}
-      onChange={onChange}
-      sx={{
-        width: {
-          md: 0.2 * width,
-          sm: 0.4 * width,
-          xs: 0.3 * width,
-        },
-      }}
-      inputProps={{
-        style: {
-          fontFamily: "Josefin Sans",
-          height: "8px",
-          fontSize: 19,
-          justifyContent: "center",
-        },
-      }}
-    />
+    <Box sx={{ position: "relative", display: "inline-block" }}>
+      <TextField
+        value={value}
+        onChange={onChange}
+        type={type}
+        sx={{
+          width: {
+            md: 0.2 * width,
+            sm: 0.4 * width,
+            xs: 0.3 * width,
+          },
+        }}
+        inputProps={{
+          style: {
+            fontFamily: "Josefin Sans",
+            height: "8px",
+            fontSize: 19,
+            justifyContent: "center",
+          },
+        }}
+        placeholder={placeholder}
+      />
+      {showPasswordToggle && (
+        <IconButton
+          onClick={onTogglePasswordVisibility}
+          sx={{
+            position: "absolute",
+            right: 0,
+            top: "50%",
+            transform: "translateY(-50%)",
+          }}
+        >
+          {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
+        </IconButton>
+      )}
+    </Box>
   );
 };
 
@@ -65,6 +97,20 @@ const ProfileForm = () => {
   const [email, setEmail] = useState<string>(currentEmail);
 
   const [school, setSchool] = useState<string>("n/a");
+
+  const [currentPassword, setCurrentPassword] = useState<string>(
+    customUser?.password || ""
+  );
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const [editingPassword, setEditingPassword] = useState<boolean>(false);
+  const [isCurrentPasswordVisible, setIsCurrentPasswordVisible] =
+    useState<boolean>(false);
+  const [isNewPasswordVisible, setIsNewPasswordVisible] =
+    useState<boolean>(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState<boolean>(false);
 
   const fetchUserData = async () => {
     const { data, error } = await supabase
@@ -193,6 +239,54 @@ const ProfileForm = () => {
           setCurrentEmail(email);
         }
       }
+    } else if (inputType === "password") {
+      if (currentPassword !== customUser?.password) {
+        setAlert(
+          <Alert variant="outlined" severity="error">
+            Current password is incorrect!
+          </Alert>
+        );
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        setAlert(
+          <Alert variant="outlined" severity="error">
+            New passwords do not match!
+          </Alert>
+        );
+        return;
+      }
+
+      setEditingPassword(false);
+      const { data: rawData, error: rawError } = await supabase.auth.updateUser(
+        { password: newPassword }
+      );
+
+      if (rawError) {
+        console.log("couldn't update password ", rawError);
+        setAlert(
+          <Alert variant="outlined" severity="error">
+            Couldn't update password!
+          </Alert>
+        );
+      } else {
+        const { error: updatePasswordError } = await supabase
+          .from("Users")
+          .update({ password: newPassword })
+          .eq("id", customUser?.id);
+        if (updatePasswordError) {
+          console.log("custom password couldnt update");
+        } else {
+          setAlert(
+            <Alert variant="outlined" severity="success">
+              Successfully updated password!
+            </Alert>
+          );
+          console.log(rawData);
+          setNewPassword("");
+          setConfirmPassword("");
+        }
+      }
     }
   };
 
@@ -203,6 +297,10 @@ const ProfileForm = () => {
     } else if (inputType === "email") {
       setEmail(currentEmail);
       setEditingEmail(false);
+    } else if (inputType === "password") {
+      setNewPassword("");
+      setConfirmPassword("");
+      setEditingPassword(false);
     }
   };
 
@@ -295,13 +393,91 @@ const ProfileForm = () => {
             gridTemplateColumns="auto max-content"
             alignItems="center"
           >
-            <Typography fontFamily="inherit" fontSize={23}>
-              password: {customUser ? customUser.password : "n/a"}
+            <Typography
+              fontFamily="inherit"
+              fontSize={23}
+              display={"flex"}
+              flexDirection={"row"}
+              gap={1}
+            >
+              password:{" "}
+              {editingPassword ? (
+                <CustomTextField
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  type={isCurrentPasswordVisible ? "text" : "password"}
+                  placeholder="Current Password"
+                  showPasswordToggle
+                  onTogglePasswordVisibility={() =>
+                    setIsCurrentPasswordVisible(!isCurrentPasswordVisible)
+                  }
+                  isPasswordVisible={isCurrentPasswordVisible}
+                />
+              ) : (
+                <>
+                  <Typography fontFamily="inherit" fontSize={23}>
+                    {isCurrentPasswordVisible
+                      ? currentPassword
+                      : "•".repeat(currentPassword.length)}
+                  </Typography>
+                  <Box sx={{ display: "flex", gap: 1, ml: 1 }}>
+                    <IconButton
+                      onClick={() =>
+                        setIsCurrentPasswordVisible(!isCurrentPasswordVisible)
+                      }
+                    >
+                      {isCurrentPasswordVisible ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
+                    </IconButton>
+                    <IconButton onClick={() => setEditingPassword(true)}>
+                      <EditNoteIcon sx={{ fontSize: "25px" }} />
+                    </IconButton>
+                  </Box>
+                </>
+              )}
             </Typography>
-            <IconButton>
-              <EditNoteIcon sx={{ fontSize: "25px" }} />
-            </IconButton>
           </Box>
+          {editingPassword && (
+            <>
+              <Box display="flex" alignItems="center" mt={1}>
+                <CustomTextField
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  type={isNewPasswordVisible ? "text" : "password"}
+                  placeholder="New Password"
+                  showPasswordToggle
+                  onTogglePasswordVisibility={() =>
+                    setIsNewPasswordVisible(!isNewPasswordVisible)
+                  }
+                  isPasswordVisible={isNewPasswordVisible}
+                />
+              </Box>
+              <Box display="flex" alignItems="center" mt={1}>
+                <CustomTextField
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  type={isConfirmPasswordVisible ? "text" : "password"}
+                  placeholder="Confirm New Password"
+                  showPasswordToggle
+                  onTogglePasswordVisibility={() =>
+                    setIsConfirmPasswordVisible(!isConfirmPasswordVisible)
+                  }
+                  isPasswordVisible={isConfirmPasswordVisible}
+                />
+              </Box>
+              <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
+                <IconButton onClick={() => handleUpdate("password")}>
+                  <SaveAltIcon sx={{ fontSize: "25px" }} />
+                </IconButton>
+                <IconButton onClick={() => handleCancel("password")}>
+                  <CancelIcon sx={{ fontSize: "25px" }} />
+                </IconButton>
+              </Box>
+            </>
+          )}
         </Grid>
       </Grid>
     </Box>
