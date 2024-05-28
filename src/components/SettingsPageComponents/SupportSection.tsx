@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Colors from "../../assets/Colors";
+import { SupportRequestForm } from "./SupportRequestForm";
 
 const SupportSection = () => {
   return (
@@ -101,11 +102,32 @@ const SupportSection = () => {
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          Accordion 1
+          <Typography fontFamily={"inherit"} fontWeight={600}>
+            why does my school not seem to be recognized?
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet bladit leo lobortis ege.
+          In the case that your institution is not already in our database,
+          please send in a request via the support form provided below for any
+          bug/improvement/question/etc.
+        </AccordionDetails>
+      </Accordion>
+      <Accordion sx={{ backgroundColor: Colors.tan }}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+        >
+          <Typography
+            sx={{ textDecoration: "underline" }}
+            fontFamily={"inherit"}
+            fontWeight={600}
+          >
+            support request form
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <SupportRequestForm />
         </AccordionDetails>
       </Accordion>
     </Box>
