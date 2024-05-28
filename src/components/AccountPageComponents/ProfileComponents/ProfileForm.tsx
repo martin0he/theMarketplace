@@ -1,6 +1,11 @@
 import {
   Alert,
   Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Grid,
   IconButton,
   TextField,
@@ -17,6 +22,7 @@ import useWindowDimensions from "../../../hooks/useWindowDimensions";
 import supabase from "../../../auth/supabase";
 import { AlertBox } from "../../../pages/SellPage";
 import { Universities } from "../../../assets/Universities";
+import Colors from "../../../assets/Colors";
 
 interface CustomTextFieldProps {
   value: string;
@@ -80,6 +86,7 @@ const CustomTextField = ({
 };
 
 const ProfileForm = () => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [alert, setAlert] = useState<ReactElement | null>(null);
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const { customUser } = useAuth();
@@ -306,10 +313,64 @@ const ProfileForm = () => {
     }
   };
 
+  const handleConfirmAccountDelete = () => {};
+
   return (
     <Box>
       {alert && (
         <AlertBox style={{ opacity: alertVisible ? 1 : 0 }}>{alert}</AlertBox>
+      )}
+      {isDeleteModalOpen && (
+        <Dialog
+          open={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          PaperProps={{
+            sx: {
+              borderRadius: "10px",
+            },
+          }}
+        >
+          <DialogTitle
+            sx={{ fontFamily: "Josefin Sans" }}
+            id="alert-dialog-title"
+          >
+            {"Confirm Account Deletion"}
+          </DialogTitle>
+          <DialogContent>
+            <Typography
+              id="alert-dialog-description"
+              fontFamily={"Josefin Sans"}
+            >
+              Are you sure you want to delete your account? This action is
+              irreversible.
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              sx={{
+                fontFamily: "Josefin Sans",
+                color: Colors.turquoise,
+                textTransform: "lowercase",
+              }}
+              onClick={() => setIsDeleteModalOpen(false)}
+            >
+              no
+            </Button>
+            <Button
+              sx={{
+                fontFamily: "Josefin Sans",
+                color: Colors.cerise,
+                textTransform: "lowercase",
+              }}
+              onClick={handleConfirmAccountDelete}
+              autoFocus
+            >
+              yes
+            </Button>
+          </DialogActions>
+        </Dialog>
       )}
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -482,6 +543,21 @@ const ProfileForm = () => {
           )}
         </Grid>
       </Grid>
+      <Button
+        onClick={() => setIsDeleteModalOpen(true)}
+        sx={{
+          backgroundColor: Colors.cerise,
+          borderRadius: "10px",
+          textTransform: "lowercase",
+          "&:hover": {
+            backgroundColor: "#9c2121",
+          },
+        }}
+      >
+        <Typography fontFamily={"Josefin Sans"} color="white">
+          delete account
+        </Typography>
+      </Button>
     </Box>
   );
 };
