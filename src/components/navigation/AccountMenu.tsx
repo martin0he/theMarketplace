@@ -18,7 +18,6 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import { Person } from "@mui/icons-material";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
-import { Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const AccountMenu = () => {
@@ -128,36 +127,36 @@ const AccountMenu = () => {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem onClick={handleClose}>
-              <Link
-                href="/account"
-                underline="none"
-                color="inherit"
-                fontFamily="inherit"
-                display="flex"
-                flexDirection="row"
-              >
-                <ListItemIcon>
-                  <Person fontSize="small" />
-                </ListItemIcon>
-                <Typography fontFamily="Josefin Sans">my account</Typography>
-              </Link>
+            <MenuItem
+              onClick={() => navigate("/account")}
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                textDecoration: "none",
+                textTransform: "none",
+                color: "inherit",
+              }}
+            >
+              <ListItemIcon>
+                <Person fontSize="small" />
+              </ListItemIcon>
+              <Typography fontFamily="Josefin Sans">my account</Typography>
             </MenuItem>
             <Divider />
-            <MenuItem>
-              <Link
-                href="/settings"
-                underline="none"
-                color="inherit"
-                fontFamily="inherit"
-                display="flex"
-                flexDirection="row"
-              >
-                <ListItemIcon>
-                  <Settings fontSize="small" />
-                </ListItemIcon>
-                <Typography fontFamily="Josefin Sans">settings</Typography>
-              </Link>
+            <MenuItem
+              onClick={() => navigate("/settings")}
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                textDecoration: "none",
+                textTransform: "none",
+                color: "inherit",
+              }}
+            >
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+              <Typography fontFamily="Josefin Sans">settings</Typography>
             </MenuItem>
             <MenuItem onClick={handleSignOut}>
               <ListItemIcon>

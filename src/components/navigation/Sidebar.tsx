@@ -3,7 +3,6 @@ import {
   Box,
   Drawer,
   IconButton,
-  Link,
   List,
   ListItem,
   ListItemButton,
@@ -12,6 +11,7 @@ import {
 import { useState } from "react";
 import Colors from "../../assets/Colors";
 import { useAuth } from "../../auth/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
   setSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,81 +21,72 @@ interface SidebarProps {
 const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
   const { customUser, signOut } = useAuth();
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const DrawerList = (
     <Box sx={{ width: 250 }} onClick={() => setOpen(false)}>
       <List>
         <ListItem disablePadding>
-          <Link href="/test" underline="none" width="100%">
-            <ListItemButton>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontFamily: "inherit",
-                  color: "black",
-                  fontSize: "20px",
-                }}
-                primary="listings"
-              />
-            </ListItemButton>
-          </Link>
+          <ListItemButton onClick={() => navigate("/listings")}>
+            <ListItemText
+              primaryTypographyProps={{
+                fontFamily: "inherit",
+                color: "black",
+                fontSize: "20px",
+              }}
+              primary="listings"
+            />
+          </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <Link href="/sell" underline="none" width="100%">
-            <ListItemButton>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontFamily: "inherit",
-                  color: "black",
-                  fontSize: "20px",
-                }}
-                primary="sell"
-              />
-            </ListItemButton>
-          </Link>
+          <ListItemButton onClick={() => navigate("/sell")}>
+            <ListItemText
+              primaryTypographyProps={{
+                fontFamily: "inherit",
+                color: "black",
+                fontSize: "20px",
+              }}
+              primary="sell"
+            />
+          </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <Link href="/about" underline="none" width="100%">
-            <ListItemButton>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontFamily: "inherit",
-                  color: "black",
-                  fontSize: "20px",
-                }}
-                primary="about"
-              />
-            </ListItemButton>
-          </Link>
+          <ListItemButton onClick={() => navigate("/about")}>
+            <ListItemText
+              primaryTypographyProps={{
+                fontFamily: "inherit",
+                color: "black",
+                fontSize: "20px",
+              }}
+              primary="about"
+            />
+          </ListItemButton>
         </ListItem>
         {customUser ? (
           <>
             <ListItem disablePadding>
-              <Link href="/account" underline="none" width="100%">
-                <ListItemButton>
-                  <ListItemText
-                    primaryTypographyProps={{
-                      fontFamily: "inherit",
-                      color: "black",
-                      fontSize: "20px",
-                    }}
-                    primary="my account"
-                  />
-                </ListItemButton>
-              </Link>
+              <ListItemButton onClick={() => navigate("/account")}>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontFamily: "inherit",
+                    color: "black",
+                    fontSize: "20px",
+                  }}
+                  primary="my account"
+                />
+              </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <Link href="/settings" underline="none" width="100%">
-                <ListItemButton>
-                  <ListItemText
-                    primaryTypographyProps={{
-                      fontFamily: "inherit",
-                      color: "black",
-                      fontSize: "20px",
-                    }}
-                    primary="settings"
-                  />
-                </ListItemButton>
-              </Link>
+              <ListItemButton onClick={() => navigate("/settings")}>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontFamily: "inherit",
+                    color: "black",
+                    fontSize: "20px",
+                  }}
+                  primary="settings"
+                />
+              </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton onClick={() => signOut()}>
