@@ -36,6 +36,9 @@ const Navbar = () => {
       <Button
         onClick={() => navigate("/")}
         sx={{
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
           textDecoration: "none",
           textTransform: "none",
           color: "inherit",

@@ -112,31 +112,30 @@ const ProfileForm = () => {
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState<boolean>(false);
 
-  const fetchUserData = async () => {
-    const { data, error } = await supabase
-      .from("Users")
-      .select()
-      .eq("id", customUser?.id);
-
-    if (error) {
-      console.log("Error fetching user data", error);
-    } else {
-      const userData = data[0];
-      setCurrentUsername(userData.username);
-      setUsername(userData.username);
-      setCurrentEmail(userData.email);
-      setEmail(userData.email);
-      const emailDomain = userData.email.split("@")[1];
-      const matchedUniversity = Universities.find((uni) =>
-        uni.domains.includes(emailDomain)
-      );
-      setSchool(matchedUniversity ? matchedUniversity.name : "n/a");
-    }
-  };
-
   useEffect(() => {
+    const fetchUserData = async () => {
+      const { data, error } = await supabase
+        .from("Users")
+        .select()
+        .eq("id", customUser?.id);
+
+      if (error) {
+        console.log("Error fetching user data", error);
+      } else {
+        const userData = data[0];
+        setCurrentUsername(userData.username);
+        setUsername(userData.username);
+        setCurrentEmail(userData.email);
+        setEmail(userData.email);
+        const emailDomain = userData.email.split("@")[1];
+        const matchedUniversity = Universities.find((uni) =>
+          uni.domains.includes(emailDomain)
+        );
+        setSchool(matchedUniversity ? matchedUniversity.name : "n/a");
+      }
+    };
     fetchUserData();
-  }, []);
+  }, [customUser?.id]);
 
   useEffect(() => {
     const updateSchool = () => {
@@ -216,11 +215,15 @@ const ProfileForm = () => {
           </Alert>
         );
       } else {
-        const { data: updatedUser, error: updateEmailError } = await supabase
+        const domain = customUser?.email?.split("@")[1];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const newSchool = Universities.find((uni: any) =>
+          uni.domains.includes(domain)
+        );
+        const { error: updateEmailError } = await supabase
           .from("Users")
-          .update({ email: email })
-          .eq("id", customUser?.id)
-          .select();
+          .update({ email: email, school: newSchool?.name || "n/a" })
+          .eq("id", customUser?.id);
 
         if (updateEmailError) {
           setAlert(
@@ -230,7 +233,6 @@ const ProfileForm = () => {
           );
         } else {
           console.log(data);
-          console.log("updated email to ", updatedUser);
           setAlert(
             <Alert variant="outlined" severity="success">
               Check your inbox to confirm new email!
