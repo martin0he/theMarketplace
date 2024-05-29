@@ -79,7 +79,7 @@ export const SupportRequestForm = () => {
       <input
         type="text"
         name="from_school"
-        value={customUser?.school}
+        value={customUser?.school || "n/a"}
         readOnly
         style={{
           width: "100%",
