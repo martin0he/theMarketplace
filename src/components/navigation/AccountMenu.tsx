@@ -19,6 +19,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { Person } from "@mui/icons-material";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material";
 
 const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -33,6 +34,7 @@ const AccountMenu = () => {
   const [signUpModalOpen, setSignUpModalOpen] = useState<boolean>(false);
   const [signInModalOpen, setSignInModalOpen] = useState<boolean>(false);
   const { signOut, customUser } = useAuth();
+  const theme = useTheme();
 
   const handleSignOut = () => {
     signOut();
@@ -68,7 +70,7 @@ const AccountMenu = () => {
                   width: 32,
                   height: 32,
                   padding: "22px",
-                  backgroundColor: "#8b3fc6",
+                  backgroundColor: theme.palette.customColors.soldSticker,
                 }}
               >
                 {customUser !== null ? (

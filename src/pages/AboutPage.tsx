@@ -1,9 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
 const AboutPage = () => {
+  const theme = useTheme();
   return (
     <Box paddingY={10} paddingX={7} textAlign="center" marginTop="40px">
-      <Typography variant="h4" color="#68ac53">
+      <Typography variant="h4" color={theme.palette.customColors.celestialBlue}>
         Welcome to theMarketplace!
       </Typography>
 
@@ -29,7 +30,11 @@ const AboutPage = () => {
       >
         To use theMarketplace you must first sign in with your
         <span
-          style={{ fontWeight: "bold", fontStyle: "italic", color: "#1d7ec9" }}
+          style={{
+            fontWeight: "bold",
+            fontStyle: "italic",
+            color: theme.palette.customColors.submitButton,
+          }}
         >
           {" "}
           university-administrated '.edu'
@@ -61,13 +66,21 @@ const AboutPage = () => {
         list your items here today and get things rolling! When you think about
         going{" "}
         <span
-          style={{ fontWeight: "bold", fontStyle: "italic", color: "#57c157" }}
+          style={{
+            fontWeight: "bold",
+            fontStyle: "italic",
+            color: theme.palette.customColors.celestialBlue,
+          }}
         >
           second-hand
         </span>
         , think about{" "}
         <span
-          style={{ fontWeight: "bold", fontStyle: "italic", color: "#57c157" }}
+          style={{
+            fontWeight: "bold",
+            fontStyle: "italic",
+            color: theme.palette.customColors.celestialBlue,
+          }}
         >
           theMarketplace
         </span>

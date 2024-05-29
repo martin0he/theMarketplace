@@ -9,8 +9,13 @@ declare module "@mui/material/styles" {
       ghostWhite: string;
       cerise: string;
       smallListing: string;
-      tan: string;
+      inputBG: string;
       turquoise: string;
+      listBoxBG1: string;
+      listBoxBG2: string;
+      priceSticker: string;
+      soldSticker: string;
+      submitButton: string;
     };
   }
   interface PaletteOptions {
@@ -20,8 +25,13 @@ declare module "@mui/material/styles" {
       ghostWhite?: string;
       cerise?: string;
       smallListing?: string;
-      tan?: string;
+      inputBG?: string;
       turquoise?: string;
+      listBoxBG1?: string;
+      listBoxBG2?: string;
+      priceSticker?: string;
+      soldSticker?: string;
+      submitButton?: string;
     };
   }
 }

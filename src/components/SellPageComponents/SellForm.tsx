@@ -65,7 +65,7 @@ const SellForm = ({
   const inputStyle = {
     height: "56px",
     borderRadius: "12px",
-    backgroundColor: theme.palette.customColors.tan,
+    backgroundColor: theme.palette.customColors.inputBG,
   };
 
   const handlePaymentChange = (event: SelectChangeEvent<PaymentMethod[]>) => {
@@ -259,7 +259,7 @@ const SellForm = ({
                   InputProps={{ style: inputStyle }}
                   InputLabelProps={{
                     style: {
-                      backgroundColor: theme.palette.customColors.tan,
+                      backgroundColor: theme.palette.customColors.inputBG,
                       borderRadius: "9px",
                       paddingLeft: "5px",
                       paddingRight: "5px",
@@ -275,7 +275,7 @@ const SellForm = ({
                   <InputLabel
                     color="secondary"
                     sx={{
-                      backgroundColor: theme.palette.customColors.tan,
+                      backgroundColor: theme.palette.customColors.inputBG,
                       borderRadius: "9px",
                       paddingLeft: "5px",
                       paddingRight: "5px",
@@ -310,7 +310,7 @@ const SellForm = ({
                   variant="outlined"
                   InputLabelProps={{
                     style: {
-                      backgroundColor: theme.palette.customColors.tan,
+                      backgroundColor: theme.palette.customColors.inputBG,
                       borderRadius: "9px",
                       paddingLeft: "5px",
                       paddingRight: "5px",
@@ -320,7 +320,7 @@ const SellForm = ({
                     style: {
                       borderRadius: "12px",
 
-                      backgroundColor: theme.palette.customColors.tan,
+                      backgroundColor: theme.palette.customColors.inputBG,
                     },
                   }}
                   value={listingDescription}
@@ -353,7 +353,7 @@ const SellForm = ({
                   }}
                   InputLabelProps={{
                     style: {
-                      backgroundColor: theme.palette.customColors.tan,
+                      backgroundColor: theme.palette.customColors.inputBG,
                       borderRadius: "9px",
                       paddingLeft: "5px",
                       paddingRight: "5px",
@@ -377,7 +377,7 @@ const SellForm = ({
                   <InputLabel
                     color="secondary"
                     sx={{
-                      backgroundColor: theme.palette.customColors.tan,
+                      backgroundColor: theme.palette.customColors.inputBG,
                       borderRadius: "9px",
                       paddingLeft: "5px",
                       paddingRight: "5px",
@@ -436,7 +436,7 @@ const SellForm = ({
                     variant="outlined"
                     InputLabelProps={{
                       style: {
-                        backgroundColor: theme.palette.customColors.tan,
+                        backgroundColor: theme.palette.customColors.inputBG,
                         borderRadius: "9px",
                         paddingLeft: "5px",
                         paddingRight: "5px",
@@ -456,7 +456,7 @@ const SellForm = ({
                         variant="outlined"
                         InputLabelProps={{
                           style: {
-                            backgroundColor: theme.palette.customColors.tan,
+                            backgroundColor: theme.palette.customColors.inputBG,
                             borderRadius: "9px",
                             paddingLeft: "5px",
                             paddingRight: "5px",
@@ -518,7 +518,7 @@ const SellForm = ({
       <Button
         variant="contained"
         sx={{
-          backgroundColor: "#52c777",
+          backgroundColor: theme.palette.customColors.submitButton,
           "&:hover": {
             backgroundColor: theme.palette.customColors.celestialBlue,
           },

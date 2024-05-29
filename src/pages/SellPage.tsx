@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import SellForm from "../components/SellPageComponents/SellForm";
 import PreviewTab from "../components/SellPageComponents/PreviewTab";
 import { Condition, PaymentMethod } from "../types";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -84,6 +84,8 @@ const SellPage = () => {
     }
   }, [alert]);
 
+  const theme = useTheme();
+
   return (
     <Box paddingTop={12} paddingBottom={10} paddingX={5}>
       {alert && (
@@ -100,7 +102,7 @@ const SellPage = () => {
             label={
               <Typography
                 style={{
-                  color: "blue",
+                  color: theme.palette.customColors.royalBlue,
                   fontSize: 18,
                   textTransform: "lowercase",
                   fontWeight: value === 0 ? "bold" : "normal",
@@ -115,7 +117,7 @@ const SellPage = () => {
             label={
               <Typography
                 style={{
-                  color: "blue",
+                  color: theme.palette.customColors.royalBlue,
                   fontSize: 18,
                   textTransform: "lowercase",
                   fontWeight: value === 1 ? "bold" : "normal",

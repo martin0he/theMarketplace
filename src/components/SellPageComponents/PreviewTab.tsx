@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
 import { useAuth } from "../../auth/AuthProvider";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import CustomCarousel from "../general/CustomCarousel";
@@ -27,7 +27,7 @@ const PreviewTab = ({
   const { customUser } = useAuth();
   const formattedDate = new Date().toLocaleDateString();
   const { width, height } = useWindowDimensions();
-
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -116,7 +116,7 @@ const PreviewTab = ({
                   right: "20px",
                   transform: "rotate(-45deg) translate(50%, -50%)",
                   transformOrigin: "bottom right",
-                  backgroundColor: "#96b17c",
+                  backgroundColor: theme.palette.customColors.priceSticker,
                   padding: "10px",
                   zIndex: 1,
                   width: "250px",

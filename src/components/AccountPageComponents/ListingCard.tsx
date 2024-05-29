@@ -201,7 +201,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
   const inputStyle = {
     height: "56px",
     borderRadius: "12px",
-    backgroundColor: theme.palette.customColors.tan,
+    backgroundColor: theme.palette.customColors.inputBG,
     width: width * 0.65 * 0.75,
   };
 
@@ -211,7 +211,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
       width={width * 0.65}
       height={height * 0.58}
       sx={{
-        backgroundColor: theme.palette.customColors.tan,
+        backgroundColor: theme.palette.customColors.inputBG,
         position: "relative",
       }}
       boxShadow="1px 1px 2px #7c6741"
@@ -242,11 +242,13 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           borderRadius: "8px",
           backgroundColor: dateDeleted
             ? "white"
-            : theme.palette.customColors.turquoise,
-          color: dateDeleted ? theme.palette.customColors.turquoise : "white",
+            : theme.palette.customColors.submitButton,
+          color: dateDeleted
+            ? theme.palette.customColors.submitButton
+            : "white",
           "&:hover": {
             backgroundColor: "white",
-            color: theme.palette.customColors.turquoise,
+            color: theme.palette.customColors.submitButton,
           },
           zIndex: 2,
           boxShadow: "1px 1px 2px #838181",
@@ -429,7 +431,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             InputProps={{ style: inputStyle }}
             InputLabelProps={{
               style: {
-                backgroundColor: theme.palette.customColors.tan,
+                backgroundColor: theme.palette.customColors.inputBG,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -455,7 +457,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             }}
             InputLabelProps={{
               style: {
-                backgroundColor: theme.palette.customColors.tan,
+                backgroundColor: theme.palette.customColors.inputBG,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -476,7 +478,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             <InputLabel
               color="secondary"
               sx={{
-                backgroundColor: theme.palette.customColors.tan,
+                backgroundColor: theme.palette.customColors.inputBG,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -509,7 +511,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             InputProps={{ style: inputStyle }}
             InputLabelProps={{
               style: {
-                backgroundColor: theme.palette.customColors.tan,
+                backgroundColor: theme.palette.customColors.inputBG,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -522,7 +524,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             <InputLabel
               color="secondary"
               sx={{
-                backgroundColor: theme.palette.customColors.tan,
+                backgroundColor: theme.palette.customColors.inputBG,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -556,7 +558,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             variant="outlined"
             InputLabelProps={{
               style: {
-                backgroundColor: theme.palette.customColors.tan,
+                backgroundColor: theme.palette.customColors.inputBG,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",

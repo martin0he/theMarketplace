@@ -145,7 +145,7 @@ const HomePage = () => {
               height="100%"
               paddingBottom="10px"
               sx={{
-                backgroundColor: "#bedcee",
+                backgroundColor: theme.palette.customColors.listBoxBG1,
                 borderRadius: "10px",
                 border: 0.7,
                 borderColor: "#3aacd9cc",
@@ -204,7 +204,7 @@ const HomePage = () => {
               height="100%"
               paddingBottom="10px"
               sx={{
-                backgroundColor: "#caeec8e0",
+                backgroundColor: theme.palette.customColors.listBoxBG2,
                 borderRadius: "10px",
                 border: 0.7,
                 borderColor: "#49d049cc",
@@ -266,7 +266,7 @@ const HomePage = () => {
               height="100%"
               paddingBottom="10px"
               sx={{
-                backgroundColor: "#caeec8e0",
+                backgroundColor: theme.palette.customColors.listBoxBG2,
                 borderRadius: "10px",
                 border: 0.7,
                 borderColor: "#49d049cc",
@@ -331,7 +331,7 @@ const HomePage = () => {
               height="100%"
               paddingBottom="10px"
               sx={{
-                backgroundColor: "#bedcee",
+                backgroundColor: theme.palette.customColors.listBoxBG1,
                 borderRadius: "10px",
                 border: 0.7,
                 borderColor: "#3aacd9cc",

@@ -13,7 +13,7 @@ const SupportSection = () => {
   const theme = useTheme();
   return (
     <Box padding="20px">
-      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.inputBG }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -28,7 +28,7 @@ const SupportSection = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.inputBG }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -42,7 +42,7 @@ const SupportSection = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.inputBG }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -58,7 +58,7 @@ const SupportSection = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.inputBG }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -76,7 +76,7 @@ const SupportSection = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.inputBG }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -91,7 +91,7 @@ const SupportSection = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.inputBG }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -107,7 +107,7 @@ const SupportSection = () => {
           bug/improvement/question/etc.
         </AccordionDetails>
       </Accordion>
-      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.inputBG }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"

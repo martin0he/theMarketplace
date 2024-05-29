@@ -69,7 +69,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
           width: width,
           height: height,
           borderRadius: "10px",
-          backgroundColor: theme.palette.customColors.tan,
+          backgroundColor: theme.palette.customColors.inputBG,
           marginTop: "15px",
           border: "2px dotted #312f2f",
         }}

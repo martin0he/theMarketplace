@@ -155,7 +155,7 @@ const SmallListingCard = ({
             top: "20px",
             marginLeft: "60px",
             transform: "rotate(45deg)",
-            backgroundColor: "#8b3fc6",
+            backgroundColor: theme.palette.customColors.soldSticker,
             padding: "5px",
             boxShadow: ".5px 1px 2.5px #3d2055",
           }}
@@ -172,7 +172,7 @@ const SmallListingCard = ({
             top: "20px",
             marginLeft: "60px",
             transform: "rotate(45deg)",
-            backgroundColor: "#96b17c",
+            backgroundColor: theme.palette.customColors.priceSticker,
             padding: "5px",
             boxShadow: ".5px 1px 2.5px #3b4f3c",
           }}

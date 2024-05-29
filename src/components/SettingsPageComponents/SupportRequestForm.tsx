@@ -123,8 +123,8 @@ export const SupportRequestForm = () => {
           border: "none",
           borderRadius: "4px",
           backgroundColor: isHovered
-            ? "#5aaa8f"
-            : theme.palette.customColors.turquoise,
+            ? theme.palette.customColors.cerise
+            : theme.palette.customColors.submitButton,
           color: "white",
           fontSize: "1rem",
           cursor: "pointer",

@@ -17,6 +17,7 @@ import {
   CssBaseline,
 } from "@mui/material";
 import { ThemeProvider, ThemeContext } from "./ThemeContext";
+import { GlobalStyles } from "@mui/system";
 
 const Layout: React.FC = () => {
   return (
@@ -45,8 +46,13 @@ const AppContent: React.FC = () => {
         ghostWhite: theme.ghostWhite,
         cerise: theme.cerise,
         smallListing: theme.smallListing,
-        tan: theme.tan,
+        inputBG: theme.inputBG,
         turquoise: theme.turquoise,
+        listBoxBG1: theme.listBoxBG1,
+        listBoxBG2: theme.listBoxBG2,
+        priceSticker: theme.priceSticker,
+        soldSticker: theme.soldSticker,
+        submitButton: theme.submitButton,
       },
     },
     typography: {
@@ -57,6 +63,24 @@ const AppContent: React.FC = () => {
   return (
     <MuiThemeProvider theme={muiTheme}>
       <CssBaseline />
+      <GlobalStyles
+        styles={{
+          "&::-webkit-scrollbar": {
+            height: "8px",
+            backgroundColor: "transparent",
+          },
+          "&::-webkit-scrollbar-track": {
+            borderRadius: "2px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: muiTheme.palette.customColors.celestialBlue,
+            borderRadius: "2px",
+            "&:hover": {
+              backgroundColor: muiTheme.palette.customColors.royalBlue,
+            },
+          },
+        }}
+      />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
