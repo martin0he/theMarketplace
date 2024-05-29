@@ -48,14 +48,11 @@ const AccountMenu = () => {
             display: "flex",
             alignItems: "center",
             textAlign: "center",
-            fontFamily: "inherit",
           }}
         >
           <Tooltip
             title={
-              <Typography fontFamily="Josefin Sans">
-                {customUser ? "your account" : "guest"}
-              </Typography>
+              <Typography>{customUser ? "your account" : "guest"}</Typography>
             }
           >
             <IconButton
@@ -76,7 +73,6 @@ const AccountMenu = () => {
               >
                 {customUser !== null ? (
                   <Typography
-                    fontFamily="Josefin Sans"
                     fontSize={24}
                     marginTop={0.7}
                     textAlign={"center"}
@@ -140,7 +136,7 @@ const AccountMenu = () => {
               <ListItemIcon>
                 <Person fontSize="small" />
               </ListItemIcon>
-              <Typography fontFamily="Josefin Sans">my account</Typography>
+              <Typography>my account</Typography>
             </MenuItem>
             <Divider />
             <MenuItem
@@ -156,13 +152,13 @@ const AccountMenu = () => {
               <ListItemIcon>
                 <Settings fontSize="small" />
               </ListItemIcon>
-              <Typography fontFamily="Josefin Sans">settings</Typography>
+              <Typography>settings</Typography>
             </MenuItem>
             <MenuItem onClick={handleSignOut}>
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
-              <Typography fontFamily="Josefin Sans">logout</Typography>
+              <Typography>logout</Typography>
             </MenuItem>
           </Menu>
         ) : (
@@ -204,15 +200,11 @@ const AccountMenu = () => {
           >
             <MenuItem onClick={() => setSignInModalOpen(true)}>
               <LoginIcon />
-              <Typography padding="7px" fontFamily="Josefin Sans">
-                sign in
-              </Typography>
+              <Typography padding="7px">sign in</Typography>
             </MenuItem>
             <MenuItem onClick={() => setSignUpModalOpen(true)}>
               <PersonAddIcon />
-              <Typography padding="7px" fontFamily="Josefin Sans">
-                sign up
-              </Typography>
+              <Typography padding="7px">sign up</Typography>
             </MenuItem>
           </Menu>
         )}

@@ -3,11 +3,11 @@ import { Box, Typography } from "@mui/material";
 const AboutPage = () => {
   return (
     <Box paddingY={10} paddingX={7} textAlign="center" marginTop="40px">
-      <Typography variant="h4" color="#68ac53" fontFamily="inherit">
+      <Typography variant="h4" color="#68ac53">
         Welcome to theMarketplace!
       </Typography>
 
-      <Typography variant="h6" fontFamily="inherit" marginTop="15px">
+      <Typography variant="h6" marginTop="15px">
         This is the premiere, college-exclusive online markeplace to sell and
         buy items on your campus.
       </Typography>
@@ -15,7 +15,6 @@ const AboutPage = () => {
       <Typography
         variant="h5"
         textAlign="left"
-        fontFamily="inherit"
         marginTop="20px"
         marginLeft="35px"
       >
@@ -24,7 +23,6 @@ const AboutPage = () => {
 
       <Typography
         variant="h6"
-        fontFamily="inherit"
         textAlign="left"
         marginLeft="35px"
         marginTop="20px"
@@ -44,7 +42,6 @@ const AboutPage = () => {
       <Typography
         variant="h5"
         textAlign="left"
-        fontFamily="inherit"
         marginTop="20px"
         marginLeft="35px"
       >
@@ -53,7 +50,6 @@ const AboutPage = () => {
 
       <Typography
         variant="h6"
-        fontFamily="inherit"
         textAlign="left"
         marginLeft="35px"
         marginTop="20px"

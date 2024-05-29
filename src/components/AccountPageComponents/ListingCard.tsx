@@ -14,12 +14,12 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  useTheme,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import Colors from "../../assets/Colors";
 import { Condition, CustomUser, Listing, PaymentMethod } from "../../types";
 import { useEffect, useState } from "react";
 import supabase from "../../auth/supabase";
@@ -32,6 +32,29 @@ interface ListingCardProps {
 }
 
 const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
+  const theme = useTheme();
+  const { width, height } = useWindowDimensions();
+  const { customUser } = useAuth();
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [price, setPrice] = useState<number | string>(listing.price);
+  const [name, setName] = useState<string>(listing.name);
+  const [description, setDescription] = useState<string>(listing.description);
+  const [condition, setCondition] = useState<Condition>(
+    listing.condition || Condition.EMPTY
+  );
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>(
+    listing.payment_methods
+  );
+  const [location, setLocation] = useState<string>(listing.exchange_location);
+  const [likes, setLikes] = useState<CustomUser[]>([]);
+  const [dateDeleted, setDateDeleted] = useState<Date | null>(
+    listing.date_deleted || null
+  );
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openSaveDialog, setOpenSaveDialog] = useState(false);
+  const [openMarkAsSoldDialog, setOpenMarkAsSoldDialog] = useState(false);
+
   useEffect(() => {
     const fetchLikes = async () => {
       const { data: Likers, error } = await supabase
@@ -68,7 +91,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
       console.log(updateError || updateUserError);
     } else {
       setDateDeleted(new Date());
-      console.log("mark as sold successful");
+      console.log("Mark as sold successful");
       onUpdate();
     }
   };
@@ -111,7 +134,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           updateUserSoldError
       );
     } else {
-      console.log("delete successful");
+      console.log("Delete successful");
       onUpdate();
     }
   };
@@ -131,33 +154,11 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
     if (saveError) {
       console.log(saveError);
     } else {
-      console.log("save successful");
+      console.log("Save successful");
       setIsEditing(false);
       onUpdate();
     }
   };
-
-  const { width, height } = useWindowDimensions();
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [price, setPrice] = useState<number | string>(listing.price);
-  const [name, setName] = useState<string>(listing.name);
-  const [description, setDescription] = useState<string>(listing.description);
-  const [condition, setCondition] = useState<Condition>(
-    listing.condition || Condition.EMPTY
-  );
-  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>(
-    listing.payment_methods
-  );
-  const [location, setLocation] = useState<string>(listing.exchange_location);
-  const [likes, setLikes] = useState<CustomUser[]>([]);
-  const [dateDeleted, setDateDeleted] = useState<Date | null>(
-    listing.date_deleted || null
-  );
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [openSaveDialog, setOpenSaveDialog] = useState(false);
-  const [openMarkAsSoldDialog, setOpenMarkAsSoldDialog] = useState(false);
-
-  const { customUser } = useAuth();
 
   const handleOpenDeleteDialog = () => {
     setOpenDeleteDialog(true);
@@ -185,14 +186,6 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
     setOpenSaveDialog(false);
   };
 
-  const inputStyle = {
-    height: "56px",
-    borderRadius: "12px",
-    fontFamily: "Josefin Sans",
-    backgroundColor: Colors.tan,
-    width: width * 0.65 * 0.75,
-  };
-
   const handleConditionChange = (event: SelectChangeEvent<Condition>) => {
     const { value } = event.target;
     setCondition(value as Condition);
@@ -205,12 +198,22 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
     );
   };
 
+  const inputStyle = {
+    height: "56px",
+    borderRadius: "12px",
+    backgroundColor: theme.palette.customColors.tan,
+    width: width * 0.65 * 0.75,
+  };
+
   return (
     <Box
       borderRadius="12px"
       width={width * 0.65}
       height={height * 0.58}
-      sx={{ backgroundColor: Colors.tan, position: "relative" }}
+      sx={{
+        backgroundColor: theme.palette.customColors.tan,
+        position: "relative",
+      }}
       boxShadow="1px 1px 2px #7c6741"
     >
       {isEditing ? (
@@ -237,11 +240,13 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           transform: "translateX(-50%)",
           textTransform: "lowercase",
           borderRadius: "8px",
-          backgroundColor: dateDeleted ? "white" : Colors.turquoise,
-          color: dateDeleted ? Colors.turquoise : "white",
+          backgroundColor: dateDeleted
+            ? "white"
+            : theme.palette.customColors.turquoise,
+          color: dateDeleted ? theme.palette.customColors.turquoise : "white",
           "&:hover": {
             backgroundColor: "white",
-            color: Colors.turquoise,
+            color: theme.palette.customColors.turquoise,
           },
           zIndex: 2,
           boxShadow: "1px 1px 2px #838181",
@@ -249,9 +254,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
         onClick={() => setOpenMarkAsSoldDialog(true)}
         disabled={dateDeleted ? true : false}
       >
-        <Typography fontFamily="Josefin Sans">
-          {dateDeleted ? "already sold" : "mark as sold"}
-        </Typography>
+        <Typography>{dateDeleted ? "already sold" : "mark as sold"}</Typography>
       </Button>
 
       <IconButton
@@ -278,22 +281,16 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           },
         }}
       >
-        <DialogTitle
-          sx={{ fontFamily: "Josefin Sans" }}
-          id="alert-dialog-title"
-        >
-          {"Confirm Deletion"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Confirm Deletion"}</DialogTitle>
         <DialogContent>
-          <Typography id="alert-dialog-description" fontFamily={"Josefin Sans"}>
+          <Typography id="alert-dialog-description">
             Are you sure you want to delete this listing?
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button
             sx={{
-              fontFamily: "Josefin Sans",
-              color: Colors.turquoise,
+              color: theme.palette.customColors.turquoise,
               textTransform: "lowercase",
             }}
             onClick={handleCloseDeleteDialog}
@@ -302,8 +299,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           </Button>
           <Button
             sx={{
-              fontFamily: "Josefin Sans",
-              color: Colors.cerise,
+              color: theme.palette.customColors.cerise,
               textTransform: "lowercase",
             }}
             onClick={handleConfirmDelete}
@@ -325,22 +321,16 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           },
         }}
       >
-        <DialogTitle
-          sx={{ fontFamily: "Josefin Sans" }}
-          id="alert-dialog-title"
-        >
-          {"Confirm Changes"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Confirm Changes"}</DialogTitle>
         <DialogContent>
-          <Typography fontFamily="inherit" id="alert-dialog-description">
+          <Typography id="alert-dialog-description">
             Are you sure you want to save these changes?
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button
             sx={{
-              fontFamily: "Josefin Sans",
-              color: Colors.royalBlue,
+              color: theme.palette.customColors.royalBlue,
               textTransform: "lowercase",
             }}
             onClick={handleCloseSaveDialog}
@@ -349,8 +339,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           </Button>
           <Button
             sx={{
-              fontFamily: "Josefin Sans",
-              color: Colors.royalBlue,
+              color: theme.palette.customColors.royalBlue,
               textTransform: "lowercase",
             }}
             onClick={handleConfirmSave}
@@ -373,22 +362,16 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           },
         }}
       >
-        <DialogTitle
-          sx={{ fontFamily: "Josefin Sans" }}
-          id="alert-dialog-title"
-        >
-          {"Confirm Status"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Confirm Status"}</DialogTitle>
         <DialogContent>
-          <Typography fontFamily="inherit" id="alert-dialog-description">
+          <Typography id="alert-dialog-description">
             Are you sure you want to mark this listing as sold?
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button
             sx={{
-              fontFamily: "Josefin Sans",
-              color: Colors.royalBlue,
+              color: theme.palette.customColors.royalBlue,
               textTransform: "lowercase",
             }}
             onClick={() => setOpenMarkAsSoldDialog(false)}
@@ -397,8 +380,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
           </Button>
           <Button
             sx={{
-              fontFamily: "Josefin Sans",
-              color: Colors.royalBlue,
+              color: theme.palette.customColors.royalBlue,
               textTransform: "lowercase",
             }}
             onClick={handleMarkAsSold}
@@ -423,12 +405,12 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
               borderRadius: "12px",
             },
             "&::-webkit-scrollbar-thumb": {
-              backgroundColor: Colors.celestialBlue,
+              backgroundColor: theme.palette.customColors.celestialBlue,
               borderRadius: "12px",
               zIndex: 2,
             },
             "&::-webkit-scrollbar-thumb:hover": {
-              backgroundColor: Colors.royalBlue,
+              backgroundColor: theme.palette.customColors.royalBlue,
             },
             "&::-webkit-scrollbar-track": {
               backgroundColor: "transparent",
@@ -436,11 +418,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             },
           }}
         >
-          <Typography
-            fontFamily={"inherit"}
-            fontSize={21}
-            sx={{ textDecoration: "underline" }}
-          >
+          <Typography fontSize={21} sx={{ textDecoration: "underline" }}>
             update listing
           </Typography>
           <TextField
@@ -451,8 +429,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             InputProps={{ style: inputStyle }}
             InputLabelProps={{
               style: {
-                fontFamily: "Josefin Sans",
-                backgroundColor: Colors.tan,
+                backgroundColor: theme.palette.customColors.tan,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -478,8 +455,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             }}
             InputLabelProps={{
               style: {
-                fontFamily: "Josefin Sans",
-                backgroundColor: Colors.tan,
+                backgroundColor: theme.palette.customColors.tan,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -500,8 +476,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             <InputLabel
               color="secondary"
               sx={{
-                fontFamily: "Josefin Sans",
-                backgroundColor: Colors.tan,
+                backgroundColor: theme.palette.customColors.tan,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -514,14 +489,13 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
               sx={{ mt: "15px", height: "56px" }}
               color="secondary"
               fullWidth
-              inputProps={{ style: { fontFamily: "Josefin Sans" } }}
-              style={inputStyle}
               value={condition}
               onChange={handleConditionChange}
+              style={inputStyle}
             >
               {Object.values(Condition).map((condition) => (
                 <MenuItem key={condition} value={condition}>
-                  <Typography fontFamily="Josefin Sans">{condition}</Typography>
+                  <Typography>{condition}</Typography>
                 </MenuItem>
               ))}
             </Select>
@@ -535,8 +509,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             InputProps={{ style: inputStyle }}
             InputLabelProps={{
               style: {
-                fontFamily: "Josefin Sans",
-                backgroundColor: Colors.tan,
+                backgroundColor: theme.palette.customColors.tan,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -549,8 +522,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             <InputLabel
               color="secondary"
               sx={{
-                fontFamily: "Josefin Sans",
-                backgroundColor: Colors.tan,
+                backgroundColor: theme.palette.customColors.tan,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -567,12 +539,11 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
               value={paymentMethods}
               onChange={handlePaymentChange}
               renderValue={(selected) => selected.join(", ")}
-              inputProps={{ style: { fontFamily: "Josefin Sans" } }}
               style={inputStyle}
             >
               {Object.values(PaymentMethod).map((method) => (
                 <MenuItem key={method} value={method}>
-                  <Typography fontFamily="Josefin Sans">{method}</Typography>
+                  <Typography>{method}</Typography>
                 </MenuItem>
               ))}
             </Select>
@@ -585,8 +556,7 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             variant="outlined"
             InputLabelProps={{
               style: {
-                fontFamily: "Josefin Sans",
-                backgroundColor: Colors.tan,
+                backgroundColor: theme.palette.customColors.tan,
                 borderRadius: "9px",
                 paddingLeft: "5px",
                 paddingRight: "5px",
@@ -611,12 +581,12 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
               borderRadius: "12px",
             },
             "&::-webkit-scrollbar-thumb": {
-              backgroundColor: Colors.celestialBlue,
+              backgroundColor: theme.palette.customColors.celestialBlue,
               borderRadius: "12px",
               zIndex: 2,
             },
             "&::-webkit-scrollbar-thumb:hover": {
-              backgroundColor: Colors.royalBlue,
+              backgroundColor: theme.palette.customColors.royalBlue,
             },
             "&::-webkit-scrollbar-track": {
               backgroundColor: "transparent",
@@ -624,43 +594,35 @@ const ListingCard = ({ listing, onUpdate }: ListingCardProps) => {
             },
           }}
         >
-          <Typography fontSize={21} fontFamily={"inherit"}>
-            Name: {name}
-          </Typography>
-          <Typography fontSize={21} fontFamily={"inherit"}>
+          <Typography fontSize={21}>Name: {name}</Typography>
+          <Typography fontSize={21}>
             Status:{" "}
             {dateDeleted ? `Sold: ${dateDeleted.toString()}` : "Available"}
           </Typography>
-          <Typography fontSize={21} fontFamily="inherit">
+          <Typography fontSize={21}>
             Price: {customUser ? getLocalCurrency(customUser) : ""}
             {price}
           </Typography>
-          <Typography fontSize={21} fontFamily="inherit">
-            Description: {description}
-          </Typography>
-          <Typography fontSize={21} fontFamily="inherit">
-            Condition: {condition}
-          </Typography>
-          <Typography fontSize={21} fontFamily="inherit">
+          <Typography fontSize={21}>Description: {description}</Typography>
+          <Typography fontSize={21}>Condition: {condition}</Typography>
+          <Typography fontSize={21}>
             {Array.isArray(paymentMethods) && paymentMethods.length > 0 ? (
               `Payment Methods: ${paymentMethods.join(", ")}`
             ) : (
-              <Typography fontSize={21} fontFamily={"inherit"}>
+              <Typography fontSize={21}>
                 Payment methods are not available.
               </Typography>
             )}
           </Typography>
-          <Typography fontSize={21} fontFamily="inherit">
-            Exchange Location: {location}
-          </Typography>
-          <Typography fontSize={21} fontFamily="inherit">
+          <Typography fontSize={21}>Exchange Location: {location}</Typography>
+          <Typography fontSize={21}>
             Date Posted: {listing.created_at.toString()}
           </Typography>
-          <Typography fontSize={21} fontFamily="inherit">
+          <Typography fontSize={21}>
             {Array.isArray(likes) && likes.length > 0 ? (
               `Liked By: ${likes.map((like) => like.username).join(", ")}`
             ) : (
-              <Typography fontSize={21} fontFamily={"inherit"}>
+              <Typography fontSize={21}>
                 No one has liked your listing.
               </Typography>
             )}

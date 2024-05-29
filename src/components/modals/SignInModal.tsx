@@ -11,8 +11,8 @@ import {
   IconButton,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
-import Colors from "../../assets/Colors";
 import { FormEvent, ReactElement, useState } from "react";
 import supabase from "../../auth/supabase";
 import CloseIcon from "@mui/icons-material/Close";
@@ -23,6 +23,7 @@ interface SignInModalProps {
 }
 
 const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
+  const theme = useTheme();
   const [alert, setAlert] = useState<ReactElement>();
   const [formData, setFormData] = useState({
     email: "",
@@ -72,9 +73,8 @@ const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
       <Dialog open={isOpen} onClose={handleClose}>
         <DialogTitle
           sx={{
-            fontFamily: "Josefin Sans",
             fontSize: "28px",
-            color: Colors.celestialBlue,
+            color: theme.palette.customColors.celestialBlue,
           }}
         >
           sign in
@@ -86,7 +86,7 @@ const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
             position: "absolute",
             right: 8,
             top: 8,
-            color: Colors.celestialBlue,
+            color: theme.palette.customColors.celestialBlue,
           }}
         >
           <CloseIcon />
@@ -105,10 +105,10 @@ const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
                 fullWidth
                 margin="normal"
                 InputProps={{
-                  style: { fontFamily: "inherit", fontSize: "24px" },
+                  style: { fontSize: "24px" },
                 }}
                 InputLabelProps={{
-                  style: { fontFamily: "inherit", fontSize: "24px" },
+                  style: { fontSize: "24px" },
                 }}
                 required
               />
@@ -122,10 +122,10 @@ const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
                 fullWidth
                 margin="normal"
                 InputProps={{
-                  style: { fontFamily: "inherit", fontSize: "24px" },
+                  style: { fontSize: "24px" },
                 }}
                 InputLabelProps={{
-                  style: { fontFamily: "inherit", fontSize: "24px" },
+                  style: { fontSize: "24px" },
                 }}
                 required
               />
@@ -137,11 +137,7 @@ const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
                     color="primary"
                   />
                 }
-                label={
-                  <Typography fontFamily="Josefin Sans">
-                    show password
-                  </Typography>
-                }
+                label={<Typography>show password</Typography>}
               />
               <Button
                 fullWidth
@@ -151,7 +147,7 @@ const SignInModal = ({ isOpen, handleClose }: SignInModalProps) => {
                   marginTop: "30px",
                   backgroundColor: "#8b3fc6",
                   color: "white",
-                  fontFamily: "inherit",
+
                   textTransform: "lowercase",
                   fontSize: "18px",
                   borderRadius: "9px",

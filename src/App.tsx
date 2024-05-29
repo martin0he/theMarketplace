@@ -1,4 +1,5 @@
-// App.tsx
+// src/App.tsx
+import React, { useContext } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import TestPage from "./pages/TestPage";
@@ -10,8 +11,14 @@ import SettingsPage from "./pages/SettingsPage";
 import AccountPage from "./pages/AccountPage";
 import Masthead from "./components/navigation/Masthead";
 import Navbar from "./components/navigation/Navbar";
+import {
+  ThemeProvider as MuiThemeProvider,
+  createTheme,
+  CssBaseline,
+} from "@mui/material";
+import { ThemeProvider, ThemeContext } from "./ThemeContext";
 
-const Layout = () => {
+const Layout: React.FC = () => {
   return (
     <>
       <Navbar />
@@ -21,23 +28,59 @@ const Layout = () => {
   );
 };
 
-function App() {
+const AppContent: React.FC = () => {
+  const themeContext = useContext(ThemeContext);
+
+  if (!themeContext) {
+    throw new Error("ThemeContext must be used within a ThemeProvider");
+  }
+
+  const { theme } = themeContext;
+
+  const muiTheme = createTheme({
+    palette: {
+      customColors: {
+        royalBlue: theme.royalBlue,
+        celestialBlue: theme.celestialBlue,
+        ghostWhite: theme.ghostWhite,
+        cerise: theme.cerise,
+        smallListing: theme.smallListing,
+        tan: theme.tan,
+        turquoise: theme.turquoise,
+      },
+    },
+    typography: {
+      fontFamily: "Josefin Sans",
+    },
+  });
+
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="listings" element={<TestPage />} />
-            <Route path="about" element={<AboutPage />} />
-            <Route path="sell" element={<SellPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-            <Route path="account" element={<AccountPage />} />
-          </Route>
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+    <MuiThemeProvider theme={muiTheme}>
+      <CssBaseline />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="listings" element={<TestPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="sell" element={<SellPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+          <Route path="account" element={<AccountPage />} />
+        </Route>
+      </Routes>
+    </MuiThemeProvider>
   );
-}
+};
+
+const App: React.FC = () => {
+  return (
+    <ThemeProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+      </BrowserRouter>
+    </ThemeProvider>
+  );
+};
 
 export default App;

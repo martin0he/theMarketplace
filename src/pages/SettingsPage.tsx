@@ -1,7 +1,7 @@
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
-import Colors from "../assets/Colors";
 import SupportSection from "../components/SettingsPageComponents/SupportSection";
+import ThemeSwitcher from "../components/SettingsPageComponents/ThemeSwitcher";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -38,6 +38,8 @@ const SettingsPage = () => {
     setValue(newValue);
     console.log(event);
   };
+
+  const theme = useTheme();
   return (
     <Box paddingTop={12} paddingX={5}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -51,9 +53,9 @@ const SettingsPage = () => {
             label={
               <Typography
                 style={{
-                  color: Colors.royalBlue,
+                  color: theme.palette.customColors.royalBlue,
                   fontSize: 18,
-                  fontFamily: "Josefin Sans",
+
                   textTransform: "lowercase",
                   fontWeight: value === 0 ? "bold" : "normal",
                 }}
@@ -67,9 +69,9 @@ const SettingsPage = () => {
             label={
               <Typography
                 style={{
-                  color: Colors.royalBlue,
+                  color: theme.palette.customColors.royalBlue,
                   fontSize: 18,
-                  fontFamily: "Josefin Sans",
+
                   textTransform: "lowercase",
                   fontWeight: value === 1 ? "bold" : "normal",
                 }}
@@ -81,7 +83,9 @@ const SettingsPage = () => {
           />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}></CustomTabPanel>
+      <CustomTabPanel value={value} index={0}>
+        <ThemeSwitcher />
+      </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <SupportSection />
       </CustomTabPanel>

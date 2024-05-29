@@ -38,7 +38,6 @@ const PreviewTab = ({
       <Grid container>
         <Grid item>
           <Typography
-            fontFamily="Josefin Sans"
             sx={{
               fontSize: "33px",
               marginBottom: "10px",
@@ -52,24 +51,15 @@ const PreviewTab = ({
         <Grid item container>
           <Grid item xs={6}>
             <Box>
-              <Typography
-                fontFamily="Josefin Sans"
-                sx={{ margin: "5px 0", fontSize: "19px" }}
-              >
+              <Typography sx={{ margin: "5px 0", fontSize: "19px" }}>
                 <strong>Posted: </strong>
                 {formattedDate}
               </Typography>
-              <Typography
-                fontFamily="Josefin Sans"
-                sx={{ margin: "5px 0", fontSize: "19px" }}
-              >
+              <Typography sx={{ margin: "5px 0", fontSize: "19px" }}>
                 <strong>By: </strong>
                 {customUser?.username}
               </Typography>
-              <Typography
-                fontFamily="Josefin Sans"
-                sx={{ margin: "5px 0", fontSize: "19px" }}
-              >
+              <Typography sx={{ margin: "5px 0", fontSize: "19px" }}>
                 <strong>Condition: </strong>
                 {listingCondition ? `${listingCondition}` : "Not Selected"}
               </Typography>
@@ -86,7 +76,6 @@ const PreviewTab = ({
                 }}
               >
                 <Typography
-                  fontFamily="Josefin Sans"
                   sx={{
                     margin: "5px 0",
                     fontSize: "19px",
@@ -135,7 +124,6 @@ const PreviewTab = ({
                 }}
               >
                 <Typography
-                  fontFamily="inherit"
                   color="white"
                   textAlign="center"
                   sx={{ fontSize: "1rem" }}
@@ -153,10 +141,7 @@ const PreviewTab = ({
 
         <Grid container item>
           <Grid item xs={12} md={6}>
-            <Typography
-              fontFamily="Josefin Sans"
-              sx={{ margin: "5px 0", fontSize: "19px" }}
-            >
+            <Typography sx={{ margin: "5px 0", fontSize: "19px" }}>
               <strong>Payment: </strong>
               {listingPaymentMethods.length < 1 ? "N/A" : ""}
             </Typography>
@@ -169,10 +154,7 @@ const PreviewTab = ({
             </ul>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Typography
-              fontFamily="Josefin Sans"
-              sx={{ margin: "5px 0", fontSize: "19px" }}
-            >
+            <Typography sx={{ margin: "5px 0", fontSize: "19px" }}>
               <strong>Exchange At: </strong>
               {listingLocation ? `${listingLocation}` : "Not Specified"}
             </Typography>

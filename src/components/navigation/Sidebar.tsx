@@ -7,9 +7,9 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  useTheme,
 } from "@mui/material";
 import { useState } from "react";
-import Colors from "../../assets/Colors";
 import { useAuth } from "../../auth/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -22,6 +22,7 @@ const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
   const { customUser, signOut } = useAuth();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const DrawerList = (
     <Box sx={{ width: 250 }} onClick={() => setOpen(false)}>
@@ -30,7 +31,6 @@ const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
           <ListItemButton onClick={() => navigate("/listings")}>
             <ListItemText
               primaryTypographyProps={{
-                fontFamily: "inherit",
                 color: "black",
                 fontSize: "20px",
               }}
@@ -42,7 +42,6 @@ const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
           <ListItemButton onClick={() => navigate("/sell")}>
             <ListItemText
               primaryTypographyProps={{
-                fontFamily: "inherit",
                 color: "black",
                 fontSize: "20px",
               }}
@@ -54,7 +53,6 @@ const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
           <ListItemButton onClick={() => navigate("/about")}>
             <ListItemText
               primaryTypographyProps={{
-                fontFamily: "inherit",
                 color: "black",
                 fontSize: "20px",
               }}
@@ -68,7 +66,6 @@ const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
               <ListItemButton onClick={() => navigate("/account")}>
                 <ListItemText
                   primaryTypographyProps={{
-                    fontFamily: "inherit",
                     color: "black",
                     fontSize: "20px",
                   }}
@@ -80,7 +77,6 @@ const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
               <ListItemButton onClick={() => navigate("/settings")}>
                 <ListItemText
                   primaryTypographyProps={{
-                    fontFamily: "inherit",
                     color: "black",
                     fontSize: "20px",
                   }}
@@ -92,7 +88,6 @@ const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
               <ListItemButton onClick={() => signOut()}>
                 <ListItemText
                   primaryTypographyProps={{
-                    fontFamily: "inherit",
                     color: "black",
                     fontSize: "20px",
                   }}
@@ -107,7 +102,6 @@ const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
               <ListItemButton onClick={() => setSignInModalOpen(true)}>
                 <ListItemText
                   primaryTypographyProps={{
-                    fontFamily: "inherit",
                     color: "black",
                     fontSize: "20px",
                   }}
@@ -119,7 +113,6 @@ const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
               <ListItemButton onClick={() => setSignUpModalOpen(true)}>
                 <ListItemText
                   primaryTypographyProps={{
-                    fontFamily: "inherit",
                     color: "black",
                     fontSize: "20px",
                   }}
@@ -143,7 +136,9 @@ const Sidebar = ({ setSignInModalOpen, setSignUpModalOpen }: SidebarProps) => {
         open={open}
         onClose={() => setOpen(false)}
         sx={{
-          "& .MuiDrawer-paper": { backgroundColor: Colors.ghostWhite },
+          "& .MuiDrawer-paper": {
+            backgroundColor: theme.palette.customColors.ghostWhite,
+          },
         }}
       >
         {DrawerList}

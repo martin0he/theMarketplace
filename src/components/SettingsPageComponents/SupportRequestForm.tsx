@@ -1,13 +1,13 @@
 import { useRef, FormEvent, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useAuth } from "../../auth/AuthProvider";
-import Colors from "../../assets/Colors";
+import { useTheme } from "@mui/material";
 
 export const SupportRequestForm = () => {
   const { customUser } = useAuth();
   const form = useRef<HTMLFormElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
-
+  const theme = useTheme();
   const sendEmail = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -122,7 +122,9 @@ export const SupportRequestForm = () => {
           padding: "0.75rem",
           border: "none",
           borderRadius: "4px",
-          backgroundColor: isHovered ? "#5aaa8f" : Colors.turquoise,
+          backgroundColor: isHovered
+            ? "#5aaa8f"
+            : theme.palette.customColors.turquoise,
           color: "white",
           fontSize: "1rem",
           cursor: "pointer",

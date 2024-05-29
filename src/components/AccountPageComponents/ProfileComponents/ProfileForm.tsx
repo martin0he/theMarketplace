@@ -54,7 +54,6 @@ const CustomTextField = ({
         }}
         inputProps={{
           style: {
-            fontFamily: "Josefin Sans",
             height: "8px",
             fontSize: 19,
             justifyContent: "center",
@@ -319,7 +318,7 @@ const ProfileForm = () => {
             gridTemplateColumns="auto max-content"
             alignItems="center"
           >
-            <Typography fontFamily="inherit" fontSize={23}>
+            <Typography fontSize={23}>
               username:{" "}
               {editingUsername ? (
                 <CustomTextField
@@ -352,7 +351,7 @@ const ProfileForm = () => {
             gridTemplateColumns="auto max-content"
             alignItems="center"
           >
-            <Typography fontFamily="inherit" fontSize={23}>
+            <Typography fontSize={23}>
               email:{" "}
               {editingEmail ? (
                 <CustomTextField
@@ -385,9 +384,7 @@ const ProfileForm = () => {
             gridTemplateColumns="auto max-content"
             alignItems="center"
           >
-            <Typography fontFamily="inherit" fontSize={23}>
-              school: {school}
-            </Typography>
+            <Typography fontSize={23}>school: {school}</Typography>
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -397,7 +394,6 @@ const ProfileForm = () => {
             alignItems="center"
           >
             <Typography
-              fontFamily="inherit"
               fontSize={23}
               display={"flex"}
               flexDirection={"row"}
@@ -418,7 +414,7 @@ const ProfileForm = () => {
                 />
               ) : (
                 <>
-                  <Typography fontFamily="inherit" fontSize={23}>
+                  <Typography fontSize={23}>
                     {isCurrentPasswordVisible
                       ? currentPassword
                       : "•".repeat(currentPassword.length)}

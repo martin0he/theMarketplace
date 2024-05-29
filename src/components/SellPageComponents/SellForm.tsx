@@ -12,9 +12,9 @@ import {
   TextField,
   Typography,
   InputAdornment,
+  useTheme,
 } from "@mui/material";
 import Carousel from "react-bootstrap/Carousel";
-import Colors from "../../assets/Colors";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { AddressAutofill } from "@mapbox/search-js-react";
 import { Condition, Listing, PaymentMethod } from "../../types";
@@ -60,13 +60,12 @@ const SellForm = ({
   setAlert,
 }: SellFormProps) => {
   const [isCustom, setIsCustom] = useState<boolean>(true);
-
+  const theme = useTheme();
   const { width } = useWindowDimensions();
   const inputStyle = {
     height: "56px",
     borderRadius: "12px",
-    fontFamily: "Josefin Sans",
-    backgroundColor: Colors.tan,
+    backgroundColor: theme.palette.customColors.tan,
   };
 
   const handlePaymentChange = (event: SelectChangeEvent<PaymentMethod[]>) => {
@@ -260,8 +259,7 @@ const SellForm = ({
                   InputProps={{ style: inputStyle }}
                   InputLabelProps={{
                     style: {
-                      fontFamily: "Josefin Sans",
-                      backgroundColor: Colors.tan,
+                      backgroundColor: theme.palette.customColors.tan,
                       borderRadius: "9px",
                       paddingLeft: "5px",
                       paddingRight: "5px",
@@ -277,8 +275,7 @@ const SellForm = ({
                   <InputLabel
                     color="secondary"
                     sx={{
-                      fontFamily: "Josefin Sans",
-                      backgroundColor: Colors.tan,
+                      backgroundColor: theme.palette.customColors.tan,
                       borderRadius: "9px",
                       paddingLeft: "5px",
                       paddingRight: "5px",
@@ -289,16 +286,14 @@ const SellForm = ({
                   <Select
                     color="secondary"
                     fullWidth
-                    inputProps={{ style: { fontFamily: "Josefin Sans" } }}
+                    inputProps={{ style: {} }}
                     style={inputStyle}
                     value={listingCondition}
                     onChange={handleConditionChange}
                   >
                     {Object.values(Condition).map((condition) => (
                       <MenuItem key={condition} value={condition}>
-                        <Typography fontFamily="Josefin Sans">
-                          {condition}
-                        </Typography>
+                        <Typography>{condition}</Typography>
                       </MenuItem>
                     ))}
                   </Select>
@@ -315,8 +310,7 @@ const SellForm = ({
                   variant="outlined"
                   InputLabelProps={{
                     style: {
-                      fontFamily: "Josefin Sans",
-                      backgroundColor: Colors.tan,
+                      backgroundColor: theme.palette.customColors.tan,
                       borderRadius: "9px",
                       paddingLeft: "5px",
                       paddingRight: "5px",
@@ -325,8 +319,8 @@ const SellForm = ({
                   InputProps={{
                     style: {
                       borderRadius: "12px",
-                      fontFamily: "Josefin Sans",
-                      backgroundColor: Colors.tan,
+
+                      backgroundColor: theme.palette.customColors.tan,
                     },
                   }}
                   value={listingDescription}
@@ -359,8 +353,7 @@ const SellForm = ({
                   }}
                   InputLabelProps={{
                     style: {
-                      fontFamily: "Josefin Sans",
-                      backgroundColor: Colors.tan,
+                      backgroundColor: theme.palette.customColors.tan,
                       borderRadius: "9px",
                       paddingLeft: "5px",
                       paddingRight: "5px",
@@ -384,8 +377,7 @@ const SellForm = ({
                   <InputLabel
                     color="secondary"
                     sx={{
-                      fontFamily: "Josefin Sans",
-                      backgroundColor: Colors.tan,
+                      backgroundColor: theme.palette.customColors.tan,
                       borderRadius: "9px",
                       paddingLeft: "5px",
                       paddingRight: "5px",
@@ -400,14 +392,12 @@ const SellForm = ({
                     value={listingPaymentMethods}
                     onChange={handlePaymentChange}
                     renderValue={(selected) => selected.join(", ")}
-                    inputProps={{ style: { fontFamily: "Josefin Sans" } }}
+                    inputProps={{ style: {} }}
                     style={inputStyle}
                   >
                     {Object.values(PaymentMethod).map((method) => (
                       <MenuItem key={method} value={method}>
-                        <Typography fontFamily="Josefin Sans">
-                          {method}
-                        </Typography>
+                        <Typography>{method}</Typography>
                       </MenuItem>
                     ))}
                   </Select>
@@ -420,7 +410,6 @@ const SellForm = ({
                     <Button onClick={() => setIsCustom(true)}>
                       <Typography
                         sx={{ textDecoration: isCustom ? "underline" : "none" }}
-                        fontFamily="Josefin Sans"
                         textTransform="lowercase"
                         color="black"
                       >
@@ -431,7 +420,6 @@ const SellForm = ({
                     <Button onClick={() => setIsCustom(false)}>
                       <Typography
                         sx={{ textDecoration: isCustom ? "none" : "underline" }}
-                        fontFamily="Josefin Sans"
                         textTransform="lowercase"
                         color="black"
                       >
@@ -448,8 +436,7 @@ const SellForm = ({
                     variant="outlined"
                     InputLabelProps={{
                       style: {
-                        fontFamily: "Josefin Sans",
-                        backgroundColor: Colors.tan,
+                        backgroundColor: theme.palette.customColors.tan,
                         borderRadius: "9px",
                         paddingLeft: "5px",
                         paddingRight: "5px",
@@ -469,8 +456,7 @@ const SellForm = ({
                         variant="outlined"
                         InputLabelProps={{
                           style: {
-                            fontFamily: "Josefin Sans",
-                            backgroundColor: Colors.tan,
+                            backgroundColor: theme.palette.customColors.tan,
                             borderRadius: "9px",
                             paddingLeft: "5px",
                             paddingRight: "5px",
@@ -509,17 +495,15 @@ const SellForm = ({
               variant="contained"
               component="label"
               sx={{
-                backgroundColor: Colors.cerise,
+                backgroundColor: theme.palette.customColors.cerise,
                 "&:hover": {
-                  backgroundColor: Colors.celestialBlue,
+                  backgroundColor: theme.palette.customColors.celestialBlue,
                 },
                 borderRadius: "10px",
                 marginTop: "20px",
               }}
             >
-              <Typography textTransform="lowercase" fontFamily="Josefin Sans">
-                upload image
-              </Typography>
+              <Typography textTransform="lowercase">upload image</Typography>
               <input
                 type="file"
                 hidden
@@ -536,7 +520,7 @@ const SellForm = ({
         sx={{
           backgroundColor: "#52c777",
           "&:hover": {
-            backgroundColor: Colors.celestialBlue,
+            backgroundColor: theme.palette.customColors.celestialBlue,
           },
           borderRadius: "10px",
           position: "fixed",
@@ -547,9 +531,7 @@ const SellForm = ({
         onClick={uploadListing}
         disabled={customUser === null}
       >
-        <Typography textTransform="lowercase" fontFamily="Josefin Sans">
-          Submit Listing
-        </Typography>
+        <Typography textTransform="lowercase">Submit Listing</Typography>
       </Button>
     </>
   );

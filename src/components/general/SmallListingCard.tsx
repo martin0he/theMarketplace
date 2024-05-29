@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
-import Colors from "../../assets/Colors";
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Listing } from "../../types";
 import CustomCarousel from "./CustomCarousel";
@@ -23,6 +22,7 @@ const SmallListingCard = ({
 }: SmallListingCardProps) => {
   const { customUser } = useAuth();
   const [likeColor, setLikeColor] = useState<string>("#b8b7b7");
+  const theme = useTheme();
 
   useEffect(() => {
     if (listing.liked_by && customUser?.id) {
@@ -119,7 +119,7 @@ const SmallListingCard = ({
         position: "relative",
         borderRadius: "12px",
         boxShadow: 2,
-        backgroundColor: Colors.smallListing,
+        backgroundColor: theme.palette.customColors.smallListing,
         minWidth: "200px",
         flex: "0 0 auto",
         marginLeft: 1,
@@ -160,12 +160,7 @@ const SmallListingCard = ({
             boxShadow: ".5px 1px 2.5px #3d2055",
           }}
         >
-          <Typography
-            fontSize={14}
-            fontFamily="inherit"
-            color="white"
-            textAlign="center"
-          >
+          <Typography fontSize={14} color="white" textAlign="center">
             {`sold ${datePipe(listing.date_deleted.toString())}`}
           </Typography>
         </Box>
@@ -182,7 +177,7 @@ const SmallListingCard = ({
             boxShadow: ".5px 1px 2.5px #3b4f3c",
           }}
         >
-          <Typography fontFamily="inherit" color="white" textAlign="center">
+          <Typography color="white" textAlign="center">
             {customUser ? getLocalCurrency(customUser) : ""}
             {listing.price}
           </Typography>
@@ -198,7 +193,6 @@ const SmallListingCard = ({
         padding="5px"
       >
         <Typography
-          fontFamily="inherit"
           whiteSpace="nowrap"
           overflow="hidden"
           textOverflow="ellipsis"

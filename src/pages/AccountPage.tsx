@@ -1,6 +1,5 @@
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
-import Colors from "../assets/Colors";
 import ProfileSection from "../components/AccountPageComponents/ProfileSection";
 import ListingsSection from "../components/AccountPageComponents/ListingsSection";
 
@@ -39,6 +38,7 @@ const AccountPage = () => {
     setValue(newValue);
     console.log(event);
   };
+  const theme = useTheme();
   return (
     <Box paddingTop={12} paddingBottom={7} paddingX={5}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -52,9 +52,8 @@ const AccountPage = () => {
             label={
               <Typography
                 style={{
-                  color: Colors.royalBlue,
+                  color: theme.palette.customColors.royalBlue,
                   fontSize: 18,
-                  fontFamily: "Josefin Sans",
                   textTransform: "lowercase",
                   fontWeight: value === 0 ? "bold" : "normal",
                 }}
@@ -68,9 +67,8 @@ const AccountPage = () => {
             label={
               <Typography
                 style={{
-                  color: Colors.royalBlue,
+                  color: theme.palette.customColors.royalBlue,
                   fontSize: 18,
-                  fontFamily: "Josefin Sans",
                   textTransform: "lowercase",
                   fontWeight: value === 1 ? "bold" : "normal",
                 }}

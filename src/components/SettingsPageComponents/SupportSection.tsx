@@ -4,23 +4,22 @@ import {
   AccordionDetails,
   Accordion,
   Typography,
+  useTheme,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Colors from "../../assets/Colors";
 import { SupportRequestForm } from "./SupportRequestForm";
 
 const SupportSection = () => {
+  const theme = useTheme();
   return (
     <Box padding="20px">
-      <Accordion sx={{ backgroundColor: Colors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <Typography fontFamily={"inherit"} fontWeight={600}>
-            what is theMarketplace for?
-          </Typography>
+          <Typography fontWeight={600}>what is theMarketplace for?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           theMarketplace is designed to help students buy, sell, and exchange
@@ -29,15 +28,13 @@ const SupportSection = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion sx={{ backgroundColor: Colors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <Typography fontFamily={"inherit"} fontWeight={600}>
-            who can use theMarketplace?
-          </Typography>
+          <Typography fontWeight={600}>who can use theMarketplace?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           This website is exclusively for students, faculty, and staff of any
@@ -45,13 +42,13 @@ const SupportSection = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion sx={{ backgroundColor: Colors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <Typography fontFamily={"inherit"} fontWeight={600}>
+          <Typography fontWeight={600}>
             can I edit/delete my listing?
           </Typography>
         </AccordionSummary>
@@ -61,13 +58,13 @@ const SupportSection = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion sx={{ backgroundColor: Colors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <Typography fontFamily={"inherit"} fontWeight={600}>
+          <Typography fontWeight={600}>
             where do exchanges usually take place?
           </Typography>
         </AccordionSummary>
@@ -79,15 +76,13 @@ const SupportSection = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion sx={{ backgroundColor: Colors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <Typography fontFamily={"inherit"} fontWeight={600}>
-            how do I buy an item?
-          </Typography>
+          <Typography fontWeight={600}>how do I buy an item?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           To buy an item, browse the listings and click on the item you are
@@ -96,13 +91,13 @@ const SupportSection = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion sx={{ backgroundColor: Colors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <Typography fontFamily={"inherit"} fontWeight={600}>
+          <Typography fontWeight={600}>
             why does my school not seem to be recognized?
           </Typography>
         </AccordionSummary>
@@ -112,17 +107,13 @@ const SupportSection = () => {
           bug/improvement/question/etc.
         </AccordionDetails>
       </Accordion>
-      <Accordion sx={{ backgroundColor: Colors.tan }}>
+      <Accordion sx={{ backgroundColor: theme.palette.customColors.tan }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <Typography
-            sx={{ textDecoration: "underline" }}
-            fontFamily={"inherit"}
-            fontWeight={600}
-          >
+          <Typography sx={{ textDecoration: "underline" }} fontWeight={600}>
             support request form
           </Typography>
         </AccordionSummary>

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
-import Colors from "../../assets/Colors";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import Sidebar from "./Sidebar";
 import AccountMenu from "./AccountMenu";
@@ -10,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { width } = useWindowDimensions();
-
+  const theme = useTheme();
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const [signInModalOpen, setSignInModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ const Navbar = () => {
   return (
     <Box
       sx={{
-        backgroundColor: Colors.ghostWhite,
+        backgroundColor: theme.palette.customColors.ghostWhite,
         width: "100%",
         height: "85px",
         borderBottomLeftRadius: "10px",
@@ -46,9 +45,7 @@ const Navbar = () => {
           marginLeft: "5px",
         }}
       >
-        <Typography fontFamily="Josefin Sans" fontSize={35}>
-          theMarketplace
-        </Typography>
+        <Typography fontSize={35}>theMarketplace</Typography>
       </Button>
       {width > 950 ? (
         <Box
@@ -65,16 +62,11 @@ const Navbar = () => {
             onClick={() => navigate("/listings")}
             sx={{
               marginLeft: { xs: "20px", sm: "65px" },
-              fontFamily: "inherit",
+
               textTransform: "none",
             }}
           >
-            <Typography
-              fontFamily="inherit"
-              color="black"
-              fontSize={23}
-              fontWeight={500}
-            >
+            <Typography color="black" fontSize={23} fontWeight={500}>
               listings
             </Typography>
           </Button>
@@ -83,16 +75,11 @@ const Navbar = () => {
             onClick={() => navigate("/sell")}
             sx={{
               marginLeft: { xs: "20px", sm: "65px" },
-              fontFamily: "inherit",
+
               textTransform: "none",
             }}
           >
-            <Typography
-              fontFamily="inherit"
-              color="black"
-              fontSize={23}
-              fontWeight={500}
-            >
+            <Typography color="black" fontSize={23} fontWeight={500}>
               sell
             </Typography>
           </Button>
@@ -101,16 +88,11 @@ const Navbar = () => {
             onClick={() => navigate("/about")}
             sx={{
               marginLeft: { xs: "20px", sm: "65px" },
-              fontFamily: "inherit",
+
               textTransform: "none",
             }}
           >
-            <Typography
-              fontFamily="inherit"
-              color="black"
-              fontSize={23}
-              fontWeight={500}
-            >
+            <Typography color="black" fontSize={23} fontWeight={500}>
               about
             </Typography>
           </Button>

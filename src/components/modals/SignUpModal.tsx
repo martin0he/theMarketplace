@@ -12,8 +12,8 @@ import {
   IconButton,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
-import Colors from "../../assets/Colors";
 import { useState, ReactElement, FormEvent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import supabase from "../../auth/supabase";
@@ -25,6 +25,7 @@ interface SignUpModalProps {
 }
 
 const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
+  const theme = useTheme();
   const [alert, setAlert] = useState<ReactElement>();
   const [formData, setFormData] = useState({
     username: "",
@@ -106,9 +107,8 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
     <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle
         sx={{
-          fontFamily: "Josefin Sans",
           fontSize: "28px",
-          color: Colors.celestialBlue,
+          color: theme.palette.customColors.celestialBlue,
         }}
       >
         sign up
@@ -120,7 +120,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
           position: "absolute",
           right: 8,
           top: 8,
-          color: Colors.celestialBlue,
+          color: theme.palette.customColors.celestialBlue,
         }}
       >
         <CloseIcon />
@@ -138,10 +138,10 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
               fullWidth
               margin="normal"
               InputProps={{
-                style: { fontFamily: "inherit", fontSize: "24px" },
+                style: { fontSize: "24px" },
               }}
               InputLabelProps={{
-                style: { fontFamily: "inherit", fontSize: "24px" },
+                style: { fontSize: "24px" },
               }}
               required
             />
@@ -155,10 +155,10 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
               fullWidth
               margin="normal"
               InputProps={{
-                style: { fontFamily: "inherit", fontSize: "24px" },
+                style: { fontSize: "24px" },
               }}
               InputLabelProps={{
-                style: { fontFamily: "inherit", fontSize: "24px" },
+                style: { fontSize: "24px" },
               }}
               required
             />
@@ -172,10 +172,10 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
               fullWidth
               margin="normal"
               InputProps={{
-                style: { fontFamily: "inherit", fontSize: "24px" },
+                style: { fontSize: "24px" },
               }}
               InputLabelProps={{
-                style: { fontFamily: "inherit", fontSize: "24px" },
+                style: { fontSize: "24px" },
               }}
               required
             />
@@ -187,9 +187,7 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
                   color="primary"
                 />
               }
-              label={
-                <Typography fontFamily="Josefin Sans">show password</Typography>
-              }
+              label={<Typography>show password</Typography>}
             />
             <Button
               fullWidth
@@ -199,7 +197,6 @@ const SignUpModal = ({ isOpen, handleClose }: SignUpModalProps) => {
                 marginTop: "30px",
                 backgroundColor: "#8b3fc6",
                 color: "white",
-                fontFamily: "inherit",
                 textTransform: "lowercase",
                 fontSize: "18px",
                 borderRadius: "9px",

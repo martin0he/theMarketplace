@@ -1,9 +1,9 @@
-import { Box, Typography } from "@mui/material";
-import Colors from "../../assets/Colors";
+import { Box, Typography, useTheme } from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 const Masthead = () => {
   const { width } = useWindowDimensions();
+  const theme = useTheme();
   return (
     <Box
       width={width}
@@ -11,7 +11,7 @@ const Masthead = () => {
       sx={{
         position: "fixed",
         bottom: 0,
-        backgroundColor: Colors.celestialBlue,
+        backgroundColor: theme.palette.customColors.celestialBlue,
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
@@ -19,7 +19,7 @@ const Masthead = () => {
         zIndex: 5,
       }}
     >
-      <Typography fontFamily={"inherit"} color={"white"} fontSize="14px">
+      <Typography color={"white"} fontSize="14px">
         martin hema @ northeastern university
       </Typography>
     </Box>

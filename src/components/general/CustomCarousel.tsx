@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Box, IconButton, CircularProgress } from "@mui/material";
+import { Box, IconButton, CircularProgress, useTheme } from "@mui/material";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
-import Colors from "../../assets/Colors";
 
 interface CustomCarouselProps {
   imageUrls: string[];
@@ -29,6 +28,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
 
   useEffect(() => {
     setLoading(false); // Set loading to true whenever currentIndex changes
@@ -69,7 +69,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
           width: width,
           height: height,
           borderRadius: "10px",
-          backgroundColor: Colors.tan,
+          backgroundColor: theme.palette.customColors.tan,
           marginTop: "15px",
           border: "2px dotted #312f2f",
         }}
@@ -133,7 +133,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
               position: "absolute",
               top: "6px",
               right: "6px",
-              backgroundColor: Colors.cerise,
+              backgroundColor: theme.palette.customColors.cerise,
               "&:hover": {
                 backgroundColor: "#ac3535",
               },

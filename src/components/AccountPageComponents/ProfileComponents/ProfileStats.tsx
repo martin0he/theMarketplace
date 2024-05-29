@@ -46,7 +46,6 @@ const ProfileStats = ({ customUser }: ProfileStatsProps) => {
         }}
       >
         <Typography
-          fontFamily="Josefin Sans"
           color="white"
           sx={{
             fontSize: {
@@ -60,7 +59,6 @@ const ProfileStats = ({ customUser }: ProfileStatsProps) => {
           {text}
         </Typography>
         <Typography
-          fontFamily="Josefin Sans"
           color="white"
           sx={{
             fontSize: {

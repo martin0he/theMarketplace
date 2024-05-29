@@ -1,5 +1,4 @@
-import { Box, Grid, Tooltip, Typography } from "@mui/material";
-import Colors from "../assets/Colors";
+import { Box, Grid, Tooltip, Typography, useTheme } from "@mui/material";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import SmallListingCard from "../components/general/SmallListingCard";
 import { useAuth } from "../auth/AuthProvider";
@@ -10,6 +9,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import { formatISO, subDays } from "date-fns";
 
 const HomePage = () => {
+  const theme = useTheme();
   const { width } = useWindowDimensions();
   const { customUser, user } = useAuth();
   const [userListings, setUserListings] = useState<Listing[]>([]);
@@ -100,7 +100,7 @@ const HomePage = () => {
     <Box paddingTop={10} paddingBottom={7}>
       <Box justifyContent="center" display="flex" alignItems="center">
         {customUser !== null ? (
-          <Typography fontFamily={"inherit"} fontSize={30} marginTop={7}>
+          <Typography fontSize={30} marginTop={7}>
             {`Hello ${customUser?.username}`}
           </Typography>
         ) : (
@@ -108,13 +108,13 @@ const HomePage = () => {
             arrow
             placement="bottom"
             title={
-              <Typography fontFamily="Josefin Sans">
+              <Typography>
                 to use theMarketplace, you need to be signed in
               </Typography>
             }
           >
             <span style={{ display: "flex", alignItems: "center" }}>
-              <Typography fontFamily="Josefin Sans" fontSize={30} marginTop={7}>
+              <Typography fontSize={30} marginTop={7}>
                 Not Logged In
               </Typography>
               <InfoIcon fontSize="small" sx={{ marginLeft: 1 }} />
@@ -127,8 +127,7 @@ const HomePage = () => {
         <Typography
           fontWeight="bold"
           fontSize={27}
-          fontFamily="inherit"
-          color={Colors.royalBlue}
+          color={theme.palette.customColors.royalBlue}
         >
           {customUser?.school || "University marketplace not found :("}
         </Typography>
@@ -153,12 +152,7 @@ const HomePage = () => {
                 boxShadow: 1,
               }}
             >
-              <Typography
-                padding="8px"
-                fontSize={20}
-                fontFamily={"inherit"}
-                color={"black"}
-              >
+              <Typography padding="8px" fontSize={20} color={"black"}>
                 Your Items
               </Typography>
 
@@ -185,10 +179,10 @@ const HomePage = () => {
                       borderRadius: "4px",
                     },
                     "&::-webkit-scrollbar-thumb": {
-                      backgroundColor: Colors.celestialBlue,
+                      backgroundColor: theme.palette.customColors.celestialBlue,
                       borderRadius: "4px",
                       "&:hover": {
-                        backgroundColor: Colors.royalBlue,
+                        backgroundColor: theme.palette.customColors.royalBlue,
                       },
                     },
                   }}
@@ -198,9 +192,7 @@ const HomePage = () => {
                       <SmallListingCard key={index} listing={listing} />
                     ))
                   ) : (
-                    <Typography fontFamily="Josefin Sans">
-                      You haven't posted anything!
-                    </Typography>
+                    <Typography>You haven't posted anything!</Typography>
                   )}
                 </Box>
               </Box>
@@ -219,12 +211,7 @@ const HomePage = () => {
                 boxShadow: 1,
               }}
             >
-              <Typography
-                padding="8px"
-                fontSize={20}
-                fontFamily={"inherit"}
-                color={"black"}
-              >
+              <Typography padding="8px" fontSize={20} color={"black"}>
                 Your Likes
               </Typography>
               <Box
@@ -250,10 +237,10 @@ const HomePage = () => {
                       borderRadius: "4px",
                     },
                     "&::-webkit-scrollbar-thumb": {
-                      backgroundColor: Colors.celestialBlue,
+                      backgroundColor: theme.palette.customColors.celestialBlue,
                       borderRadius: "4px",
                       "&:hover": {
-                        backgroundColor: Colors.royalBlue,
+                        backgroundColor: theme.palette.customColors.royalBlue,
                       },
                     },
                   }}
@@ -267,9 +254,7 @@ const HomePage = () => {
                       />
                     ))
                   ) : (
-                    <Typography fontFamily="Josefin Sans">
-                      You haven't liked any listings!
-                    </Typography>
+                    <Typography>You haven't liked any listings!</Typography>
                   )}
                 </Box>
               </Box>
@@ -288,12 +273,7 @@ const HomePage = () => {
                 boxShadow: 1,
               }}
             >
-              <Typography
-                padding="8px"
-                fontSize={20}
-                fontFamily={"inherit"}
-                color={"black"}
-              >
+              <Typography padding="8px" fontSize={20} color={"black"}>
                 Recently Posted
               </Typography>
               <Box
@@ -319,10 +299,10 @@ const HomePage = () => {
                       borderRadius: "4px",
                     },
                     "&::-webkit-scrollbar-thumb": {
-                      backgroundColor: Colors.celestialBlue,
+                      backgroundColor: theme.palette.customColors.celestialBlue,
                       borderRadius: "4px",
                       "&:hover": {
-                        backgroundColor: Colors.royalBlue,
+                        backgroundColor: theme.palette.customColors.royalBlue,
                       },
                     },
                   }}
@@ -337,7 +317,7 @@ const HomePage = () => {
                       />
                     ))
                   ) : (
-                    <Typography fontFamily="Josefin Sans">
+                    <Typography>
                       No available posts from within the last week :(
                     </Typography>
                   )}
@@ -358,12 +338,7 @@ const HomePage = () => {
                 boxShadow: 1,
               }}
             >
-              <Typography
-                padding="8px"
-                fontSize={20}
-                fontFamily={"inherit"}
-                color={"black"}
-              >
+              <Typography padding="8px" fontSize={20} color={"black"}>
                 Recently Sold
               </Typography>
               <Box
@@ -389,10 +364,10 @@ const HomePage = () => {
                       borderRadius: "4px",
                     },
                     "&::-webkit-scrollbar-thumb": {
-                      backgroundColor: Colors.celestialBlue,
+                      backgroundColor: theme.palette.customColors.celestialBlue,
                       borderRadius: "4px",
                       "&:hover": {
-                        backgroundColor: Colors.royalBlue,
+                        backgroundColor: theme.palette.customColors.royalBlue,
                       },
                     },
                   }}
@@ -402,9 +377,7 @@ const HomePage = () => {
                       <SmallListingCard key={index} listing={listing} />
                     ))
                   ) : (
-                    <Typography fontFamily="Josefin Sans">
-                      Nothing sold within the last week!
-                    </Typography>
+                    <Typography>Nothing sold within the last week!</Typography>
                   )}
                 </Box>
               </Box>

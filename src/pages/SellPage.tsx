@@ -3,7 +3,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Colors from "../assets/Colors";
 import SellForm from "../components/SellPageComponents/SellForm";
 import PreviewTab from "../components/SellPageComponents/PreviewTab";
 import { Condition, PaymentMethod } from "../types";
@@ -46,7 +45,7 @@ export const AlertBox = styled(Box)(() => ({
   zIndex: 10,
   width: "80%",
   transition: "opacity 0.5s ease-in-out",
-  backgroundColor: Colors.tan,
+  backgroundColor: "beige",
 }));
 
 const SellPage = () => {
@@ -101,9 +100,8 @@ const SellPage = () => {
             label={
               <Typography
                 style={{
-                  color: Colors.royalBlue,
+                  color: "blue",
                   fontSize: 18,
-                  fontFamily: "Josefin Sans",
                   textTransform: "lowercase",
                   fontWeight: value === 0 ? "bold" : "normal",
                 }}
@@ -117,9 +115,8 @@ const SellPage = () => {
             label={
               <Typography
                 style={{
-                  color: Colors.royalBlue,
+                  color: "blue",
                   fontSize: 18,
-                  fontFamily: "Josefin Sans",
                   textTransform: "lowercase",
                   fontWeight: value === 1 ? "bold" : "normal",
                 }}

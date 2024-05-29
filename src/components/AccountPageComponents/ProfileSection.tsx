@@ -1,6 +1,5 @@
-import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography, useTheme } from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import Colors from "../../assets/Colors";
 import ProfileStats from "./ProfileComponents/ProfileStats";
 import { useAuth } from "../../auth/AuthProvider";
 import ProfileForm from "./ProfileComponents/ProfileForm";
@@ -8,7 +7,7 @@ import ProfileForm from "./ProfileComponents/ProfileForm";
 const ProfileSection = () => {
   const { height } = useWindowDimensions();
   const { customUser, user } = useAuth();
-
+  const theme = useTheme();
   return (
     <Grid
       container
@@ -38,7 +37,7 @@ const ProfileSection = () => {
         flexItem
         sx={{
           display: { xs: "none", md: "block" },
-          backgroundColor: Colors.royalBlue,
+          backgroundColor: theme.palette.customColors.royalBlue,
           width: "2.5px",
           borderRadius: "10px",
         }}
@@ -66,10 +65,10 @@ const ProfileSection = () => {
                 backgroundColor: "#d5d3d3",
               },
               "&::-webkit-scrollbar-thumb": {
-                backgroundColor: Colors.celestialBlue,
+                backgroundColor: theme.palette.customColors.celestialBlue,
                 borderRadius: "4px",
                 "&:hover": {
-                  backgroundColor: Colors.royalBlue,
+                  backgroundColor: theme.palette.customColors.royalBlue,
                 },
               },
               overflowY: { xs: "visible", md: "auto" },
@@ -80,7 +79,7 @@ const ProfileSection = () => {
             <ProfileStats customUser={customUser} />
           </Box>
         ) : (
-          <Typography fontFamily={"Josefin Sans"}>no stats :(</Typography>
+          <Typography>no stats :(</Typography>
         )}
       </Grid>
     </Grid>

@@ -58,7 +58,7 @@ const ListingsSection = () => {
         flexDirection: "column",
       }}
     >
-      <Typography fontFamily="inherit" variant="h5" paddingBottom="20px">
+      <Typography variant="h5" paddingBottom="20px">
         {customUser ? `${customUser.username}'s Listings` : "Not Signed In"}
       </Typography>
       {loading ? (
@@ -87,7 +87,7 @@ const ListingsSection = () => {
           ))}
         </Carousel>
       ) : (
-        <Typography fontFamily={"inherit"}>No listings available</Typography>
+        <Typography>No listings available</Typography>
       )}
     </Box>
   );
