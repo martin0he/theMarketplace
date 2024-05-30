@@ -47,6 +47,11 @@ const AccountPage = () => {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          sx={{
+            "& .MuiTabs-indicator": {
+              backgroundColor: theme.palette.customColors.royalBlue,
+            },
+          }}
         >
           <Tab
             label={
