@@ -5,7 +5,7 @@ import { CustomUser, Listing } from "../../types";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import CustomCarousel from "../general/CustomCarousel";
 import supabase from "../../auth/supabase";
-import { datePipe } from "../../pipes/sellDatePipe";
+import { calculateDaysAgo, datePipe } from "../../pipes/sellDatePipe";
 
 interface ListingModalProps {
   open: boolean;
@@ -90,6 +90,9 @@ const ListingModal: React.FC<ListingModalProps> = ({
                 Description: {listing.description}
               </Typography>
               <Typography fontSize={22}>
+                Exchange Location: {listing.exchange_location}
+              </Typography>
+              <Typography fontSize={22}>
                 Payment Methods:{" "}
                 {
                   <ul style={{ paddingLeft: "18px", margin: "3px" }}>
@@ -100,7 +103,10 @@ const ListingModal: React.FC<ListingModalProps> = ({
                 }
               </Typography>
               <Typography fontSize={22}>
-                Posted: {datePipe(listing.created_at.toString())}
+                Posted: {datePipe(listing.created_at.toString())}{" "}
+                {` (${calculateDaysAgo(
+                  listing.created_at.toString()
+                )} days ago)`}
               </Typography>
             </Box>
           </Grid>

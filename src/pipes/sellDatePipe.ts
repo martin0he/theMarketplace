@@ -4,3 +4,11 @@ export const datePipe = (dateString: string) => {
     date.getFullYear()
   ).slice(-2)}`;
 };
+
+export const calculateDaysAgo = (date: string): number => {
+  const createdAt = new Date(date);
+  const currentDate = new Date();
+  const differenceInTime = currentDate.getTime() - createdAt.getTime();
+  const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+  return differenceInDays;
+};
