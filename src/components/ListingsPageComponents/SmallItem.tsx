@@ -26,6 +26,11 @@ const SmallItem: React.FC<SmallItemProps> = ({ listing, onClick }) => {
         height: 0.22 * height,
         boxShadow: "-1px 2px 1px #5c5757",
         cursor: "pointer",
+        transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+        "&:hover": {
+          transform: "translateY(-5px)",
+          boxShadow: "0px 4px 8px #5c5757",
+        },
       }}
     >
       <Typography textAlign="center" fontSize="20px" paddingTop="7px">
