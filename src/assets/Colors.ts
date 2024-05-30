@@ -10,7 +10,7 @@ export const themes = {
     turquoise: "#8dc3b3",
     listBoxBG1: "#bedcee",
     listBoxBG2: "#d0f0cf",
-    priceSticker: "#6ebd3d",
+    priceSticker: "#36a630",
     soldSticker: "#8b3fc6",
     submitButton: "#51C777",
   },
