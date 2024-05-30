@@ -148,7 +148,7 @@ const HomePage = () => {
                 backgroundColor: theme.palette.customColors.listBoxBG1,
                 borderRadius: "10px",
                 border: 0.7,
-                borderColor: "#3aacd9cc",
+                borderColor: theme.palette.customColors.listBoxBG2,
                 boxShadow: 1,
               }}
             >
@@ -207,7 +207,7 @@ const HomePage = () => {
                 backgroundColor: theme.palette.customColors.listBoxBG2,
                 borderRadius: "10px",
                 border: 0.7,
-                borderColor: "#49d049cc",
+                borderColor: theme.palette.customColors.listBoxBG1,
                 boxShadow: 1,
               }}
             >
@@ -269,7 +269,7 @@ const HomePage = () => {
                 backgroundColor: theme.palette.customColors.listBoxBG2,
                 borderRadius: "10px",
                 border: 0.7,
-                borderColor: "#49d049cc",
+                borderColor: theme.palette.customColors.listBoxBG1,
                 boxShadow: 1,
               }}
             >
@@ -334,7 +334,7 @@ const HomePage = () => {
                 backgroundColor: theme.palette.customColors.listBoxBG1,
                 borderRadius: "10px",
                 border: 0.7,
-                borderColor: "#3aacd9cc",
+                borderColor: theme.palette.customColors.listBoxBG2,
                 boxShadow: 1,
               }}
             >

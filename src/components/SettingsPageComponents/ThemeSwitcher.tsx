@@ -16,49 +16,77 @@ const ThemeSwitcher: React.FC = () => {
 
   return (
     <Container>
-      <Grid container spacing={2} justifyContent="center" alignItems="center">
+      <Grid container spacing={2} display="flex" flexDirection="column">
         <Grid item xs={12}>
           <Typography
             variant="h4"
             style={{ color: theme.palette.customColors.cerise }}
           >
-            Theme Switcher
+            change themes
           </Typography>
         </Grid>
         <Grid item>
           <Button
+            sx={{
+              backgroundColor: theme.palette.customColors.submitButton,
+              borderRadius: "10px",
+              textTransform: "lowercase",
+              "&:hover": {
+                backgroundColor: theme.palette.customColors.celestialBlue,
+              },
+            }}
             variant="contained"
-            style={{ backgroundColor: theme.palette.customColors.royalBlue }}
             onClick={() => switchTheme("theme1")}
           >
-            Theme 1
+            default
           </Button>
         </Grid>
         <Grid item>
           <Button
+            sx={{
+              backgroundColor: theme.palette.customColors.submitButton,
+              borderRadius: "10px",
+              textTransform: "lowercase",
+              "&:hover": {
+                backgroundColor: theme.palette.customColors.celestialBlue,
+              },
+            }}
             variant="contained"
-            style={{ backgroundColor: theme.palette.customColors.royalBlue }}
             onClick={() => switchTheme("theme2")}
           >
-            Theme 2
+            bubblegum
           </Button>
         </Grid>
         <Grid item>
           <Button
+            sx={{
+              backgroundColor: theme.palette.customColors.submitButton,
+              borderRadius: "10px",
+              textTransform: "lowercase",
+              "&:hover": {
+                backgroundColor: theme.palette.customColors.celestialBlue,
+              },
+            }}
             variant="contained"
-            style={{ backgroundColor: theme.palette.customColors.royalBlue }}
             onClick={() => switchTheme("theme3")}
           >
-            Theme 3
+            sienna
           </Button>
         </Grid>
         <Grid item>
           <Button
+            sx={{
+              backgroundColor: theme.palette.customColors.submitButton,
+              borderRadius: "10px",
+              textTransform: "lowercase",
+              "&:hover": {
+                backgroundColor: theme.palette.customColors.celestialBlue,
+              },
+            }}
             variant="contained"
-            style={{ backgroundColor: theme.palette.customColors.royalBlue }}
             onClick={() => switchTheme("theme4")}
           >
-            Theme 4
+            morning glory blossom
           </Button>
         </Grid>
       </Grid>
