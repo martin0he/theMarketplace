@@ -2,7 +2,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import TestPage from "./pages/TestPage";
 import AboutPage from "./pages/AboutPage";
 import { AuthProvider } from "./auth/AuthProvider";
 import SellPage from "./pages/SellPage";
@@ -18,6 +17,7 @@ import {
 } from "@mui/material";
 import { ThemeProvider, ThemeContext } from "./ThemeContext";
 import { GlobalStyles } from "@mui/system";
+import ListingsPage from "./pages/ListingsPage";
 
 const Layout: React.FC = () => {
   return (
@@ -75,6 +75,7 @@ const AppContent: React.FC = () => {
           },
           "&::-webkit-scrollbar-track": {
             borderRadius: "2px",
+            backgroundColor: muiTheme.palette.customColors.bodyBG,
           },
           "&::-webkit-scrollbar-thumb": {
             backgroundColor: muiTheme.palette.customColors.celestialBlue,
@@ -88,7 +89,7 @@ const AppContent: React.FC = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="listings" element={<TestPage />} />
+          <Route path="listings" element={<ListingsPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="sell" element={<SellPage />} />
           <Route path="settings" element={<SettingsPage />} />
