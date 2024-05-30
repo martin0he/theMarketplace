@@ -4,6 +4,7 @@ import "@mui/material/styles";
 declare module "@mui/material/styles" {
   interface Palette {
     customColors: {
+      bodyBG: string;
       royalBlue: string;
       celestialBlue: string;
       ghostWhite: string;
@@ -20,6 +21,7 @@ declare module "@mui/material/styles" {
   }
   interface PaletteOptions {
     customColors?: {
+      bodyBG?: string;
       royalBlue?: string;
       celestialBlue?: string;
       ghostWhite?: string;

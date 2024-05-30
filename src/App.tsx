@@ -53,6 +53,7 @@ const AppContent: React.FC = () => {
         priceSticker: theme.priceSticker,
         soldSticker: theme.soldSticker,
         submitButton: theme.submitButton,
+        bodyBG: theme.bodyBG,
       },
     },
     typography: {
@@ -65,6 +66,9 @@ const AppContent: React.FC = () => {
       <CssBaseline />
       <GlobalStyles
         styles={{
+          body: {
+            backgroundColor: muiTheme.palette.customColors.bodyBG,
+          },
           "&::-webkit-scrollbar": {
             height: "8px",
             backgroundColor: "transparent",

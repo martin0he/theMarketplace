@@ -1,5 +1,6 @@
 export const themes = {
   theme1: {
+    bodyBG: "#fffaff",
     royalBlue: "#0A2463",
     celestialBlue: "#3E92CC",
     ghostWhite: "#FFFAFF",
@@ -14,6 +15,7 @@ export const themes = {
     submitButton: "#51C777",
   },
   theme2: {
+    bodyBG: "#fdf2f6",
     royalBlue: "#a91b60",
     celestialBlue: "#da4977",
     ghostWhite: "#f2b5d9",
@@ -23,13 +25,14 @@ export const themes = {
     turquoise: "#9dc3c3",
     listBoxBG1: "#ec9ec0",
     listBoxBG2: "#b7cfe6",
-    priceSticker: "#ed7d21",
+    priceSticker: "#6c5cd1",
     soldSticker: "#23be92",
     submitButton: "#761cc4",
   },
   theme3: {
+    bodyBG: "#faf3e5",
     royalBlue: "#445D48",
-    celestialBlue: "#001524",
+    celestialBlue: "#55320c",
     ghostWhite: "#fde5d4",
     cerise: "#5E3023",
     smallListing: "white",
@@ -42,6 +45,7 @@ export const themes = {
     submitButton: "#c76a1f",
   },
   theme4: {
+    bodyBG: "#f7f0de",
     royalBlue: "#3e7030",
     celestialBlue: "#638d58",
     ghostWhite: "#d9ebd6",
