@@ -1,10 +1,11 @@
 // src/components/ListingModal.tsx
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Modal, useTheme, Grid } from "@mui/material";
+import { Box, Typography, Modal, useTheme, Grid, Tooltip } from "@mui/material";
 import { CustomUser, Listing } from "../../types";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import CustomCarousel from "../general/CustomCarousel";
 import supabase from "../../auth/supabase";
+import { datePipe } from "../../pipes/sellDatePipe";
 
 interface ListingModalProps {
   open: boolean;
@@ -55,19 +56,53 @@ const ListingModal: React.FC<ListingModalProps> = ({
           boxShadow: 24,
           p: 4,
           borderRadius: "12px",
+          overflow: "auto",
         }}
       >
-        <Grid container>
-          <Grid item xs={6}>
-            <Typography>{listing.name}</Typography>
-            <CustomCarousel
-              imageUrls={listing.imageUrls}
-              width={`${0.25 * width}px`}
-              height={`${0.32 * height}px`}
-            />
+        <Grid container sx={{ borderRadius: "12px" }}>
+          <Grid item xs={6} justifyContent="center">
+            <Typography fontSize={30}>{listing.name}</Typography>
+            <Box mt="10px">
+              <CustomCarousel
+                imageUrls={listing.imageUrls}
+                width={`${0.25 * width}px`}
+                height={`${0.32 * height}px`}
+              />
+            </Box>
           </Grid>
           <Grid item xs={6}>
-            <Typography>By: {currentSeller?.username}</Typography>
+            <Box padding="10px">
+              <Tooltip
+                sx={{ width: "fit-content" }}
+                arrow
+                placement="right-end"
+                children={
+                  <Typography fontSize={22}>
+                    By: {currentSeller?.username}
+                  </Typography>
+                }
+                title={
+                  <Typography fontSize={18}>{currentSeller?.email}</Typography>
+                }
+              ></Tooltip>
+
+              <Typography fontSize={22}>
+                Description: {listing.description}
+              </Typography>
+              <Typography fontSize={22}>
+                Payment Methods:{" "}
+                {
+                  <ul style={{ paddingLeft: "18px", margin: "3px" }}>
+                    {listing.payment_methods.map((method, index) => (
+                      <li key={index}>{method}</li>
+                    ))}
+                  </ul>
+                }
+              </Typography>
+              <Typography fontSize={22}>
+                Posted: {datePipe(listing.created_at.toString())}
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
       </Box>
