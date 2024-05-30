@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import SupportSection from "../components/SettingsPageComponents/SupportSection";
-import ThemeSwitcher from "../components/SettingsPageComponents/ThemeSwitcher";
+import AppearanceSection from "../components/SettingsPageComponents/AppearanceSection";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -84,7 +84,7 @@ const SettingsPage = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <ThemeSwitcher />
+        <AppearanceSection />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <SupportSection />
