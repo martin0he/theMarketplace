@@ -8,7 +8,7 @@ export interface Listing {
   created_at: Date;
   date_deleted?: Date;
   price: number;
-  seller: CustomUser;
+  seller_id: string;
   payment_methods: PaymentMethod[];
   exchange_location: string;
   imageUrls: string[];

@@ -1,8 +1,10 @@
 // src/components/ListingModal.tsx
-import React from "react";
-import { Box, Typography, Modal, useTheme } from "@mui/material";
-import { Listing } from "../../types";
+import React, { useEffect, useState } from "react";
+import { Box, Typography, Modal, useTheme, Grid } from "@mui/material";
+import { CustomUser, Listing } from "../../types";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import CustomCarousel from "../general/CustomCarousel";
+import supabase from "../../auth/supabase";
 
 interface ListingModalProps {
   open: boolean;
@@ -17,6 +19,25 @@ const ListingModal: React.FC<ListingModalProps> = ({
 }) => {
   const { width, height } = useWindowDimensions();
   const theme = useTheme();
+  const [currentSeller, setCurrentSeller] = useState<CustomUser>();
+
+  useEffect(() => {
+    const handleFetchSeller = async () => {
+      const { data: Seller, error } = await supabase
+        .from("Users")
+        .select("*")
+        .eq("id", listing?.seller_id)
+        .single();
+
+      if (error) {
+        console.log("Error fetching seller:", error);
+      }
+
+      setCurrentSeller(Seller as CustomUser);
+    };
+    handleFetchSeller();
+  }, [listing]);
+
   if (!listing) return null;
 
   return (
@@ -36,11 +57,19 @@ const ListingModal: React.FC<ListingModalProps> = ({
           borderRadius: "12px",
         }}
       >
-        <Typography variant="h6" component="h2">
-          {listing.name}
-        </Typography>
-        <Typography sx={{ mt: 2 }}>{listing.description}</Typography>
-        <Typography sx={{ mt: 2 }}>Price: {listing.price}</Typography>
+        <Grid container>
+          <Grid item xs={6}>
+            <Typography>{listing.name}</Typography>
+            <CustomCarousel
+              imageUrls={listing.imageUrls}
+              width={`${0.25 * width}px`}
+              height={`${0.32 * height}px`}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography>By: {currentSeller?.username}</Typography>
+          </Grid>
+        </Grid>
       </Box>
     </Modal>
   );
