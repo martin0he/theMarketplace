@@ -135,7 +135,7 @@ const SellForm = ({
         typeof listingPrice === "string"
           ? parseFloat(listingPrice)
           : listingPrice,
-      seller: customUser,
+      seller_id: customUser?.id || "",
       payment_methods: listingPaymentMethods,
       exchange_location: listingLocation,
       imageUrls: newUrls,
