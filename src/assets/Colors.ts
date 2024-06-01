@@ -39,7 +39,7 @@ export const themes = {
     inputBG: "#fcf4de",
     turquoise: "#D6CC99",
     listBoxBG1: "#f4c695",
-    listBoxBG2: "#ceccca",
+    listBoxBG2: "#e5e4e1",
     priceSticker: "#dbd39f",
     soldSticker: "#634b4b",
     submitButton: "#c76a1f",
