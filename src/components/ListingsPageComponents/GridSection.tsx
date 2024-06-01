@@ -151,7 +151,7 @@ const GridSection = () => {
             <MenuItem value="recent">most recent</MenuItem>
             <MenuItem value="price ascending">price ascending</MenuItem>
             <MenuItem value="price descending">price descending</MenuItem>
-            <MenuItem value="popularity">popularity</MenuItem>
+            <MenuItem value="popularity">most popular</MenuItem>
           </Select>
         </FormControl>
       </Box>
