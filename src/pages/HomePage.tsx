@@ -106,7 +106,7 @@ const HomePage = () => {
         ) : (
           <Tooltip
             arrow
-            placement="bottom"
+            placement="right-end"
             title={
               <Typography>
                 to use theMarketplace, you need to be signed in
