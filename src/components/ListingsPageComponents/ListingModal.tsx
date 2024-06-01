@@ -33,6 +33,10 @@ const ListingModal: React.FC<ListingModalProps> = ({
   const theme = useTheme();
   const { customUser } = useAuth();
   const [currentSeller, setCurrentSeller] = useState<CustomUser>();
+  const [likes, setLikes] = useState<string[]>(listing?.liked_by ?? []);
+  const [listingsLiked, setListingsLiked] = useState<string[]>(
+    customUser?.items_liked ?? []
+  );
 
   useEffect(() => {
     const handleFetchSeller = async () => {
@@ -53,42 +57,37 @@ const ListingModal: React.FC<ListingModalProps> = ({
     handleFetchSeller();
   }, [listing]);
 
-  const [isLiked, setIsLiked] = useState<boolean>(
-    !!listing?.liked_by?.includes(customUser?.id || "")
-  );
-  const [likes, setLikes] = useState<string[]>(listing?.liked_by ?? []);
-  const [listingsLiked, setListingsLiked] = useState<string[]>(
-    customUser?.items_liked ?? []
-  );
+  useEffect(() => {
+    if (listing) {
+      setLikes(listing.liked_by ?? []);
+    }
+  }, [listing]);
 
   const handleLikeClick = async () => {
     if (!customUser || !listing || !customUser.id || !listing.id) return;
 
-    const hasLiked = isLiked;
-    const updatedLikedBy = hasLiked
-      ? likes.filter((id: string) => id !== customUser.id)
+    const isLiked = likes.includes(customUser.id);
+    const updatedLikes = isLiked
+      ? likes.filter((id) => id !== customUser.id)
       : [...likes, customUser.id];
 
-    setLikes(updatedLikedBy);
-    setIsLiked(!isLiked);
+    setLikes(updatedLikes);
 
-    const updatedItemsLiked = hasLiked
-      ? listingsLiked.filter((id: string) => id !== listing.id)
+    const updatedItemsLiked = isLiked
+      ? listingsLiked.filter((id) => id !== listing.id)
       : [...listingsLiked, listing.id];
 
     setListingsLiked(updatedItemsLiked);
 
-    // Update the liked_by array in Supabase
     const { error: updateError } = await supabase
       .from("Listings")
-      .update({ liked_by: updatedLikedBy })
+      .update({ liked_by: updatedLikes })
       .eq("id", listing.id);
 
     if (updateError) {
       console.error("Error updating liked_by:", updateError);
     }
 
-    // Update the user's items_liked array in Supabase
     const { error: userUpdateError } = await supabase
       .from("Users")
       .update({ items_liked: updatedItemsLiked })
@@ -110,7 +109,7 @@ const ListingModal: React.FC<ListingModalProps> = ({
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: 0.7 * width,
-          height: 0.6 * height,
+          height: 0.8 * height,
           bgcolor: theme.palette.customColors.bodyBG,
           border: "1.5px solid #000",
           boxShadow: 24,
@@ -134,7 +133,7 @@ const ListingModal: React.FC<ListingModalProps> = ({
           alignItems="center"
         >
           <IconButton onClick={handleLikeClick}>
-            {isLiked ? (
+            {likes.includes(customUser?.id ?? "") ? (
               <FavoriteIcon htmlColor="#e61919" />
             ) : (
               <FavoriteBorderIcon htmlColor="#b8b7b7" />

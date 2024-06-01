@@ -95,6 +95,7 @@ const GridSection = () => {
         justifyContent="flex-end"
         width="100%"
         marginRight="10px"
+        marginTop="20px"
       >
         <FormControl
           variant="outlined"
