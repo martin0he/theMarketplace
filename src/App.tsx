@@ -39,6 +39,26 @@ const AppContent: React.FC = () => {
   const { theme } = themeContext;
 
   const muiTheme = createTheme({
+    components: {
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: theme.royalBlue,
+            },
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            "&.Mui-focused": {
+              color: theme.royalBlue,
+            },
+          },
+        },
+      },
+    },
     palette: {
       customColors: {
         royalBlue: theme.royalBlue,
