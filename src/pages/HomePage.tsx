@@ -7,6 +7,7 @@ import { Listing } from "../types";
 import { useEffect, useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
 import { formatISO, subDays } from "date-fns";
+import ListingModal from "../components/ListingsPageComponents/ListingModal";
 
 const HomePage = () => {
   const theme = useTheme();
@@ -95,6 +96,19 @@ const HomePage = () => {
     fetchRecentlySoldListings();
     fetchUserLikedListings();
   }, [user, customUser]);
+
+  const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = (listing: Listing) => {
+    setSelectedListing(listing);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedListing(null);
+  };
 
   return (
     <Box paddingTop={10} paddingBottom={7}>
@@ -189,7 +203,11 @@ const HomePage = () => {
                 >
                   {userListings.length > 0 ? (
                     userListings.map((listing, index) => (
-                      <SmallListingCard key={index} listing={listing} />
+                      <SmallListingCard
+                        key={index}
+                        listing={listing}
+                        onClick={handleOpenModal}
+                      />
                     ))
                   ) : (
                     <Typography>You haven't posted anything!</Typography>
@@ -250,6 +268,7 @@ const HomePage = () => {
                       <SmallListingCard
                         key={index}
                         listing={listing}
+                        onClick={handleOpenModal}
                         onLikeChange={fetchUserLikedListings}
                       />
                     ))
@@ -310,6 +329,7 @@ const HomePage = () => {
                   {recentListings.length > 0 ? (
                     recentListings.map((listing, index) => (
                       <SmallListingCard
+                        onClick={handleOpenModal}
                         key={index}
                         listing={listing}
                         isLikable
@@ -374,7 +394,11 @@ const HomePage = () => {
                 >
                   {recentlySoldListings.length > 0 ? (
                     recentlySoldListings.map((listing, index) => (
-                      <SmallListingCard key={index} listing={listing} />
+                      <SmallListingCard
+                        key={index}
+                        listing={listing}
+                        onClick={handleOpenModal}
+                      />
                     ))
                   ) : (
                     <Typography>Nothing sold within the last week!</Typography>
@@ -385,6 +409,11 @@ const HomePage = () => {
           </Grid>
         </Grid>
       </Box>
+      <ListingModal
+        open={modalOpen}
+        handleClose={handleCloseModal}
+        listing={selectedListing}
+      />
     </Box>
   );
 };

@@ -8,6 +8,7 @@ import {
   InputLabel,
   SelectChangeEvent,
   useTheme,
+  CircularProgress,
 } from "@mui/material";
 import supabase from "../../auth/supabase";
 import { useAuth } from "../../auth/AuthProvider";
@@ -24,11 +25,13 @@ const GridSection = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [tileSize, setTileSize] = useState("small");
   const [filterCriteria, setFilterCriteria] = useState("recent");
+  const [loading, setLoading] = useState(true);
   const theme = useTheme();
   const { height } = useWindowDimensions();
 
   const handleFetchingListings = async () => {
     if (!customUser) return;
+    setLoading(true); // Start loading
     const { data: Listings, error } = await supabase
       .from("Listings")
       .select("*")
@@ -37,10 +40,12 @@ const GridSection = () => {
 
     if (error) {
       console.error("Error fetching listings:", error);
+      setLoading(false); // Stop loading on error
       return;
     }
 
     setCurrentListings(Listings as Listing[]);
+    setLoading(false); // Stop loading on success
   };
 
   const filterListings = (listings: Listing[], criteria: string): Listing[] => {
@@ -87,6 +92,19 @@ const GridSection = () => {
   const handleFilterChange = (event: SelectChangeEvent<string>) => {
     setFilterCriteria(event.target.value as string);
   };
+
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">

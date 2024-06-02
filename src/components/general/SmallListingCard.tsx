@@ -13,12 +13,14 @@ interface SmallListingCardProps {
   listing: Listing;
   isLikable?: boolean;
   onLikeChange?: () => void;
+  onClick: (listing: Listing) => void;
 }
 
 const SmallListingCard = ({
   listing,
   isLikable,
   onLikeChange,
+  onClick,
 }: SmallListingCardProps) => {
   const { customUser } = useAuth();
   const [likeColor, setLikeColor] = useState<string>("#b8b7b7");
@@ -115,6 +117,7 @@ const SmallListingCard = ({
 
   return (
     <Box
+      onClick={() => onClick(listing)}
       sx={{
         position: "relative",
         borderRadius: "12px",
@@ -124,6 +127,7 @@ const SmallListingCard = ({
         flex: "0 0 auto",
         marginLeft: 1,
         overflow: "clip",
+        cursor: "pointer",
       }}
       height="150px"
     >
@@ -203,6 +207,7 @@ const SmallListingCard = ({
 
       {isLikable === true ? (
         <IconButton
+          disabled
           sx={{ position: "absolute", top: 0, right: 0 }}
           onClick={handleLikeClick}
         >

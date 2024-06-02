@@ -147,8 +147,14 @@ const ListingModal: React.FC<ListingModalProps> = ({
         <Grid container sx={{ borderRadius: "12px" }}>
           <Grid item xs={6} justifyContent="center">
             <Typography fontSize={30}>{listing.name}</Typography>
-            <Box mt="10px" sx={{ position: "relative" }}>
+            <Box
+              width={`${0.25 * width}px`}
+              height={`${0.32 * height}px`}
+              mt="10px"
+              sx={{ position: "relative" }}
+            >
               <Box
+                minWidth="20%"
                 sx={{
                   position: "absolute",
                   bottom: "10px",
@@ -160,15 +166,15 @@ const ListingModal: React.FC<ListingModalProps> = ({
                   zIndex: 2,
                 }}
               >
-                <Typography color="white" textAlign="center" fontWeight="bold">
+                <Typography color="white" textAlign="center">
                   {customUser ? getLocalCurrency(customUser) : ""}
                   {listing.price}
                 </Typography>
               </Box>
               <CustomCarousel
                 imageUrls={listing.imageUrls}
-                width={`${0.25 * width}px`}
-                height={`${0.32 * height}px`}
+                width="100%"
+                height="100%"
                 isSmallArrows
               />
             </Box>

@@ -31,7 +31,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   const theme = useTheme();
 
   useEffect(() => {
-    setLoading(false); // Set loading to true whenever currentIndex changes
+    setLoading(true); // Set loading to true whenever currentIndex changes
   }, [currentIndex]);
 
   const handlePrevious = () => {
@@ -109,7 +109,9 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
               zIndex: 1,
             }}
           >
-            <CircularProgress />
+            <CircularProgress
+              sx={{ color: theme.palette.customColors.royalBlue }}
+            />
           </Box>
         )}
         <img
