@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Listing } from "../../types";
-import CustomCarousel from "./CustomCarousel";
 import supabase from "../../auth/supabase";
 import { useAuth } from "../../auth/AuthProvider";
 import getLocalCurrency from "./LocalCurrency";
@@ -128,6 +127,9 @@ const SmallListingCard = ({
         marginLeft: 1,
         overflow: "clip",
         cursor: "pointer",
+        "&:hover": {
+          boxShadow: "0px 2px 3px #5c5757",
+        },
       }}
       height="150px"
     >
@@ -142,12 +144,11 @@ const SmallListingCard = ({
         height="80px"
         margin="5px"
       >
-        <CustomCarousel
-          imageUrls={imageUrls}
+        <img
+          src={imageUrls[0]}
           width="90px"
           height="80px"
-          isWhiteArrows
-          isSmallArrows
+          style={{ borderRadius: "10px", objectFit: "cover" }}
         />
       </Box>
 

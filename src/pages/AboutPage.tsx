@@ -3,31 +3,21 @@ import { Box, Typography, useTheme } from "@mui/material";
 const AboutPage = () => {
   const theme = useTheme();
   return (
-    <Box paddingY={10} paddingX={7} textAlign="center" marginTop="40px">
+    <Box sx={{ py: 10, px: 7, textAlign: "center", mt: 4 }}>
       <Typography variant="h4" color={theme.palette.customColors.celestialBlue}>
         Welcome to theMarketplace!
       </Typography>
 
-      <Typography variant="h6" marginTop="15px">
-        This is the premiere, college-exclusive online markeplace to sell and
+      <Typography variant="h6" sx={{ mt: 2 }}>
+        This is the premiere, college-exclusive online marketplace to sell and
         buy items on your campus.
       </Typography>
 
-      <Typography
-        variant="h5"
-        textAlign="left"
-        marginTop="20px"
-        marginLeft="35px"
-      >
+      <Typography variant="h5" sx={{ textAlign: "left", mt: 4, ml: 4 }}>
         How It Works
       </Typography>
 
-      <Typography
-        variant="h6"
-        textAlign="left"
-        marginLeft="35px"
-        marginTop="20px"
-      >
+      <Typography variant="h6" sx={{ textAlign: "left", mt: 2, ml: 4 }}>
         To use theMarketplace you must first sign in with your
         <span
           style={{
@@ -44,23 +34,13 @@ const AboutPage = () => {
         sale.
       </Typography>
 
-      <Typography
-        variant="h5"
-        textAlign="left"
-        marginTop="20px"
-        marginLeft="35px"
-      >
+      <Typography variant="h5" sx={{ textAlign: "left", mt: 4, ml: 4 }}>
         Why It Exists
       </Typography>
 
-      <Typography
-        variant="h6"
-        textAlign="left"
-        marginLeft="35px"
-        marginTop="20px"
-      >
-        Having to search on general markeplaces or broad social media stories to
-        buy your fellow students' second-hand possessions is an inefficient
+      <Typography variant="h6" sx={{ textAlign: "left", mt: 2, ml: 4 }}>
+        Having to search on general marketplaces or broad social media stories
+        to buy your fellow students' second-hand possessions is an inefficient
         problem not belonging to this day and age. Moving out and need some
         quick cash? Waiting weeks for a response just doesn't cut it anymore,
         list your items here today and get things rolling! When you think about

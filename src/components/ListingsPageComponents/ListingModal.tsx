@@ -145,13 +145,15 @@ const ListingModal: React.FC<ListingModalProps> = ({
           </Typography>
         </Box>
         <Grid container sx={{ borderRadius: "12px" }}>
-          <Grid item xs={6} justifyContent="center">
+          <Grid item xs={12} sm={6} justifyContent="center">
             <Typography fontSize={30}>{listing.name}</Typography>
             <Box
-              width={`${0.25 * width}px`}
               height={`${0.32 * height}px`}
               mt="10px"
-              sx={{ position: "relative" }}
+              sx={{
+                position: "relative",
+                width: { sm: `${0.25 * width}px`, xs: `${0.57 * width}px` },
+              }}
             >
               <Box
                 minWidth="20%"
