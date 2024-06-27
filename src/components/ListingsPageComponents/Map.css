@@ -1,5 +1,7 @@
 .map-container {
   height: 65vh;
   width: 85%;
-  border-radius: 10%;
+  border-radius: 10px;
+  overflow: hidden; /* Ensures that no content spills out of the container */
+  position: relative; /* Ensures proper positioning within the parent */
 }
