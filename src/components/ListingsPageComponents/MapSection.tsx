@@ -4,7 +4,7 @@ import mapboxgl from "mapbox-gl";
 import "./Map.css";
 import { LocalCoordinates } from "../general/LocalCoordinates";
 import { useAuth } from "../../auth/AuthProvider";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ";
 
@@ -44,7 +44,11 @@ const MapSection: React.FC = () => {
       display="flex"
       marginTop="20px"
     >
-      <div className="map-container" ref={mapContainerRef}></div>
+      {customUser ? (
+        <div className="map-container" ref={mapContainerRef}></div>
+      ) : (
+        <Typography>no school :(</Typography>
+      )}
     </Box>
   );
 };
