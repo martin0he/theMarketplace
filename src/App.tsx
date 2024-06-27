@@ -109,8 +109,8 @@ const AppContent: React.FC = () => {
         }}
       />
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={isMobile ? <RedirectPage /> : <HomePage />} />
+        <Route path="/" element={isMobile ? <RedirectPage /> : <Layout />}>
+          <Route index element={<HomePage />} />
           <Route path="listings" element={<ListingsPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="sell" element={<SellPage />} />
