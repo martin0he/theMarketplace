@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
 import { formatISO, subDays } from "date-fns";
 import ListingModal from "../components/ListingsPageComponents/ListingModal";
-import { isMobile } from "react-device-detect";
 
 const HomePage = () => {
   const theme = useTheme();
@@ -113,11 +112,6 @@ const HomePage = () => {
 
   return (
     <Box paddingTop={10} paddingBottom={7}>
-      {isMobile ? (
-        <Typography>is mobile</Typography>
-      ) : (
-        <Typography>not mobile</Typography>
-      )}
       <Box justifyContent="center" display="flex" alignItems="center">
         {customUser !== null ? (
           <Typography fontSize={30} marginTop={7}>

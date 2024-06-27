@@ -18,6 +18,8 @@ import {
 import { ThemeProvider, ThemeContext } from "./ThemeContext";
 import { GlobalStyles } from "@mui/system";
 import ListingsPage from "./pages/ListingsPage";
+import { isMobile } from "react-device-detect";
+import RedirectPage from "./pages/RedirectPage";
 
 const Layout: React.FC = () => {
   return (
@@ -108,7 +110,7 @@ const AppContent: React.FC = () => {
       />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
+          <Route index element={isMobile ? <RedirectPage /> : <HomePage />} />
           <Route path="listings" element={<ListingsPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="sell" element={<SellPage />} />
