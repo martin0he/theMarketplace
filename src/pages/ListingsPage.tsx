@@ -1,6 +1,7 @@
 import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import GridSection from "../components/ListingsPageComponents/GridSection";
+import MapSection from "../components/ListingsPageComponents/MapSection";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -88,7 +89,9 @@ const ListingsPage = () => {
       <CustomTabPanel value={value} index={0}>
         <GridSection />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}></CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <MapSection />
+      </CustomTabPanel>
     </Box>
   );
 };
