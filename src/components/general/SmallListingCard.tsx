@@ -128,7 +128,7 @@ const SmallListingCard = ({
         overflow: "clip",
         cursor: "pointer",
         "&:hover": {
-          boxShadow: "0px 2px 3px #5c5757",
+          boxShadow: "0px 1px 5px #5c5757",
         },
       }}
       height="150px"

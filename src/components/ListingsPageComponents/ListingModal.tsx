@@ -186,7 +186,7 @@ const ListingModal: React.FC<ListingModalProps> = ({
               />
             </Box>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Box padding="10px" marginTop="40px">
               <Tooltip
                 sx={{ width: "fit-content" }}
@@ -202,15 +202,15 @@ const ListingModal: React.FC<ListingModalProps> = ({
                 </Typography>
               </Tooltip>
 
-              <Typography fontSize={22}>
+              <Typography fontSize={22} sx={{ wordWrap: "break-word" }}>
                 <strong>description: </strong>
                 {listing.description}
               </Typography>
-              <Typography fontSize={22}>
+              <Typography fontSize={22} sx={{ wordWrap: "break-word" }}>
                 <strong>exchange location: </strong>
                 {listing.exchange_location}
               </Typography>
-              <Typography fontSize={22}>
+              <Typography fontSize={22} sx={{ wordWrap: "break-word" }}>
                 <strong>payment methods: </strong>
                 <ul style={{ paddingLeft: "18px", margin: "3px" }}>
                   {listing.payment_methods.map((method, index) => (
@@ -218,7 +218,7 @@ const ListingModal: React.FC<ListingModalProps> = ({
                   ))}
                 </ul>
               </Typography>
-              <Typography fontSize={22}>
+              <Typography fontSize={22} sx={{ wordWrap: "break-word" }}>
                 <strong>posted: </strong>
                 {datePipe(listing.created_at.toString())}{" "}
                 {` (${calculateDaysAgo(
