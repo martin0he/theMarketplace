@@ -117,6 +117,11 @@ const ListingModal: React.FC<ListingModalProps> = ({
           borderRadius: "12px",
           overflow: "auto",
           maxWidth: 0.7 * width,
+          clipPath: "inset(0 round 12px)",
+          "&::-webkit-scrollbar-track": {
+            backgroundColor: "transparent",
+            borderRadius: "0px 15px 15px 0px",
+          },
         }}
       >
         <Box
