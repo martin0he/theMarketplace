@@ -68,6 +68,7 @@ const SellPage = () => {
     PaymentMethod[]
   >([]);
   const [listingLocation, setListingLocation] = useState<string>("");
+  const [listingLocationCity, setListingLocationCity] = useState<string>("");
   const [previewImageUrls, setPreviewImageUrls] = useState<string[]>([]);
 
   useEffect(() => {
@@ -150,6 +151,8 @@ const SellPage = () => {
             setListingPaymentMethods={setListingPaymentMethods}
             listingLocation={listingLocation}
             setListingLocation={setListingLocation}
+            listingLocationCity={listingLocationCity}
+            setListingLocationCity={setListingLocationCity}
             previewImageUrls={previewImageUrls}
             setPreviewImageUrls={setPreviewImageUrls}
             setAlert={setAlert}

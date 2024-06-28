@@ -6,6 +6,8 @@ import { useAuth } from "../../auth/AuthProvider";
 import { Box, Typography } from "@mui/material";
 import supabase from "../../auth/supabase";
 import { validateAddress } from "../general/ValidateAddress";
+import { Listing } from "../../types";
+import getLocalCurrency from "../general/LocalCurrency";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ";
@@ -49,19 +51,31 @@ const MapSection: React.FC = () => {
         });
 
         map.on("load", () => {
-          new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
-
-          Listings.forEach(async (listing) => {
-            if (await validateAddress(listing.exchange_location)) {
+          new mapboxgl.Marker()
+            .setLngLat(coordinates)
+            .setPopup(
+              new mapboxgl.Popup({ offset: 15 }).setHTML(
+                `<h5>${customUser.school}</h5>`
+              )
+            )
+            .addTo(map);
+          Listings.forEach(async (listing: Listing) => {
+            if (await validateAddress(`${listing.exchange_location}`)) {
               const listingCoordinates = await LocalCoordinates(
-                listing.exchange_location
+                `${listing.exchange_location}`
               );
-              new mapboxgl.Marker().setLngLat(listingCoordinates).addTo(map);
+              new mapboxgl.Marker()
+                .setLngLat(listingCoordinates)
+                .setPopup(
+                  new mapboxgl.Popup({ offset: 15 }).setHTML(
+                    `<h5>${listing.name}</h5><p>${
+                      listing.exchange_location
+                    }</p><p>${getLocalCurrency(customUser)}${listing.price}</p>`
+                  )
+                )
+                .addTo(map);
             }
           });
-          new mapboxgl.Marker()
-            .setLngLat([-71.09042113423872, 42.34034256208822])
-            .addTo(map);
         });
 
         mapRef.current = map;

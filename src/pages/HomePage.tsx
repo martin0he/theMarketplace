@@ -332,7 +332,6 @@ const HomePage = () => {
                         onClick={handleOpenModal}
                         key={index}
                         listing={listing}
-                        isLikable
                         onLikeChange={fetchUserLikedListings}
                       />
                     ))

@@ -37,6 +37,8 @@ interface SellFormProps {
   setListingPaymentMethods: (value: PaymentMethod[]) => void;
   listingLocation: string;
   setListingLocation: (value: string) => void;
+  listingLocationCity: string;
+  setListingLocationCity: (value: string) => void;
   previewImageUrls: string[];
   setPreviewImageUrls: (value: string[]) => void;
   setAlert: (value: ReactElement | null) => void;
@@ -55,6 +57,8 @@ const SellForm = ({
   setListingPaymentMethods,
   listingLocation,
   setListingLocation,
+  listingLocationCity,
+  setListingLocationCity,
   previewImageUrls,
   setPreviewImageUrls,
   setAlert,
@@ -137,7 +141,7 @@ const SellForm = ({
           : listingPrice,
       seller_id: customUser?.id || "",
       payment_methods: listingPaymentMethods,
-      exchange_location: listingLocation,
+      exchange_location: `${listingLocation}, ${listingLocationCity}`,
       imageUrls: newUrls,
       condition: listingCondition,
       liked_by: [],
@@ -447,28 +451,62 @@ const SellForm = ({
                     onChange={(e) => setListingLocation(e.target.value)}
                   />
                 ) : (
-                  <form>
-                    <AddressAutofill accessToken="pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ">
-                      <TextField
-                        color="secondary"
-                        fullWidth
-                        label="Exchange Address"
-                        variant="outlined"
-                        InputLabelProps={{
-                          style: {
-                            backgroundColor: theme.palette.customColors.inputBG,
-                            borderRadius: "9px",
-                            paddingLeft: "5px",
-                            paddingRight: "5px",
-                          },
-                        }}
-                        InputProps={{ style: inputStyle }}
-                        autoComplete="address-line1"
-                        value={listingLocation}
-                        onChange={(e) => setListingLocation(e.target.value)}
-                      />
-                    </AddressAutofill>
-                  </form>
+                  <Grid container spacing={0} flexDirection="row">
+                    <form style={{ width: "100%" }}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={7}>
+                          <AddressAutofill accessToken="pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ">
+                            <TextField
+                              color="secondary"
+                              fullWidth
+                              label="Exchange Address"
+                              variant="outlined"
+                              InputLabelProps={{
+                                style: {
+                                  backgroundColor:
+                                    theme.palette.customColors.inputBG,
+                                  borderRadius: "9px",
+                                  paddingLeft: "5px",
+                                  paddingRight: "5px",
+                                },
+                              }}
+                              InputProps={{ style: inputStyle }}
+                              autoComplete="address-line1"
+                              value={listingLocation}
+                              onChange={(e) =>
+                                setListingLocation(e.target.value)
+                              }
+                            />
+                          </AddressAutofill>
+                        </Grid>
+                        <Grid item xs={5}>
+                          <AddressAutofill accessToken="pk.eyJ1IjoibWFydGluaGVtYSIsImEiOiJjbHdhZnM0M2IwOTY2MnFsZGd1eDNnZndnIn0._wuaWK6OY8ve2xMXx_4WhQ">
+                            <TextField
+                              color="secondary"
+                              fullWidth
+                              label="City"
+                              variant="outlined"
+                              InputLabelProps={{
+                                style: {
+                                  backgroundColor:
+                                    theme.palette.customColors.inputBG,
+                                  borderRadius: "9px",
+                                  paddingLeft: "5px",
+                                  paddingRight: "5px",
+                                },
+                              }}
+                              InputProps={{ style: inputStyle }}
+                              autoComplete="address-level2"
+                              value={listingLocationCity}
+                              onChange={(e) =>
+                                setListingLocationCity(e.target.value)
+                              }
+                            />
+                          </AddressAutofill>
+                        </Grid>
+                      </Grid>
+                    </form>
+                  </Grid>
                 )}
               </Grid>
             </Grid>
