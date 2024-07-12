@@ -127,8 +127,10 @@ const SmallListingCard = ({
         marginLeft: 1,
         overflow: "clip",
         cursor: "pointer",
+        transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
         "&:hover": {
-          boxShadow: "0px 1px 5px #5c5757",
+          boxShadow: "1px -1px 3px #5c5757",
+          transform: "translateY(2px)",
         },
       }}
       height="150px"

@@ -1,30 +1,33 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# theMarketplace
 
-Currently, two official plugins are available:
+Full-stack online marketplace meant to facilitate easy buying and selling of items for students on university campuses. Users have to create an account with their univeristy-provided '.edu' email to use the site.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**Client:** React, Typescript, MUI, MapboxAPI, Email.js
 
-- Configure the top-level `parserOptions` property like this:
+**Server:** Supabase
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Screenshots
+
+![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here1)
+
+
+## Lessons Learned
+
+- Learning how to handle user authentication and creating & storing custom user data was integral in expanding my understanding of the user experience.
+- Using BaaS allowed me to focus my efforts on the front-end and hone my web design skills.
+
+
+## Appendix
+
+Contains a directory of all universities and higher educational institutions worldwide.
+
+
+## Authors
+
+- [@Martin Hema](https://www.github.com/martin0he)
+
